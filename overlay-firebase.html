@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="pt" style="background: transparent;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonus Hunt Overlay (Firebase)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            background: transparent !important;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: transparent !important;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        .overlay-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            max-width: calc(100vw - 40px);
+            background: linear-gradient(135deg, #4a1f7a 0%, #2d1450 100%);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+            border: 2px solid rgba(138, 92, 246, 0.4);
+            display: flex;
+            gap: 20px;
+            overflow: hidden;
+        }
+
+        /* LEFT PANEL - STATS */
+        .left-panel {
+            width: 200px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .hunt-header {
+            text-align: left;
+        }
+
+        .hunt-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .hunt-id {
+            font-size: 10px;
+            color: #a78bfa;
+            opacity: 0.8;
+        }
+
+        .connection-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 9px;
+            color: #a78bfa;
+            margin-top: 4px;
+        }
+
+        .connection-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #dc3545;
+            animation: pulse 2s infinite;
+        }
+
+        .connection-dot.connected {
+            background: #4ade80;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .main-stats {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid rgba(138, 92, 246, 0.3);
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .stat-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #a78bfa;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 13px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .stat-value.positive {
+            color: #4ade80;
+        }
+
+        .stat-value.negative {
+            color: #f87171;
+        }
+
+        .progress-section {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid rgba(138, 92, 246, 0.3);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-label {
+            font-size: 11px;
+            color: #a78bfa;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .progress-count {
+            font-size: 13px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .progress-count .opened {
+            color: #4ade80;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 6px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #8b5cf6 0%, #a78bfa 100%);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-percent {
+            font-size: 10px;
+            color: #a78bfa;
+            text-align: right;
+        }
+
+        /* RIGHT PANEL - SLOTS */
+        .slots-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .slots-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        .header-badge {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(138, 92, 246, 0.3);
+            font-size: 11px;
+            color: #a78bfa;
+            text-transform: uppercase;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .header-badge .value {
+            color: #fff;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .slots-container {
+            display: flex;
+            gap: 12px;
+            overflow-x: scroll !important;
+            overflow-y: hidden;
+            padding: 5px 5px 15px 5px;
+            flex: 1;
+            min-width: 0;
+            width: 100%;
+        }
+
+        /* Scrollbar FORÇADA */
+        .slots-container::-webkit-scrollbar {
+            height: 12px !important;
+            display: block !important;
+        }
+
+        .slots-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.5) !important;
+            border-radius: 6px;
+        }
+
+        .slots-container::-webkit-scrollbar-thumb {
+            background: #8b5cf6 !important;
+            border-radius: 6px;
+            border: 2px solid rgba(0, 0, 0, 0.5);
+        }
+
+        .slots-container::-webkit-scrollbar-thumb:hover {
+            background: #a78bfa !important;
+        }
+
+        /* SLOT CARD */
+        .slot-card {
+            width: 130px;
+            flex-shrink: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            background: linear-gradient(180deg, #1f1535 0%, #0f0820 100%);
+            border: 2px solid rgba(138, 92, 246, 0.3);
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .slot-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(138, 92, 246, 0.6);
+            box-shadow: 0 8px 24px rgba(138, 92, 246, 0.4);
+        }
+
+        .slot-card.opened {
+            border-color: #4ade80;
+            box-shadow: 0 4px 16px rgba(74, 222, 128, 0.4);
+        }
+
+        .slot-image-container {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .slot-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slot-number-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .slot-status-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #4ade80;
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .slot-name-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+            padding: 8px;
+        }
+
+        .slot-provider {
+            font-size: 8px;
+            color: #a78bfa;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .slot-name {
+            font-size: 11px;
+            font-weight: bold;
+            color: #fff;
+            line-height: 1.2;
+        }
+
+        .slot-footer {
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .slot-payout {
+            font-size: 13px;
+            font-weight: bold;
+            color: #a78bfa;
+        }
+
+        .slot-payout.opened {
+            color: #4ade80;
+        }
+
+        .slot-multiplier {
+            font-size: 11px;
+            color: #fff;
+            background: rgba(138, 92, 246, 0.3);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            color: #a78bfa;
+            text-align: center;
+            opacity: 0.6;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state-text {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay-container">
+        <!-- LEFT PANEL - STATS -->
+        <div class="left-panel">
+            <div class="hunt-header">
+                <div class="hunt-title">BONUS HUNT</div>
+                <div class="hunt-id">#<span id="huntNumber">1</span></div>
+                <div class="connection-indicator">
+                    <div class="connection-dot" id="connectionDot"></div>
+                    <span id="connectionStatus">DESCONECTADO</span>
+                </div>
+            </div>
+
+            <div class="main-stats">
+                <div class="stat-row">
+                    <span class="stat-label">Target</span>
+                    <span class="stat-value" id="targetValue">€0.00</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Avg Multi</span>
+                    <span class="stat-value" id="avgValue">0.00x</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">BE Multi</span>
+                    <span class="stat-value" id="beValue">0.00x</span>
+                </div>
+            </div>
+
+            <div class="progress-section">
+                <div class="progress-header">
+                    <span class="progress-label">Progresso</span>
+                    <span class="progress-count">
+                        <span class="opened" id="openedCount">0</span>/<span id="totalCount">0</span>
+                    </span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+                <div class="progress-percent" id="progressPercent">0%</div>
+            </div>
+        </div>
+
+        <!-- RIGHT PANEL - SLOTS -->
+        <div class="slots-section">
+            <div class="slots-header">
+                <div class="header-badge">
+                    Total Pay<span class="value" id="totalPayValue">€0.00</span>
+                </div>
+                <div class="header-badge">
+                    Profit/Loss<span class="value" id="profitLossValue">€0.00</span>
+                </div>
+            </div>
+
+            <div class="slots-container" id="slotsContainer">
+                <div class="empty-state">
+                    <div class="empty-state-icon">🎰</div>
+                    <div class="empty-state-text">Nenhum slot adicionado</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script>
+        // ===== CONFIGURAÇÃO FIREBASE =====
+        const firebaseConfig = {
+            apiKey: "AIzaSyDMf-hKiBYiZKARLyP11Ocq2IOtZ9DF2AY",
+            authDomain: "ruidex.firebaseapp.com",
+            databaseURL: "https://ruidex-default-rtdb.firebaseio.com",
+            projectId: "ruidex",
+            storageBucket: "ruidex.firebasestorage.app",
+            messagingSenderId: "163689134002",
+            appId: "1:163689134002:web:ea5af18bc85b0b6ac596ab",
+            measurementId: "G-RYR1BHTYCS"
+        };
+
+        // Inicializa Firebase
+        let database;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            database = firebase.database();
+            console.log('✅ Firebase inicializado!');
+        } catch (error) {
+            console.error('❌ Erro ao inicializar Firebase:', error);
+        }
+
+        // ===== DOM ELEMENTS =====
+        const elements = {
+            huntNumber: document.getElementById('huntNumber'),
+            targetValue: document.getElementById('targetValue'),
+            avgValue: document.getElementById('avgValue'),
+            beValue: document.getElementById('beValue'),
+            openedCount: document.getElementById('openedCount'),
+            totalCount: document.getElementById('totalCount'),
+            progressBar: document.getElementById('progressBar'),
+            progressPercent: document.getElementById('progressPercent'),
+            totalPayValue: document.getElementById('totalPayValue'),
+            profitLossValue: document.getElementById('profitLossValue'),
+            slotsContainer: document.getElementById('slotsContainer'),
+            connectionDot: document.getElementById('connectionDot'),
+            connectionStatus: document.getElementById('connectionStatus')
+        };
+
+        // ===== HELPERS =====
+        function formatCurrency(value) {
+            return `€${parseFloat(value || 0).toFixed(2)}`;
+        }
+
+        function formatMultiplier(value) {
+            return `${parseFloat(value || 0).toFixed(2)}x`;
+        }
+
+        function updateConnectionStatus(connected) {
+            if (connected) {
+                elements.connectionDot.classList.add('connected');
+                elements.connectionStatus.textContent = 'CONECTADO';
+            } else {
+                elements.connectionDot.classList.remove('connected');
+                elements.connectionStatus.textContent = 'DESCONECTADO';
+            }
+        }
+
+        // ===== CALCULATE STATS =====
+        function calculateStats(data) {
+            const slots = data.slots || [];
+            const totalSlots = slots.length;
+            const openedSlots = slots.filter(s => s.opened).length;
+            const progressPercent = totalSlots > 0 ? (openedSlots / totalSlots) * 100 : 0;
+
+            const totalBet = slots.reduce((sum, s) => sum + (s.betAmount || 0), 0);
+            const totalPay = slots.reduce((sum, s) => s.opened ? sum + (s.winAmount || 0) : sum, 0);
+            const profitLoss = totalPay - (data.stats?.start || 0);
+
+            const avgMultiplier = openedSlots > 0 
+                ? slots.filter(s => s.opened).reduce((sum, s) => {
+                    const bet = s.betAmount || 1;
+                    return sum + ((s.winAmount || 0) / bet);
+                }, 0) / openedSlots
+                : 0;
+
+            const beMultiplier = totalBet > 0 ? (data.stats?.start || 0) / totalBet : 0;
+
+            return {
+                huntNumber: data.stats?.huntNumber || 1,
+                target: data.stats?.start || 0,
+                avgMultiplier,
+                beMultiplier,
+                totalSlots,
+                openedSlots,
+                progressPercent,
+                totalPay,
+                profitLoss
+            };
+        }
+
+        // ===== CREATE SLOT CARD =====
+        function createSlotCard(slot, index) {
+            const bet = slot.betAmount || 0;
+            const payout = slot.winAmount || 0;
+            const multiplier = bet > 0 ? payout / bet : 0;
+            const isOpened = slot.opened || false;
+
+            return `
+                <div class="slot-card ${isOpened ? 'opened' : ''}">
+                    <div class="slot-image-container">
+                        <img src="${slot.imageUrl || ''}" 
+                             alt="${slot.slotName || ''}"
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'130\' height=\'180\'%3E%3Crect fill=\'%231f1535\' width=\'130\' height=\'180\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%23a78bfa\' font-size=\'48\'%3E🎰%3C/text%3E%3C/svg%3E'">
+                        <div class="slot-number-badge">#${index + 1}</div>
+                        ${isOpened ? '<div class="slot-status-badge">✓</div>' : ''}
+                        <div class="slot-name-overlay">
+                            <div class="slot-provider">${slot.provider || ''}</div>
+                            <div class="slot-name">${slot.slotName || 'Slot'}</div>
+                        </div>
+                    </div>
+                    <div class="slot-footer">
+                        <div class="slot-payout ${isOpened ? 'opened' : ''}">
+                            ${isOpened ? formatCurrency(payout) : formatCurrency(bet)}
+                        </div>
+                        <div class="slot-multiplier">
+                            ${isOpened ? formatMultiplier(multiplier) : 'BET'}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== UPDATE UI =====
+        function updateUI(data) {
+            const stats = calculateStats(data);
+            const slots = data.slots || [];
+
+            // Update stats
+            elements.huntNumber.textContent = stats.huntNumber;
+            elements.targetValue.textContent = formatCurrency(stats.target);
+            elements.avgValue.textContent = formatMultiplier(stats.avgMultiplier);
+            elements.beValue.textContent = formatMultiplier(stats.beMultiplier);
+            
+            // Update progress
+            elements.openedCount.textContent = stats.openedSlots;
+            elements.totalCount.textContent = stats.totalSlots;
+            elements.progressBar.style.width = stats.progressPercent + '%';
+            elements.progressPercent.textContent = stats.progressPercent.toFixed(0) + '%';
+
+            // Update totals
+            elements.totalPayValue.textContent = formatCurrency(stats.totalPay);
+            elements.profitLossValue.textContent = formatCurrency(stats.profitLoss);
+            
+            // Color profit/loss
+            const profitElement = elements.profitLossValue.parentElement.querySelector('.value');
+            if (stats.profitLoss > 0) {
+                profitElement.style.color = '#4ade80';
+            } else if (stats.profitLoss < 0) {
+                profitElement.style.color = '#f87171';
+            } else {
+                profitElement.style.color = '#fff';
+            }
+
+            // Update slots
+            if (slots.length === 0) {
+                elements.slotsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎰</div>
+                        <div class="empty-state-text">Nenhum slot adicionado</div>
+                    </div>
+                `;
+            } else {
+                elements.slotsContainer.innerHTML = slots.map((slot, index) => 
+                    createSlotCard(slot, index)
+                ).join('');
+            }
+        }
+
+        // ===== LOAD DATA FROM FIREBASE =====
+        function loadData() {
+            if (!database) {
+                console.error('❌ Firebase não inicializado');
+                updateConnectionStatus(false);
+                return;
+            }
+
+            database.ref('bonus-hunt').on('value', (snapshot) => {
+                const data = snapshot.val();
+                
+                if (data) {
+                    updateUI(data);
+                    updateConnectionStatus(true);
+                    console.log('✅ Dados atualizados!');
+                } else {
+                    updateConnectionStatus(true);
+                }
+            }, (error) => {
+                console.error('❌ Erro ao carregar dados:', error);
+                updateConnectionStatus(false);
+            });
+        }
+
+        // ===== AUTO-SCROLL SUAVE =====
+        let scrollPosition = 0;
+        const SCROLL_SPEED = 1;
+        const SCROLL_INTERVAL = 30;
+        let isResetting = false;
+
+        setInterval(() => {
+            const container = elements.slotsContainer;
+            
+            if (!container || !container.scrollWidth || isResetting) return;
+            
+            const maxScroll = container.scrollWidth - container.clientWidth;
+            
+            if (maxScroll <= 0) return;
+            
+            scrollPosition += SCROLL_SPEED;
+            
+            if (scrollPosition >= maxScroll) {
+                isResetting = true;
+                
+                container.scrollTo({
+                    left: 0,
+                    behavior: 'smooth'
+                });
+                
+                scrollPosition = 0;
+                
+                setTimeout(() => {
+                    isResetting = false;
+                }, 2000);
+                
+            } else {
+                container.scrollLeft = scrollPosition;
+            }
+            
+        }, SCROLL_INTERVAL);
+
+        // ===== START =====
+        console.log('🎰 Iniciando Bonus Hunt Overlay...');
+        console.log('🔥 Modo: Firebase Realtime Database');
+        
+        loadData();
+
+        console.log('✅ Overlay carregada com sucesso!');
+    </script>
+</body>
+</html>

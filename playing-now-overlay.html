@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt" style="background: transparent;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playing Now - Overlay</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            background: transparent !important;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+        }
+
+        .playing-now-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 320px;
+            background: linear-gradient(135deg, #1a1f35 0%, #0f1522 100%);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+            border: 2px solid rgba(138, 92, 246, 0.4);
+            opacity: 0;
+            transform: translateX(400px);
+            transition: all 0.5s ease;
+        }
+
+        .playing-now-container.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .playing-now-container.hidden {
+            opacity: 0;
+            transform: translateX(400px);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(138, 92, 246, 0.3);
+        }
+
+        .pulse-dot {
+            width: 12px;
+            height: 12px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.5;
+                transform: scale(1.2);
+            }
+        }
+
+        .header-text {
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #a78bfa;
+        }
+
+        .slot-image-wrapper {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .slot-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .provider-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .slot-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px 8px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(138, 92, 246, 0.2);
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: #a78bfa;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-size: 14px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .stat-value.max-win {
+            color: #fbbf24;
+        }
+
+        .stat-value.rtp {
+            color: #4ade80;
+        }
+
+        .stat-value.volatility {
+            color: #f87171;
+        }
+
+        .stat-value.volatility.high {
+            color: #dc2626;
+        }
+
+        .stat-value.volatility.medium {
+            color: #f59e0b;
+        }
+
+        .stat-value.volatility.low {
+            color: #10b981;
+        }
+
+
+        .no-slot-message {
+            text-align: center;
+            padding: 40px 20px;
+            color: #a78bfa;
+            opacity: 0.6;
+        }
+
+        .no-slot-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="playing-now-container" id="playingNow">
+        <div class="header">
+            <div class="pulse-dot"></div>
+            <div class="header-text">🎮 Playing Now</div>
+        </div>
+
+        <div id="slotContent">
+            <div class="no-slot-message">
+                <div class="no-slot-icon">🎰</div>
+                <div>Aguardando slot...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script>
+        // ===== FIREBASE CONFIG =====
+        const firebaseConfig = {
+            apiKey: "AIzaSyDMf-hKiBYiZKARLyP11Ocq2IOtZ9DF2AY",
+            authDomain: "ruidex.firebaseapp.com",
+            databaseURL: "https://ruidex-default-rtdb.firebaseio.com",
+            projectId: "ruidex",
+            storageBucket: "ruidex.firebasestorage.app",
+            messagingSenderId: "163689134002",
+            appId: "1:163689134002:web:ea5af18bc85b0b6ac596ab",
+            measurementId: "G-RYR1BHTYCS"
+        };
+
+        // Initialize Firebase
+        let database;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            database = firebase.database();
+            console.log('✅ Firebase inicializado!');
+        } catch (error) {
+            console.error('❌ Erro Firebase:', error);
+        }
+
+        // ===== BASE DE DADOS DE SLOTS (com Max Win, RTP, Volatilidade) =====
+        const slotsDatabase = {
+            "Gates of Olympus": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+            "Sweet Bonanza": { maxWin: "21100x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
+            "The Dog House": { maxWin: "6750x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
+            "Big Bass Bonanza": { maxWin: "2100x", rtp: "96.71%", volatility: "Medium", volatilityClass: "medium" },
+            "Sugar Rush": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+            "Starlight Princess": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+            "Wild West Gold": { maxWin: "10000x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
+            "Wolf Gold": { maxWin: "1000x", rtp: "96.01%", volatility: "Medium", volatilityClass: "medium" },
+            "Fruit Party": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+            "Great Rhino Megaways": { maxWin: "20000x", rtp: "96.58%", volatility: "High", volatilityClass: "high" },
+            
+            "Book of Dead": { maxWin: "5000x", rtp: "96.21%", volatility: "High", volatilityClass: "high" },
+            "Reactoonz": { maxWin: "4570x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
+            "Fire Joker": { maxWin: "800x", rtp: "96.15%", volatility: "Medium", volatilityClass: "medium" },
+            "Tome of Madness": { maxWin: "2000x", rtp: "96.59%", volatility: "High", volatilityClass: "high" },
+            "Moon Princess": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+            "Rise of Olympus": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+            "Legacy of Dead": { maxWin: "5000x", rtp: "96.58%", volatility: "High", volatilityClass: "high" },
+            
+            "Starburst": { maxWin: "500x", rtp: "96.09%", volatility: "Low", volatilityClass: "low" },
+            "Gonzo's Quest": { maxWin: "2500x", rtp: "95.97%", volatility: "Medium", volatilityClass: "medium" },
+            "Dead or Alive 2": { maxWin: "111111x", rtp: "96.82%", volatility: "High", volatilityClass: "high" },
+            "Blood Suckers": { maxWin: "900x", rtp: "98.00%", volatility: "Medium", volatilityClass: "medium" },
+            
+            "Wanted Dead or a Wild": { maxWin: "12500x", rtp: "96.38%", volatility: "High", volatilityClass: "high" },
+            "Chaos Crew 2": { maxWin: "20000x", rtp: "96.30%", volatility: "High", volatilityClass: "high" },
+            "Le Bandit": { maxWin: "12500x", rtp: "96.30%", volatility: "High", volatilityClass: "high" },
+            
+            "Tombstone R.I.P": { maxWin: "300000x", rtp: "96.08%", volatility: "High", volatilityClass: "high" },
+            "Mental": { maxWin: "66666x", rtp: "96.08%", volatility: "High", volatilityClass: "high" },
+            "San Quentin xWays": { maxWin: "150000x", rtp: "96.03%", volatility: "High", volatilityClass: "high" },
+            "Fire in the Hole xBomb": { maxWin: "60000x", rtp: "96.06%", volatility: "High", volatilityClass: "high" },
+            
+            "Jammin' Jars": { maxWin: "20000x", rtp: "96.83%", volatility: "High", volatilityClass: "high" },
+            "Razor Shark": { maxWin: "2500x", rtp: "96.70%", volatility: "High", volatilityClass: "high" },
+            "Razor Returns": { maxWin: "50000x", rtp: "96.58%", volatility: "High", volatilityClass: "high" },
+            
+            // Pirate Bonanza da imagem
+            "Pirate Bonanza": { maxWin: "10000x", rtp: "96.31%", volatility: "High", volatilityClass: "high" }
+        };
+
+        // ===== STATE =====
+        let currentSlot = null;
+        let lastSlotId = null;
+
+        // ===== ELEMENTS =====
+        const container = document.getElementById('playingNow');
+        const content = document.getElementById('slotContent');
+
+        // ===== GET SLOT INFO =====
+        function getSlotInfo(slotName) {
+            // Procura exata
+            if (slotsDatabase[slotName]) {
+                return slotsDatabase[slotName];
+            }
+
+            // Procura parcial (case insensitive)
+            const lowerName = slotName.toLowerCase();
+            for (const [key, value] of Object.entries(slotsDatabase)) {
+                if (key.toLowerCase().includes(lowerName) || lowerName.includes(key.toLowerCase())) {
+                    return value;
+                }
+            }
+
+            // Default se não encontrar
+            return {
+                maxWin: "N/A",
+                rtp: "N/A",
+                volatility: "N/A",
+                volatilityClass: "medium"
+            };
+        }
+
+        // ===== RENDER SLOT =====
+        function renderSlot(slot) {
+            const info = getSlotInfo(slot.slotName);
+
+            content.innerHTML = `
+                <div class="slot-image-wrapper">
+                    <img src="${slot.imageUrl || ''}" 
+                         alt="${slot.slotName}" 
+                         class="slot-image"
+                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'180\'%3E%3Crect fill=\'%231a1f35\' width=\'300\' height=\'180\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%23a78bfa\' font-size=\'60\'%3E🎰%3C/text%3E%3C/svg%3E'">
+                    <div class="provider-badge">${slot.provider || 'Unknown'}</div>
+                </div>
+
+                <div class="slot-name">${slot.slotName}</div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-label">Max Win</div>
+                        <div class="stat-value max-win">${info.maxWin}</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">RTP</div>
+                        <div class="stat-value rtp">${info.rtp}</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Volatility</div>
+                        <div class="stat-value volatility ${info.volatilityClass}">${info.volatility}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== SHOW/HIDE =====
+        function showSlot(slot) {
+            if (!slot) return;
+            
+            currentSlot = slot;
+            renderSlot(slot);
+            
+            // Mostrar com animação
+            setTimeout(() => {
+                container.classList.add('visible');
+                container.classList.remove('hidden');
+            }, 100);
+        }
+
+        function hideSlot() {
+            container.classList.remove('visible');
+            container.classList.add('hidden');
+            
+            setTimeout(() => {
+                content.innerHTML = `
+                    <div class="no-slot-message">
+                        <div class="no-slot-icon">🎰</div>
+                        <div>Aguardando slot...</div>
+                    </div>
+                `;
+            }, 500);
+        }
+
+        // ===== LOAD DATA FROM FIREBASE =====
+        function loadData() {
+            if (!database) {
+                console.error('❌ Firebase não inicializado');
+                return;
+            }
+
+            database.ref('playing-now').on('value', (snapshot) => {
+                const data = snapshot.val();
+                
+                if (data && data.slot) {
+                    console.log('🎮 Slot atual:', data.slot);
+                    
+                    // Só atualiza se mudou
+                    if (data.slot.id !== lastSlotId) {
+                        lastSlotId = data.slot.id;
+                        showSlot(data.slot);
+                    }
+                } else {
+                    console.log('⏸️ Nenhum slot a jogar');
+                    hideSlot();
+                    lastSlotId = null;
+                }
+            }, (error) => {
+                console.error('❌ Erro ao carregar:', error);
+            });
+        }
+
+        // ===== INIT =====
+        console.log('🎮 Playing Now Overlay iniciado!');
+        loadData();
+    </script>
+</body>
+</html>

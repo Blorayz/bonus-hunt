@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎰 Painel de Controle - Bonus Hunt (AltaCDN)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .connection-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #dc3545;
+            box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.connected {
+            background: #28a745;
+            box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .start-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .start-section h2 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .start-input-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .start-input-group input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .add-slot-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .add-slot-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .autocomplete-items {
+            position: absolute;
+            border: 2px solid #667eea;
+            border-top: none;
+            z-index: 99;
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 400px;
+            overflow-y: auto;
+            background: white;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .autocomplete-item {
+            padding: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background 0.2s;
+        }
+
+        .autocomplete-item:hover,
+        .autocomplete-item.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .autocomplete-item img {
+            width: 60px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .autocomplete-item-info {
+            flex: 1;
+        }
+
+        .autocomplete-item-name {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .autocomplete-item-provider {
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+            width: 100%;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .slots-list {
+            margin-bottom: 30px;
+        }
+
+        .slots-list h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .slot-card {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s;
+        }
+
+        .slot-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .slot-card.opened {
+            border-color: #28a745;
+            background: #f0fff4;
+        }
+
+        .slot-icon {
+            width: 60px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .slot-info {
+            flex: 1;
+        }
+
+        .slot-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .slot-provider {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+
+        .slot-bet {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .slot-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.9em;
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .btn-warning:hover {
+            background: #e0a800;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .stats-section {
+            background: #667eea;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stats-section h2 {
+            color: white;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            color: white;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .actions-section {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .empty-state-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        #imagePreview {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        #imagePreview img {
+            max-width: 120px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .provider-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #667eea;
+            color: white;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="connection-status">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Desconectado</span>
+            </div>
+            <h1>🎰 Painel de Controle</h1>
+            <p>Bonus Hunt Manager - AltaCDN Images</p>
+        </div>
+
+        <!-- Start Section -->
+        <div class="start-section">
+            <h2>💰 Definir Start</h2>
+            <div class="start-input-group">
+                <input type="number" id="startValue" placeholder="0.00" step="0.01" min="0">
+                <button class="btn btn-primary" onclick="setStart()">Definir Start</button>
+            </div>
+        </div>
+
+        <!-- Add Slot Section -->
+        <div class="add-slot-section">
+            <h2>➕ Adicionar Slot</h2>
+            <div class="form-group">
+                <label>🔍 Procurar Slot (Base de dados AltaCDN)</label>
+                <input type="text" id="slotName" placeholder="Ex: Gates of Olympus, Sweet Bonanza, Book of Dead..." autocomplete="off">
+                <div id="autocompleteList" class="autocomplete-items"></div>
+            </div>
+            <div class="form-group">
+                <label>🖼️ Preview da Imagem</label>
+                <div id="imagePreview"></div>
+                <input type="hidden" id="slotImage">
+            </div>
+            <div class="form-group">
+                <label>💶 Valor da Aposta (€)</label>
+                <input type="number" id="slotBet" placeholder="0.00" step="0.01" min="0.01">
+            </div>
+            <button class="btn btn-success" onclick="addSlot()">➕ Adicionar Slot</button>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <h2>📊 Estatísticas</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Target</div>
+                    <div class="stat-value" id="statTarget">€0.00</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Média</div>
+                    <div class="stat-value" id="statAverage">€0.00</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Break Even</div>
+                    <div class="stat-value" id="statBreakEven">€0.00</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Multiplicador</div>
+                    <div class="stat-value" id="statMultiplier">0.00x</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Profit/Loss</div>
+                    <div class="stat-value" id="statProfit">€0.00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slots List -->
+        <div class="slots-list">
+            <h2>🎮 Slots (<span id="slotCount">0</span>)</h2>
+            <div id="slotsList"></div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions-section">
+            <button class="btn btn-secondary" onclick="exportData()">📥 Exportar</button>
+            <button class="btn btn-secondary" onclick="importData()">📤 Importar</button>
+            <button class="btn btn-secondary" onclick="clearPlayingNow()" style="background: #6c757d;">⏸️ Parar Overlay</button>
+            <button class="btn btn-danger" onclick="clearAll()">🗑️ Limpar Tudo</button>
+        </div>
+
+        <input type="file" id="importFile" accept=".json" style="display: none;" onchange="handleImport(event)">
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script>
+        // BASE DE DADOS ALTACDN - SLOTS POPULARES
+        const altacdnSlots = [
+            // PRAGMATIC PLAY
+            { name: "Gates of Olympus", provider: "Pragmatic Play", id: "287825", image: "https://altacdn.com/ig/img/games/287825-gates-of-olympus_thumbnailx2.jpg" },
+            { name: "Sweet Bonanza", provider: "Pragmatic Play", id: "287795", image: "https://altacdn.com/ig/img/games/287795-sweet-bonanza_thumbnailx2.jpg" },
+            { name: "The Dog House", provider: "Pragmatic Play", id: "287815", image: "https://altacdn.com/ig/img/games/287815-the-dog-house_thumbnailx2.jpg" },
+            { name: "Big Bass Bonanza", provider: "Pragmatic Play", id: "287830", image: "https://altacdn.com/ig/img/games/287830-big-bass-bonanza_thumbnailx2.jpg" },
+            { name: "Sugar Rush", provider: "Pragmatic Play", id: "287840", image: "https://altacdn.com/ig/img/games/287840-sugar-rush_thumbnailx2.jpg" },
+            { name: "Starlight Princess", provider: "Pragmatic Play", id: "287850", image: "https://altacdn.com/ig/img/games/287850-starlight-princess_thumbnailx2.jpg" },
+            { name: "Wild West Gold", provider: "Pragmatic Play", id: "287820", image: "https://altacdn.com/ig/img/games/287820-wild-west-gold_thumbnailx2.jpg" },
+            { name: "Wolf Gold", provider: "Pragmatic Play", id: "287800", image: "https://altacdn.com/ig/img/games/287800-wolf-gold_thumbnailx2.jpg" },
+            { name: "Fruit Party", provider: "Pragmatic Play", id: "287835", image: "https://altacdn.com/ig/img/games/287835-fruit-party_thumbnailx2.jpg" },
+            { name: "Great Rhino Megaways", provider: "Pragmatic Play", id: "287845", image: "https://altacdn.com/ig/img/games/287845-great-rhino-megaways_thumbnailx2.jpg" },
+            
+            // PLAY'N GO
+            { name: "Book of Dead", provider: "Play'n GO", id: "287600", image: "https://altacdn.com/ig/img/games/287600-book-of-dead_thumbnailx2.jpg" },
+            { name: "Reactoonz", provider: "Play'n GO", id: "287610", image: "https://altacdn.com/ig/img/games/287610-reactoonz_thumbnailx2.jpg" },
+            { name: "Fire Joker", provider: "Play'n GO", id: "287620", image: "https://altacdn.com/ig/img/games/287620-fire-joker_thumbnailx2.jpg" },
+            { name: "Tome of Madness", provider: "Play'n GO", id: "287630", image: "https://altacdn.com/ig/img/games/287630-tome-of-madness_thumbnailx2.jpg" },
+            { name: "Moon Princess", provider: "Play'n GO", id: "287640", image: "https://altacdn.com/ig/img/games/287640-moon-princess_thumbnailx2.jpg" },
+            { name: "Rise of Olympus", provider: "Play'n GO", id: "287650", image: "https://altacdn.com/ig/img/games/287650-rise-of-olympus_thumbnailx2.jpg" },
+            { name: "Legacy of Dead", provider: "Play'n GO", id: "287660", image: "https://altacdn.com/ig/img/games/287660-legacy-of-dead_thumbnailx2.jpg" },
+            
+            // NETENT
+            { name: "Starburst", provider: "NetEnt", id: "287400", image: "https://altacdn.com/ig/img/games/287400-starburst_thumbnailx2.jpg" },
+            { name: "Gonzo's Quest", provider: "NetEnt", id: "287410", image: "https://altacdn.com/ig/img/games/287410-gonzos-quest_thumbnailx2.jpg" },
+            { name: "Dead or Alive 2", provider: "NetEnt", id: "287420", image: "https://altacdn.com/ig/img/games/287420-dead-or-alive-2_thumbnailx2.jpg" },
+            { name: "Blood Suckers", provider: "NetEnt", id: "287430", image: "https://altacdn.com/ig/img/games/287430-blood-suckers_thumbnailx2.jpg" },
+            { name: "Jack and the Beanstalk", provider: "NetEnt", id: "287440", image: "https://altacdn.com/ig/img/games/287440-jack-and-the-beanstalk_thumbnailx2.jpg" },
+            
+            // HACKSAW GAMING
+            { name: "Wanted Dead or a Wild", provider: "Hacksaw Gaming", id: "287500", image: "https://altacdn.com/ig/img/games/287500-wanted-dead-or-a-wild_thumbnailx2.jpg" },
+            { name: "Chaos Crew 2", provider: "Hacksaw Gaming", id: "287510", image: "https://altacdn.com/ig/img/games/287510-chaos-crew-2_thumbnailx2.jpg" },
+            { name: "Le Bandit", provider: "Hacksaw Gaming", id: "287520", image: "https://altacdn.com/ig/img/games/287520-le-bandit_thumbnailx2.jpg" },
+            { name: "Stack 'Em", provider: "Hacksaw Gaming", id: "287530", image: "https://altacdn.com/ig/img/games/287530-stack-em_thumbnailx2.jpg" },
+            
+            // NOLIMIT CITY
+            { name: "Tombstone R.I.P", provider: "Nolimit City", id: "287700", image: "https://altacdn.com/ig/img/games/287700-tombstone-rip_thumbnailx2.jpg" },
+            { name: "Mental", provider: "Nolimit City", id: "287710", image: "https://altacdn.com/ig/img/games/287710-mental_thumbnailx2.jpg" },
+            { name: "San Quentin xWays", provider: "Nolimit City", id: "287720", image: "https://altacdn.com/ig/img/games/287720-san-quentin-xways_thumbnailx2.jpg" },
+            { name: "Fire in the Hole xBomb", provider: "Nolimit City", id: "287730", image: "https://altacdn.com/ig/img/games/287730-fire-in-the-hole-xbomb_thumbnailx2.jpg" },
+            
+            // OUTROS
+            { name: "Razor Returns", provider: "Push Gaming", id: "287815", image: "https://altacdn.com/ig/img/games/287815-razor-returns_thumbnailx2.jpg" },
+            { name: "Jammin' Jars", provider: "Push Gaming", id: "287900", image: "https://altacdn.com/ig/img/games/287900-jammin-jars_thumbnailx2.jpg" },
+            { name: "Razor Shark", provider: "Push Gaming", id: "287902", image: "https://altacdn.com/ig/img/games/287902-razor-shark_thumbnailx2.jpg" },
+        ];
+
+        // Data structure
+        let data = {
+            slots: [],
+            stats: {
+                start: 0,
+                multiplier: 0,
+                average: 0,
+                breakEven: 0,
+                profitLoss: 0,
+                huntNumber: 1
+            }
+        };
+
+        let selectedSlotData = null;
+        const slotNameInput = document.getElementById('slotName');
+        const slotImageInput = document.getElementById('slotImage');
+        const autocompleteList = document.getElementById('autocompleteList');
+        const imagePreview = document.getElementById('imagePreview');
+
+        // Autocomplete
+        slotNameInput.addEventListener('input', function() {
+            const value = this.value.toLowerCase();
+            autocompleteList.innerHTML = '';
+            
+            if (!value) {
+                imagePreview.innerHTML = '';
+                slotImageInput.value = '';
+                selectedSlotData = null;
+                return;
+            }
+
+            const matches = altacdnSlots.filter(slot => 
+                slot.name.toLowerCase().includes(value) || 
+                slot.provider.toLowerCase().includes(value)
+            );
+
+            if (matches.length > 0) {
+                matches.forEach(slot => {
+                    const div = document.createElement('div');
+                    div.className = 'autocomplete-item';
+                    div.innerHTML = `
+                        <img src="${slot.image}" alt="${slot.name}" onerror="this.style.display='none'">
+                        <div class="autocomplete-item-info">
+                            <div class="autocomplete-item-name">${slot.name}</div>
+                            <div class="autocomplete-item-provider">${slot.provider}</div>
+                        </div>
+                    `;
+                    
+                    div.addEventListener('click', function() {
+                        slotNameInput.value = slot.name;
+                        slotImageInput.value = slot.image;
+                        selectedSlotData = slot;
+                        
+                        imagePreview.innerHTML = `<img src="${slot.image}" alt="${slot.name}">`;
+                        autocompleteList.innerHTML = '';
+                        
+                        // Enviar automaticamente para Playing Now
+                        sendToPlayingNowFromAutocomplete(slot);
+                    });
+                    
+                    autocompleteList.appendChild(div);
+                });
+            } else {
+                autocompleteList.innerHTML = '<div style="padding: 15px; text-align: center; color: #999;">❌ Slot não encontrado na base de dados</div>';
+            }
+        });
+
+        // Close autocomplete on click outside
+        document.addEventListener('click', function(e) {
+            if (!slotNameInput.contains(e.target)) {
+                autocompleteList.innerHTML = '';
+            }
+        });
+
+        // ===== FIREBASE CONFIG =====
+        const firebaseConfig = {
+            apiKey: "AIzaSyDMf-hKiBYiZKARLyP11Ocq2IOtZ9DF2AY",
+            authDomain: "ruidex.firebaseapp.com",
+            databaseURL: "https://ruidex-default-rtdb.firebaseio.com",
+            projectId: "ruidex",
+            storageBucket: "ruidex.firebasestorage.app",
+            messagingSenderId: "163689134002",
+            appId: "1:163689134002:web:ea5af18bc85b0b6ac596ab",
+            measurementId: "G-RYR1BHTYCS"
+        };
+
+        // Initialize Firebase
+        let database;
+        let isFirebaseReady = false;
+
+        try {
+            if (typeof firebase !== 'undefined') {
+                firebase.initializeApp(firebaseConfig);
+                database = firebase.database();
+                isFirebaseReady = true;
+                console.log('✅ Firebase inicializado!');
+            } else {
+                console.error('❌ Firebase SDK não carregou!');
+            }
+        } catch (error) {
+            console.error('❌ Erro ao inicializar Firebase:', error);
+        }
+
+        function updateConnectionStatus(isConnected) {
+            const dot = document.getElementById('statusDot');
+            const text = document.getElementById('statusText');
+            
+            if (isConnected) {
+                dot.classList.add('connected');
+                text.textContent = 'Conectado';
+            } else {
+                dot.classList.remove('connected');
+                text.textContent = 'Desconectado';
+            }
+        }
+
+        function loadData() {
+            console.log('🔄 loadData chamado');
+            
+            if (!isFirebaseReady || !database) {
+                console.log('⚠️ Firebase não pronto:', { isFirebaseReady, database: !!database });
+                updateConnectionStatus(false);
+                return;
+            }
+
+            try {
+                console.log('📡 Conectando ao Firebase...');
+                
+                database.ref('bonus-hunt').on('value', (snapshot) => {
+                    try {
+                        const serverData = snapshot.val();
+                        console.log('📥 Dados recebidos do Firebase:', serverData);
+                        
+                        if (serverData) {
+                            // Garantir estrutura correta
+                            if (!serverData.slots) serverData.slots = [];
+                            if (!serverData.stats) serverData.stats = {
+                                start: 0,
+                                multiplier: 0,
+                                average: 0,
+                                breakEven: 0,
+                                profitLoss: 0,
+                                huntNumber: 1
+                            };
+                            
+                            const dataChanged = JSON.stringify(serverData) !== JSON.stringify(data);
+                            if (dataChanged) {
+                                data = serverData;
+                                console.log('✅ Dados atualizados:', data);
+                                renderSlots();
+                                updateStats();
+                                updateStartValue();
+                            }
+                        } else {
+                            console.log('⚠️ Nenhum dado no Firebase, usando dados padrão');
+                        }
+                        
+                        updateConnectionStatus(true);
+                    } catch (error) {
+                        console.error('❌ Erro ao processar dados:', error);
+                        updateConnectionStatus(false);
+                    }
+                }, (error) => {
+                    console.error('❌ Erro ao carregar dados:', error);
+                    updateConnectionStatus(false);
+                });
+            } catch (error) {
+                console.error('❌ Erro no loadData:', error);
+                updateConnectionStatus(false);
+            }
+        }
+
+        async function saveData(retries = 3) {
+            if (!isFirebaseReady || !database) {
+                console.error('❌ Firebase não está pronto!');
+                updateConnectionStatus(false);
+                return false;
+            }
+
+            for (let i = 0; i < retries; i++) {
+                try {
+                    await database.ref('bonus-hunt').set(data);
+                    updateConnectionStatus(true);
+                    console.log('✅ Dados salvos!');
+                    return true;
+                } catch (error) {
+                    console.error(`❌ Tentativa ${i + 1}/${retries} falhou:`, error);
+                    if (i < retries - 1) {
+                        await new Promise(resolve => setTimeout(resolve, 500));
+                    }
+                }
+            }
+            
+            updateConnectionStatus(false);
+            return false;
+        }
+
+        function setStart() {
+            const value = parseFloat(document.getElementById('startValue').value);
+            if (isNaN(value) || value < 0) {
+                alert('⚠️ Por favor, insira um valor válido!');
+                return;
+            }
+            data.stats.start = value;
+            calculateStats();
+            saveData();
+            alert('✅ Start definido com sucesso!');
+        }
+
+        function updateStartValue() {
+            document.getElementById('startValue').value = data.stats.start.toFixed(2);
+        }
+
+        function addSlot() {
+            const name = document.getElementById('slotName').value.trim();
+            const image = document.getElementById('slotImage').value.trim();
+            const bet = parseFloat(document.getElementById('slotBet').value);
+
+            if (!name || !bet || bet <= 0) {
+                alert('⚠️ Por favor, preencha todos os campos corretamente!');
+                return;
+            }
+
+            if (!image) {
+                alert('⚠️ Por favor, selecione um slot da lista para carregar a imagem automaticamente!');
+                return;
+            }
+
+            const slot = {
+                id: Date.now(),
+                slotName: name,
+                provider: selectedSlotData ? selectedSlotData.provider : 'Unknown',
+                imageUrl: image,
+                bet: bet,
+                betAmount: bet,
+                opened: false,
+                winAmount: 0
+            };
+
+            data.slots.push(slot);
+            calculateStats();
+            saveData();
+            renderSlots();
+
+            // Clear form
+            document.getElementById('slotName').value = '';
+            document.getElementById('slotImage').value = '';
+            document.getElementById('slotBet').value = '';
+            imagePreview.innerHTML = '';
+            autocompleteList.innerHTML = '';
+            selectedSlotData = null;
+
+            alert('✅ Slot adicionado com sucesso!');
+        }
+
+        function openSlot(id) {
+            const slot = data.slots.find(s => s.id === id);
+            if (!slot) return;
+
+            const winAmount = prompt(`💰 Quanto ganhaste no slot "${slot.slotName}"?`);
+            if (winAmount === null) return;
+
+            const amount = parseFloat(winAmount);
+            if (isNaN(amount) || amount < 0) {
+                alert('⚠️ Valor inválido!');
+                return;
+            }
+
+            slot.opened = true;
+            slot.winAmount = amount;
+            
+            // Mostra no overlay "Playing Now" quando abre
+            setPlayingNow(id);
+            
+            calculateStats();
+            saveData();
+            renderSlots();
+            
+            // Remove do "Playing Now" após 10 segundos
+            setTimeout(() => {
+                clearPlayingNow();
+            }, 10000);
+        }
+
+        function deleteSlot(id) {
+            if (!confirm('🗑️ Tens certeza que queres apagar este slot?')) return;
+
+            data.slots = data.slots.filter(s => s.id !== id);
+            calculateStats();
+            saveData();
+            renderSlots();
+        }
+
+        function calculateStats() {
+            const totalBet = data.slots.reduce((sum, slot) => sum + (slot.betAmount || 0), 0);
+            const openedSlots = data.slots.filter(s => s.opened);
+            const totalWin = openedSlots.reduce((sum, slot) => sum + (slot.winAmount || 0), 0);
+
+            data.stats.average = openedSlots.length > 0 ? totalWin / openedSlots.length : 0;
+            data.stats.breakEven = data.stats.start;
+            data.stats.multiplier = totalBet > 0 ? data.stats.start / totalBet : 0;
+            data.stats.profitLoss = totalWin - data.stats.start;
+
+            updateStats();
+        }
+
+        function updateStats() {
+            document.getElementById('statTarget').textContent = `€${data.stats.start.toFixed(2)}`;
+            document.getElementById('statAverage').textContent = `€${data.stats.average.toFixed(2)}`;
+            document.getElementById('statBreakEven').textContent = `€${data.stats.breakEven.toFixed(2)}`;
+            document.getElementById('statMultiplier').textContent = `${data.stats.multiplier.toFixed(2)}x`;
+            
+            const profitElement = document.getElementById('statProfit');
+            const profit = data.stats.profitLoss;
+            profitElement.textContent = `€${profit.toFixed(2)}`;
+            profitElement.style.color = profit >= 0 ? '#4ade80' : '#f87171';
+        }
+
+        function renderSlots() {
+            const container = document.getElementById('slotsList');
+            document.getElementById('slotCount').textContent = data.slots.length;
+
+            if (data.slots.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🎰</div>
+                        <p>Nenhum slot adicionado ainda.</p>
+                        <p>Procura na base de dados AltaCDN!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = data.slots.map(slot => `
+                <div class="slot-card ${slot.opened ? 'opened' : ''}">
+                    <img src="${slot.imageUrl}" alt="${slot.slotName}" class="slot-icon">
+                    <div class="slot-info">
+                        <div class="slot-name">
+                            ${slot.slotName} ${slot.opened ? '💎' : ''}
+                            <span class="provider-badge">${slot.provider || ''}</span>
+                        </div>
+                        <div class="slot-bet">
+                            Aposta: €${(slot.betAmount || 0).toFixed(2)}
+                            ${slot.opened ? `| Ganho: €${(slot.winAmount || 0).toFixed(2)} | Multi: ${((slot.winAmount || 0) / (slot.betAmount || 1)).toFixed(2)}x` : ''}
+                        </div>
+                    </div>
+                    <div class="slot-actions">
+                        ${!slot.opened ? `
+                            <button class="btn btn-success btn-small" onclick="setPlayingNow(${slot.id})" style="background: #8b5cf6;" title="Mostrar no overlay">🎮</button>
+                            <button class="btn btn-warning btn-small" onclick="openSlot(${slot.id})" title="Abrir e registar ganho">✓</button>
+                        ` : ''}
+                        <button class="btn btn-danger btn-small" onclick="deleteSlot(${slot.id})" title="Apagar slot">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function setPlayingNow(slotId) {
+            const slot = data.slots.find(s => s.id === slotId);
+            if (!slot) return;
+
+            if (!isFirebaseReady || !database) {
+                alert('⚠️ Firebase não conectado!');
+                return;
+            }
+
+            try {
+                await database.ref('playing-now').set({
+                    slot: slot,
+                    timestamp: Date.now()
+                });
+                console.log('🎮 Playing Now definido:', slot.slotName);
+                // Não mostrar alert, apenas confirmar no console
+            } catch (error) {
+                console.error('❌ Erro ao definir Playing Now:', error);
+                alert('⚠️ Erro ao definir slot atual!');
+            }
+        }
+
+        async function sendToPlayingNowFromAutocomplete(slotData) {
+            if (!isFirebaseReady || !database) {
+                console.warn('⚠️ Firebase não conectado ainda');
+                return;
+            }
+
+            try {
+                const betValue = parseFloat(document.getElementById('slotBet').value) || 0;
+                
+                const tempSlot = {
+                    id: Date.now(),
+                    slotName: slotData.name,
+                    provider: slotData.provider,
+                    imageUrl: slotData.image,
+                    betAmount: betValue
+                };
+                
+                await database.ref('playing-now').set({
+                    slot: tempSlot,
+                    timestamp: Date.now()
+                });
+                console.log('🎮 Slot enviado para Playing Now:', slotData.name);
+            } catch (error) {
+                console.error('❌ Erro ao enviar para Playing Now:', error);
+            }
+        }
+
+        async function clearPlayingNow() {
+            if (!isFirebaseReady || !database) return;
+
+            try {
+                await database.ref('playing-now').remove();
+                console.log('⏸️ Playing Now limpo');
+            } catch (error) {
+                console.error('❌ Erro ao limpar Playing Now:', error);
+            }
+        }
+
+        function exportData() {
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `bonus-hunt-${Date.now()}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importData() {
+            document.getElementById('importFile').click();
+        }
+
+        function handleImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    data = JSON.parse(e.target.result);
+                    saveData();
+                    renderSlots();
+                    updateStats();
+                    updateStartValue();
+                    alert('✅ Dados importados com sucesso!');
+                } catch (error) {
+                    alert('⚠️ Erro ao importar dados: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function clearAll() {
+            if (!confirm('🗑️ Tens certeza que queres apagar TODOS os dados?')) return;
+
+            data = {
+                slots: [],
+                stats: {
+                    start: 0,
+                    multiplier: 0,
+                    average: 0,
+                    breakEven: 0,
+                    profitLoss: 0,
+                    huntNumber: 1
+                }
+            };
+
+            saveData();
+            renderSlots();
+            updateStats();
+            updateStartValue();
+            alert('✅ Todos os dados foram apagados!');
+        }
+
+        // Inicializar
+        setTimeout(() => {
+            loadData();
+        }, 1000);
+        
+        console.log('✅ Painel carregado com Firebase!');
+    </script>
+</body>
+</html>
