@@ -13,18 +13,20 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             padding: 20px;
             min-height: 100vh;
+            color: #e4e4e7;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: white;
+            background: linear-gradient(135deg, #1e1e2e 0%, #252538 100%);
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            border: 1px solid rgba(139, 92, 246, 0.2);
         }
 
         .header {
@@ -34,7 +36,9 @@
         }
 
         .header h1 {
-            color: #667eea;
+            background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             font-size: 2.5em;
             margin-bottom: 10px;
         }
@@ -47,7 +51,11 @@
             align-items: center;
             gap: 8px;
             font-size: 14px;
-            color: #666;
+            color: #a1a1aa;
+            background: rgba(0,0,0,0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
         }
 
         .status-dot {
@@ -118,14 +126,15 @@
         }
 
         .add-slot-section {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.1));
             padding: 25px;
             border-radius: 15px;
             margin-bottom: 30px;
+            border: 2px solid rgba(59, 130, 246, 0.3);
         }
 
         .add-slot-section h2 {
-            color: #333;
+            color: #60a5fa;
             margin-bottom: 20px;
         }
 
@@ -137,27 +146,29 @@
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            color: #666;
+            color: #a1a1aa;
             font-weight: 600;
         }
 
         .form-group input {
             width: 100%;
             padding: 12px;
-            border: 2px solid #ddd;
+            border: 2px solid rgba(59, 130, 246, 0.3);
             border-radius: 8px;
             font-size: 1em;
             transition: border-color 0.3s;
+            background: rgba(0,0,0,0.3);
+            color: #e4e4e7;
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #3b82f6;
         }
 
         .autocomplete-items {
             position: absolute;
-            border: 2px solid #667eea;
+            border: 2px solid #3b82f6;
             border-top: none;
             z-index: 99;
             top: 100%;
@@ -165,15 +176,15 @@
             right: 0;
             max-height: 400px;
             overflow-y: auto;
-            background: white;
+            background: #1e1e2e;
             border-radius: 0 0 8px 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
         }
 
         .autocomplete-item {
             padding: 12px;
             cursor: pointer;
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
             display: flex;
             align-items: center;
             gap: 12px;
@@ -182,7 +193,7 @@
 
         .autocomplete-item:hover,
         .autocomplete-item.active {
-            background: #667eea;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(37, 99, 235, 0.3));
             color: white;
         }
 
@@ -222,13 +233,13 @@
         }
 
         .slots-list h2 {
-            color: #333;
+            color: #fbbf24;
             margin-bottom: 20px;
         }
 
         .slot-card {
-            background: white;
-            border: 2px solid #ddd;
+            background: linear-gradient(135deg, rgba(30, 30, 46, 0.8), rgba(37, 37, 56, 0.8));
+            border: 2px solid rgba(139, 92, 246, 0.3);
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 15px;
@@ -239,14 +250,14 @@
         }
 
         .slot-card:hover {
-            border-color: #667eea;
+            border-color: #8b5cf6;
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 20px rgba(139, 92, 246, 0.3);
         }
 
         .slot-card.opened {
-            border-color: #28a745;
-            background: #f0fff4;
+            border-color: #10b981;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
         }
 
         .slot-icon {
@@ -264,18 +275,18 @@
         .slot-name {
             font-size: 1.2em;
             font-weight: bold;
-            color: #333;
+            color: #e4e4e7;
             margin-bottom: 5px;
         }
 
         .slot-provider {
-            color: #888;
+            color: #a1a1aa;
             font-size: 0.9em;
             margin-bottom: 8px;
         }
 
         .slot-bet {
-            color: #667eea;
+            color: #8b5cf6;
             font-weight: 600;
         }
 
@@ -308,41 +319,122 @@
         }
 
         .stats-section {
-            background: #667eea;
-            padding: 25px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 320px;
+            background: linear-gradient(135deg, rgba(30, 30, 46, 0.95), rgba(37, 37, 56, 0.95));
+            padding: 20px;
             border-radius: 15px;
-            margin-bottom: 30px;
+            border: 2px solid rgba(139, 92, 246, 0.4);
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .stats-section.hidden {
+            transform: translateX(calc(100% + 40px));
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .stats-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stats-close-btn {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #f87171;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            transition: all 0.3s;
+            padding: 0;
+        }
+
+        .stats-close-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .stats-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            border: 2px solid rgba(139, 92, 246, 0.4);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 999;
+            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
+            transition: all 0.3s;
+            display: none;
+        }
+
+        .stats-toggle-btn.show {
+            display: block;
+        }
+
+        .stats-toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(139, 92, 246, 0.6);
+        }
+
+        .stats-section.scrolled {
+            box-shadow: 0 12px 40px rgba(139, 92, 246, 0.4);
         }
 
         .stats-section h2 {
-            color: white;
-            margin-bottom: 20px;
-            text-align: center;
+            color: #a78bfa;
+            margin: 0;
+            font-size: 1.1em;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            border-radius: 10px;
             text-align: center;
-            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .stat-card.full-width {
+            grid-column: 1 / -1;
         }
 
         .stat-label {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9em;
-            margin-bottom: 8px;
+            color: #a1a1aa;
+            font-size: 0.75em;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         .stat-value {
-            color: white;
-            font-size: 1.8em;
+            color: #e4e4e7;
+            font-size: 1.3em;
             font-weight: bold;
         }
 
@@ -394,6 +486,133 @@
             font-size: 0.8em;
             margin-left: 5px;
         }
+
+        /* MODALS PERSONALIZADOS */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal {
+            background: linear-gradient(135deg, #1e1e2e 0%, #252538 100%);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            border: 2px solid rgba(139, 92, 246, 0.4);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #e4e4e7;
+            text-align: center;
+        }
+
+        .modal-body {
+            margin-bottom: 25px;
+            color: #a1a1aa;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            font-size: 1.1em;
+            background: rgba(0, 0, 0, 0.3);
+            color: #e4e4e7;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .modal-btn-primary {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+
+        .modal-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.6);
+        }
+
+        .modal-btn-secondary {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(107, 114, 128, 0.4);
+        }
+
+        .modal-btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(107, 114, 128, 0.6);
+        }
+
+        .modal-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .modal-icon.success { color: #4ade80; }
+        .modal-icon.error { color: #f87171; }
+        .modal-icon.warning { color: #fbbf24; }
+        .modal-icon.info { color: #60a5fa; }
     </style>
 </head>
 <body>
@@ -404,7 +623,7 @@
                 <span id="statusText">Desconectado</span>
             </div>
             <h1>🎰 Painel de Controle</h1>
-            <p>Bonus Hunt Manager - AltaCDN Images</p>
+            <p>BY BLORAYZ</p>
         </div>
 
         <!-- Start Section -->
@@ -436,32 +655,40 @@
             <button class="btn btn-success" onclick="addSlot()">➕ Adicionar Slot</button>
         </div>
 
-        <!-- Stats Section -->
-        <div class="stats-section">
-            <h2>📊 Estatísticas</h2>
+        <!-- Stats Section (Popup) -->
+        <div class="stats-section" id="statsPopup">
+            <div class="stats-header">
+                <h2>📊 Estatísticas</h2>
+                <button class="stats-close-btn" onclick="toggleStatsPopup()">✕</button>
+            </div>
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-label">Target</div>
                     <div class="stat-value" id="statTarget">€0.00</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Média</div>
-                    <div class="stat-value" id="statAverage">€0.00</div>
+                    <div class="stat-label">AVG</div>
+                    <div class="stat-value" id="statAverage">0.00x</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Break Even</div>
-                    <div class="stat-value" id="statBreakEven">€0.00</div>
+                    <div class="stat-label">B/E</div>
+                    <div class="stat-value" id="statBreakEven">0.00x</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">Multiplicador</div>
-                    <div class="stat-value" id="statMultiplier">0.00x</div>
+                    <div class="stat-label">Total Pay</div>
+                    <div class="stat-value" id="statTotalPay">€0.00</div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card full-width">
                     <div class="stat-label">Profit/Loss</div>
-                    <div class="stat-value" id="statProfit">€0.00</div>
+                    <div class="stat-value" id="statProfit" style="font-size: 1.5em;">€0.00</div>
                 </div>
             </div>
         </div>
+
+        <!-- Toggle Stats Button -->
+        <button class="stats-toggle-btn" id="statsToggleBtn" onclick="toggleStatsPopup()">
+            📊 Estatísticas
+        </button>
 
         <!-- Slots List -->
         <div class="slots-list">
@@ -473,11 +700,23 @@
         <div class="actions-section">
             <button class="btn btn-secondary" onclick="exportData()">📥 Exportar</button>
             <button class="btn btn-secondary" onclick="importData()">📤 Importar</button>
-            <button class="btn btn-secondary" onclick="clearPlayingNow()" style="background: #6c757d;">⏸️ Parar Overlay</button>
+            <button class="btn btn-secondary" onclick="clearPlayingNow()" style="background: #f59e0b;">⏸️ Limpar Now Playing</button>
+            <button class="btn btn-secondary" id="toggleOverlayBtn" onclick="toggleOverlay()" style="background: #8b5cf6;">👁️ Esconder Overlay Bonus Hunt</button>
             <button class="btn btn-danger" onclick="clearAll()">🗑️ Limpar Tudo</button>
         </div>
 
         <input type="file" id="importFile" accept=".json" style="display: none;" onchange="handleImport(event)">
+    </div>
+
+    <!-- MODAL OVERLAY -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-icon" id="modalIcon"></div>
+            <div class="modal-header" id="modalHeader"></div>
+            <div class="modal-body" id="modalBody"></div>
+            <input type="text" class="modal-input" id="modalInput" style="display: none;">
+            <div class="modal-buttons" id="modalButtons"></div>
+        </div>
     </div>
 
     <!-- Firebase SDK -->
@@ -485,53 +724,505 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
     <script>
-        // BASE DE DADOS ALTACDN - SLOTS POPULARES
-        const altacdnSlots = [
-            // PRAGMATIC PLAY
-            { name: "Gates of Olympus", provider: "Pragmatic Play", id: "287825", image: "https://altacdn.com/ig/img/games/287825-gates-of-olympus_thumbnailx2.jpg" },
-            { name: "Sweet Bonanza", provider: "Pragmatic Play", id: "287795", image: "https://altacdn.com/ig/img/games/287795-sweet-bonanza_thumbnailx2.jpg" },
-            { name: "The Dog House", provider: "Pragmatic Play", id: "287815", image: "https://altacdn.com/ig/img/games/287815-the-dog-house_thumbnailx2.jpg" },
-            { name: "Big Bass Bonanza", provider: "Pragmatic Play", id: "287830", image: "https://altacdn.com/ig/img/games/287830-big-bass-bonanza_thumbnailx2.jpg" },
-            { name: "Sugar Rush", provider: "Pragmatic Play", id: "287840", image: "https://altacdn.com/ig/img/games/287840-sugar-rush_thumbnailx2.jpg" },
-            { name: "Starlight Princess", provider: "Pragmatic Play", id: "287850", image: "https://altacdn.com/ig/img/games/287850-starlight-princess_thumbnailx2.jpg" },
-            { name: "Wild West Gold", provider: "Pragmatic Play", id: "287820", image: "https://altacdn.com/ig/img/games/287820-wild-west-gold_thumbnailx2.jpg" },
-            { name: "Wolf Gold", provider: "Pragmatic Play", id: "287800", image: "https://altacdn.com/ig/img/games/287800-wolf-gold_thumbnailx2.jpg" },
-            { name: "Fruit Party", provider: "Pragmatic Play", id: "287835", image: "https://altacdn.com/ig/img/games/287835-fruit-party_thumbnailx2.jpg" },
-            { name: "Great Rhino Megaways", provider: "Pragmatic Play", id: "287845", image: "https://altacdn.com/ig/img/games/287845-great-rhino-megaways_thumbnailx2.jpg" },
+        // BASE DE DADOS
+ const altacdnSlots = [
+    // ============================================
+    // PRAGMATIC PLAY - TOP 50
+    // ============================================
+    { name: "Gates of Olympus", provider: "Pragmatic Play", id: "287825", image: "https://altacdn.com/ig/img/games/292598-fortune-of-olympus_thumbnailx2.jpg" },
+    { name: "Sweet Bonanza", provider: "Pragmatic Play", id: "287795", image: "https://altacdn.com/ig/img/games/269064-sweet-bonanza_thumbnailx2.jpg" },
+    { name: "The Dog House", provider: "Pragmatic Play", id: "287815", image: "https://altacdn.com/ig/img/games/269062-the-dog-house_thumbnailx2.jpg" },
+    { name: "Big Bass Bonanza", provider: "Pragmatic Play", id: "287830", image: "https://altacdn.com/ig/img/games/287830-big-bass-bonanza_thumbnailx2.jpg" },
+    { name: "Sugar Rush", provider: "Pragmatic Play", id: "287840", image: "https://altacdn.com/ig/img/games/269066-sugar-rush_thumbnailx2.jpg" },
+    { name: "Starlight Princess", provider: "Pragmatic Play", id: "287850", image: "https://altacdn.com/ig/img/games/269080-starlight-princess_thumbnailx2.jpg" },
+    { name: "Wild West Gold", provider: "Pragmatic Play", id: "287820", image: "https://altacdn.com/ig/img/games/287820-wild-west-gold_thumbnailx2.jpg" },
+    { name: "Wolf Gold", provider: "Pragmatic Play", id: "287800", image: "https://altacdn.com/ig/img/games/287800-wolf-gold_thumbnailx2.jpg" },
+    { name: "Fruit Party", provider: "Pragmatic Play", id: "287835", image: "https://altacdn.com/ig/img/games/287835-fruit-party_thumbnailx2.jpg" },
+    { name: "Great Rhino Megaways", provider: "Pragmatic Play", id: "287845", image: "https://altacdn.com/ig/img/games/287845-great-rhino-megaways_thumbnailx2.jpg" },
+    { name: "Gates of Olympus 1000", provider: "Pragmatic Play", id: "287826", image: "https://altacdn.com/ig/img/games/269051-gates-of-olympus-1000_thumbnailx2.jpg" },
+    { name: "Sweet Bonanza 1000", provider: "Pragmatic Play", id: "287796", image: "https://altacdn.com/ig/img/games/269031-sweet-bonanza-1000_thumbnailx2.jpg" },
+    { name: "Big Bass Splash", provider: "Pragmatic Play", id: "287831", image: "https://altacdn.com/ig/img/games/269053-big-bass-splash_thumbnailx2.jpg" },
+    { name: "Sugar Rush 1000", provider: "Pragmatic Play", id: "287841", image: "https://altacdn.com/ig/img/games/269036-sugar-rush-1000_thumbnailx2.jpg" },
+    { name: "Starlight Princess 1000", provider: "Pragmatic Play", id: "PP050", image: "https://altacdn.com/ig/img/games/269045-starlight-princess-1000_thumbnailx2.jpg" },
+    { name: "The Dog House Megaways", provider: "Pragmatic Play", id: "287816", image: "https://altacdn.com/ig/img/games/269048-the-dog-house-megaways_thumbnailx2.jpg" },
+    { name: "Big Bass Vegas Double Down Deluxe", provider: "Pragmatic Play", id: "PP036", image: "https://altacdn.com/ig/img/games/269044-big-bass-vegas-double-down-deluxe_thumbnailx2.jpg" },
+    { name: "Big Bass Floats My Boat", provider: "Pragmatic Play", id: "PP037", image: "https://altacdn.com/ig/img/games/269124-big-bass-floats-my-boat_thumbnailx2.jpg" },
+    { name: "Big Bass Secrets of the Golden Lake", provider: "Pragmatic Play", id: "PP045", image: "https://altacdn.com/ig/img/games/269121-big-bass-secrets-of-the-golden-lake_thumbnailx2.jpg" },
+    { name: "Fruit Party 2", provider: "Pragmatic Play", id: "PP059", image: "https://altacdn.com/ig/img/games/269435-fruit-party-2_thumbnailx2.jpg" },
+    { name: "Wolf Gold Power Jackpot", provider: "Pragmatic Play", id: "287801", image: "" },
+    { name: "Madame Destiny Megaways", provider: "Pragmatic Play", id: "PP062", image: "https://altacdn.com/ig/img/games/269071-madame-destiny-megaways_thumbnailx2.jpg" },
+    { name: "Wild West Gold Megaways", provider: "Pragmatic Play", id: "PP063", image: "https://altacdn.com/ig/img/games/269226-wild-west-gold-megaways_thumbnailx2.jpg" },
+    { name: "Release the Kraken Megaways", provider: "Pragmatic Play", id: "287888", image: "https://altacdn.com/ig/img/games/269465-release-the-kraken-megaways_thumbnailx2.jpg" },
+    { name: "5 Lions Megaways", provider: "Pragmatic Play", id: "PP068", image: "https://altacdn.com/ig/img/games/269069-5-lions-megaways_thumbnailx2.jpg" },
+    { name: "Buffalo King Megaways", provider: "Pragmatic Play", id: "PP069", image: "https://altacdn.com/ig/img/games/269065-buffalo-king-megaways_thumbnailx2.jpg" },
+    { name: "Extra Juicy Megaways", provider: "Pragmatic Play", id: "PP073", image: "https://altacdn.com/ig/img/games/269293-extra-juicy-megaways_thumbnailx2.jpg" },
+    { name: "Vikings Unleashed Megaways", provider: "Pragmatic Play", id: "PP075", image: "" },
+    { name: "Power of Merlin Megaways", provider: "Pragmatic Play", id: "PP077", image: "https://altacdn.com/ig/img/games/269364-power-of-merlin-megaways_thumbnailx2.jpg" },
+    { name: "Mustang Gold", provider: "Pragmatic Play", id: "287882", image: "https://altacdn.com/ig/img/games/269172-mustang-gold_thumbnailx2.jpg" },
+    { name: "Chilli Heat", provider: "Pragmatic Play", id: "287885", image: "https://altacdn.com/ig/img/games/269198-chilli-heat_thumbnailx2.jpg" },
+    { name: "Buffalo King", provider: "Pragmatic Play", id: "287884", image: "https://altacdn.com/ig/img/games/269275-buffalo-king_thumbnailx2.jpg" },
+    { name: "5 Lions", provider: "Pragmatic Play", id: "287871", image: "https://altacdn.com/ig/img/games/269637-5-lions_thumbnailx2.jpg" },
+    { name: "Aztec Gems", provider: "Pragmatic Play", id: "PP093", image: "https://altacdn.com/ig/img/games/269310-aztec-gems_thumbnailx2.jpg" },
+    { name: "Gems Bonanza", provider: "Pragmatic Play", id: "PP128", image: "https://altacdn.com/ig/img/games/269222-gems-bonanza_thumbnailx2.jpg" },
+    { name: "Hot to Burn", provider: "Pragmatic Play", id: "PP140", image: "https://altacdn.com/ig/img/games/269158-hot-to-burn_thumbnailx2.jpg" },
+    { name: "Joker's Jewels", provider: "Pragmatic Play", id: "287870", image: "https://altacdn.com/ig/img/games/269081-jokers-jewels_thumbnailx2.jpg" },
+    { name: "Lucky Mouse", provider: "Pragmatic Play", id: "287861", image: "https://altacdn.com/ig/img/games/290427-lucky-mouse_thumbnailx2.jpg" },
+    { name: "Pirate Gold", provider: "Pragmatic Play", id: "287880", image: "https://altacdn.com/ig/img/games/269538-pirate-gold_thumbnailx2.jpg" },
+    { name: "The Catfather", provider: "Pragmatic Play", id: "287887", image: "https://altacdn.com/ig/img/games/271088-the-catfather_thumbnailx2.jpg" },
+    { name: "Dragon Kingdom", provider: "Pragmatic Play", id: "287881", image: "https://altacdn.com/ig/img/games/269900-dragon-kingdom_thumbnailx2.jpg" },
+    { name: "Caishen's Gold", provider: "Pragmatic Play", id: "287886", image: "https://altacdn.com/ig/img/games/269801-caishens-gold_thumbnailx2.jpg" },
+    { name: "Black Bull", provider: "Pragmatic Play", id: "287883", image: "https://altacdn.com/ig/img/games/269545-black-bull_thumbnailx2.jpg" },
+    { name: "John Hunter and the Tomb of the Scarab Queen", provider: "Pragmatic Play", id: "PP053", image: "https://altacdn.com/ig/img/games/269153-john-hunter-and-the-tomb-of-the-scarab-queen_thumbnailx2.jpg" },
+    { name: "Zeus vs Hades Gods of War", provider: "Pragmatic Play", id: "PP061", image: "https://altacdn.com/ig/img/games/269047-zeus-vs-hades-gods-of-war_thumbnailx2.jpg" },
+    { name: "Bomb Bonanza", provider: "Pragmatic Play", id: "PP099", image: "https://altacdn.com/ig/img/games/269794-bomb-bonanza_thumbnailx2.jpg" },
+    { name: "Aztec Bonanza", provider: "Pragmatic Play", id: "PP092", image: "https://altacdn.com/ig/img/games/269674-aztec-bonanza_thumbnailx2.jpg" },
+    { name: "Fire Strike", provider: "Pragmatic Play", id: "PP122", image: "https://altacdn.com/ig/img/games/269206-fire-strike_thumbnailx2.jpg" },
+    { name: "Wild Wild Riches", provider: "Pragmatic Play", id: "PP230", image: "https://altacdn.com/ig/img/games/269177-wild-wild-riches_thumbnailx2.jpg" },
+    { name: "Wisdom of Athena", provider: "Pragmatic Play", id: "PP232", image: "https://altacdn.com/ig/img/games/269190-wisdom-of-athena_thumbnailx2.jpg" },
+
+    // ============================================
+    // HACKSAW GAMING - TOP 50
+    // ============================================
+    { name: "Wanted Dead or a Wild", provider: "Hacksaw Gaming", id: "HS001", image: "https://altacdn.com/ig/img/games/255841-wanted-dead-or-a-wild_thumbnailx2.jpg" },
+    { name: "Le Bandit", provider: "Hacksaw Gaming", id: "HS002", image: "https://altacdn.com/ig/img/games/255983-le-bandit_thumbnailx2.jpg" },
+    { name: "Chaos Crew", provider: "Hacksaw Gaming", id: "HS003", image: "https://altacdn.com/ig/img/games/255840-chaos-crew_thumbnailx2.jpg" },
+    { name: "Wanted Dead or a Wild Apaches", provider: "Hacksaw Gaming", id: "HS004", image: "" },
+    { name: "Donny Dough", provider: "Hacksaw Gaming", id: "HS005", image: "https://altacdn.com/ig/img/games/256096-donny-dough_thumbnailx2.jpg" },
+    { name: "Dork Unit", provider: "Hacksaw Gaming", id: "HS006", image: "https://altacdn.com/ig/img/games/255898-dork-unit_thumbnailx2.jpg" },
+    { name: "Chaos Crew 2", provider: "Hacksaw Gaming", id: "HS007", image: "https://altacdn.com/ig/img/games/256017-chaos-crew-2_thumbnailx2.jpg" },
+    { name: "Stick 'Em", provider: "Hacksaw Gaming", id: "HS008", image: "https://altacdn.com/ig/img/games/255804-stickem_thumbnailx2.jpg" },
+    { name: "The Bowery Boys", provider: "Hacksaw Gaming", id: "HS009", image: "https://altacdn.com/ig/img/games/255878-the-bowery-boys_thumbnailx2.jpg" },
+    { name: "Itero", provider: "Hacksaw Gaming", id: "HS010", image: "https://altacdn.com/ig/img/games/255897-itero_thumbnailx2.jpg" },
+    { name: "Stack 'Em", provider: "Hacksaw Gaming", id: "HS011", image: "https://altacdn.com/ig/img/games/255842-stack-em_thumbnailx2.jpg" },
+    { name: "RIP City", provider: "Hacksaw Gaming", id: "HS012", image: "https://altacdn.com/ig/img/games/255948-rip-city_thumbnailx2.jpg" },
+    { name: "Cubes", provider: "Hacksaw Gaming", id: "HS013", image: "https://altacdn.com/ig/img/games/255806-cubes_thumbnailx2.jpg" },
+    { name: "Cubes 2", provider: "Hacksaw Gaming", id: "HS014", image: "https://altacdn.com/ig/img/games/255823-cubes2_thumbnailx2.jpg" },
+    { name: "Curry in a Hurry", provider: "Hacksaw Gaming", id: "HS015", image: "" },
+    { name: "Hades Gigablox", provider: "Hacksaw Gaming", id: "HS016", image: "" },
+    { name: "Rocket Reels", provider: "Hacksaw Gaming", id: "HS017", image: "https://altacdn.com/ig/img/games/255860-rocket-reels_thumbnailx2.jpg" },
+    { name: "M3GAN", provider: "Hacksaw Gaming", id: "HS018", image: "" },
+    { name: "Joker Bombs", provider: "Hacksaw Gaming", id: "HS019", image: "https://altacdn.com/ig/img/games/255861-joker-bombs_thumbnailx2.jpg" },
+    { name: "The General's Hot Fiesta", provider: "Hacksaw Gaming", id: "HS020", image: "" },
+    { name: "Gladiator Legends", provider: "Hacksaw Gaming", id: "HS021", image: "https://altacdn.com/ig/img/games/255895-gladiator-legends_thumbnailx2.jpg" },
+    { name: "It's Time", provider: "Hacksaw Gaming", id: "HS022", image: "https://altacdn.com/ig/img/games/272958-its-time_thumbnailx2.jpg" },
+    { name: "Xpander", provider: "Hacksaw Gaming", id: "HS023", image: "https://altacdn.com/ig/img/games/255857-xpander_thumbnailx2.jpg" },
+    { name: "Xways Hoarder xSplit", provider: "Hacksaw Gaming", id: "HS024", image: "https://altacdn.com/ig/img/games/277467-xways-hoarder-xsplit_thumbnailx2.jpg" },
+    { name: "Dead Canary", provider: "Hacksaw Gaming", id: "HS025", image: "https://altacdn.com/ig/img/games/277439-dead-canary_thumbnailx2.jpg" },
+    { name: "Bomb Squad", provider: "Hacksaw Gaming", id: "HS026", image: "" },
+    { name: "Pocketz", provider: "Hacksaw Gaming", id: "HS027", image: "" },
+    { name: "Hand of Anubis", provider: "Hacksaw Gaming", id: "HS028", image: "https://altacdn.com/ig/img/games/255896-hand-of-anubis_thumbnailx2.jpg" },
+    { name: "Pirate Booty", provider: "Hacksaw Gaming", id: "HS029", image: "" },
+    { name: "Hop 'n' Pop", provider: "Hacksaw Gaming", id: "HS030", image: "https://altacdn.com/ig/img/games/255839-hop-n-pop_thumbnailx2.jpg" },
+    { name: "Joker Supreme", provider: "Hacksaw Gaming", id: "HS031", image: "" },
+    { name: "Stacked", provider: "Hacksaw Gaming", id: "HS032", image: "" },
+    { name: "Outlaws Inc.", provider: "Hacksaw Gaming", id: "HS033", image: "https://altacdn.com/ig/img/games/255843-outlaws-inc_thumbnailx2.jpg" },
+    { name: "Mystery Mission: To the Moon", provider: "Hacksaw Gaming", id: "HS034", image: "https://altacdn.com/ig/img/games/287798-mystery-mission-to-the-moon_thumbnailx2.jpg" },
+    { name: "Dual Spin xXx", provider: "Hacksaw Gaming", id: "HS035", image: "" },
+    { name: "Canny The Can", provider: "Hacksaw Gaming", id: "HS036", image: "" },
+    { name: "Golden Genie and the Walking Wilds", provider: "Hacksaw Gaming", id: "HS037", image: "" },
+    { name: "Buffalo Stack'n'Sync", provider: "Hacksaw Gaming", id: "HS038", image: "https://altacdn.com/ig/img/games/255899-buffalo-stack-n-sync_thumbnailx2.jpg" },
+    { name: "Warrior Graveyard xNudge", provider: "Hacksaw Gaming", id: "HS039", image: "https://altacdn.com/ig/img/games/277007-warrior-graveyard-xnudge_thumbnailx2.jpg" },
+    { name: "Cashosaurus", provider: "Hacksaw Gaming", id: "HS040", image: "" },
+    { name: "El Jackpotto", provider: "Hacksaw Gaming", id: "HS041", image: "" },
+    { name: "Razor Shark", provider: "Hacksaw Gaming", id: "HS042", image: "" },
+    { name: "The Dog House Dog or Alive", provider: "Hacksaw Gaming", id: "HS043", image: "" },
+    { name: "Gates of Gatot Kaca", provider: "Hacksaw Gaming", id: "HS044", image: "" },
+    { name: "Santa's Stack", provider: "Hacksaw Gaming", id: "HS045", image: "" },
+    { name: "Bowery Boys vs. The Mummy", provider: "Hacksom Gaming", id: "HS046", image: "" },
+    { name: "Tomb of Akhenaten", provider: "Hacksaw Gaming", id: "HS047", image: "" },
+    { name: "Fat Banker", provider: "Hacksaw Gaming", id: "HS048", image: "https://altacdn.com/ig/img/games/287791-fat-banker_thumbnailx2.jpg" },
+    { name: "Toshi Video Club", provider: "Hacksaw Gaming", id: "HS049", image: "https://altacdn.com/ig/img/games/255844-toshi-video-club_thumbnailx2.jpg" },
+    { name: "Giga Jar", provider: "Hacksaw Gaming", id: "HS050", image: "" },
+
+    // ============================================
+    // PUSH GAMING - TOP 50
+    // ============================================
+    { name: "Jammin' Jars", provider: "Push Gaming", id: "PG001", image: "https://altacdn.com/ig/img/games/287919-jammin-jars_thumbnailx2.jpg" },
+    { name: "Jammin' Jars 2", provider: "Push Gaming", id: "PG002", image: "https://altacdn.com/ig/img/games/287781-jammin-jars-2_thumbnailx2.jpg" },
+    { name: "Razor Shark", provider: "Push Gaming", id: "PG003", image: "https://altacdn.com/ig/img/games/287902-razor-shark_thumbnailx2.jpg" },
+    { name: "Fat Rabbit", provider: "Push Gaming", id: "PG004", image: "https://altacdn.com/ig/img/games/287903-fat-rabbit_thumbnailx2.jpg" },
+    { name: "Retro Tapes", provider: "Push Gaming", id: "PG005", image: "https://altacdn.com/ig/img/games/287799-retro-tapes_thumbnailx2.jpg" },
+    { name: "Big Bamboo", provider: "Push Gaming", id: "PG006", image: "https://altacdn.com/ig/img/games/287790-big-bamboo_thumbnailx2.jpg" },
+    { name: "Wild Swarm", provider: "Push Gaming", id: "PG007", image: "https://altacdn.com/ig/img/games/287899-wild-swarm_thumbnailx2.jpg" },
+    { name: "Mystery Museum", provider: "Push Gaming", id: "PG008", image: "https://altacdn.com/ig/img/games/287900-mystery-museum_thumbnailx2.jpg" },
+    { name: "Mad Cars", provider: "Push Gaming", id: "PG009", image: "https://altacdn.com/ig/img/games/287796-mad-cars_thumbnailx2.jpg" },
+    { name: "Mount Mazuma", provider: "Push Gaming", id: "PG010", image: "" },
+    { name: "Dinopolis", provider: "Push Gaming", id: "PG011", image: "https://altacdn.com/ig/img/games/287780-dinopolis_thumbnailx2.jpg" },
+    { name: "Deadly 5", provider: "Push Gaming", id: "PG012", image: "https://altacdn.com/ig/img/games/287797-deadly-5_thumbnailx2.jpg" },
+    { name: "Tiki Tumble", provider: "Push Gaming", id: "PG013", image: "https://altacdn.com/ig/img/games/287911-tiki-tumble_thumbnailx2.jpg" },
+    { name: "Midnight Marauder", provider: "Push Gaming", id: "PG014", image: "" },
+    { name: "Nightfall", provider: "Push Gaming", id: "PG015", image: "" },
+    { name: "Blaze of Ra", provider: "Push Gaming", id: "PG016", image: "https://altacdn.com/ig/img/games/287917-blaze-of-ra_thumbnailx2.jpg" },
+    { name: "Bison Moon", provider: "Push Gaming", id: "PG017", image: "" },
+    { name: "Fire Hopper", provider: "Push Gaming", id: "PG018", image: "https://altacdn.com/ig/img/games/287745-fire-hopper_thumbnailx2.jpg" },
+    { name: "Fat Drac", provider: "Push Gaming", id: "PG019", image: "https://altacdn.com/ig/img/games/287898-fat-drac_thumbnailx2.jpg" },
+    { name: "Viking Clash", provider: "Push Gaming", id: "PG020", image: "" },
+    { name: "Booty Bay", provider: "Push Gaming", id: "PG021", image: "" },
+    { name: "Wild Trigger", provider: "Push Gaming", id: "PG022", image: "" },
+    { name: "Cat Wilde and the Doom of Dead", provider: "Push Gaming", id: "PG023", image: "" },
+    { name: "Land of Zenith", provider: "Push Gaming", id: "PG024", image: "" },
+    { name: "Chilli Heat Megaways", provider: "Push Gaming", id: "PG025", image: "" },
+    { name: "Chaos Crew Scratch", provider: "Push Gaming", id: "PG026", image: "" },
+    { name: "Wheel of Wonders", provider: "Push Gaming", id: "PG027", image: "" },
+    { name: "Gold Digger", provider: "Push Gaming", id: "PG028", image: "" },
+    { name: "Miami Multiplier", provider: "Push Gaming", id: "PG029", image: "" },
+    { name: "Shadow Society", provider: "Push Gaming", id: "PG030", image: "" },
+    { name: "Wild Flower", provider: "Push Gaming", id: "PG031", image: "" },
+    { name: "Blue Wizard", provider: "Push Gaming", id: "PG032", image: "" },
+    { name: "Joker Troupe", provider: "Push Gaming", id: "PG033", image: "" },
+    { name: "Immortal Fruits", provider: "Push Gaming", id: "PG034", image: "" },
+    { name: "Wizard Shop", provider: "Push Gaming", id: "PG035", image: "" },
+    { name: "Wild Celebrity Bus Megaways", provider: "Push Gaming", id: "PG036", image: "" },
+    { name: "Stacked Fire 7s", provider: "Push Gaming", id: "PG037", image: "" },
+    { name: "Phoenix Forge", provider: "Push Gaming", id: "PG038", image: "" },
+    { name: "Goose Golden Egg", provider: "Push Gaming", id: "PG039", image: "" },
+    { name: "The Falcon Huntress", provider: "Push Gaming", id: "PG040", image: "" },
+    { name: "Poltava Flames of War", provider: "Push Gaming", id: "PG041", image: "" },
+    { name: "Jammin' Jars 3", provider: "Push Gaming", id: "PG042", image: "" },
+    { name: "Rainbow Mania", provider: "Push Gaming", id: "PG043", image: "" },
+    { name: "Battle Dwarf", provider: "Push Gaming", id: "PG044", image: "" },
+    { name: "Gems & Stones", provider: "Push Gaming", id: "PG045", image: "" },
+    { name: "Humpty Dumpty", provider: "Push Gaming", id: "PG046", image: "" },
+    { name: "Fat Santa", provider: "Push Gaming", id: "PG047", image: "" },
+    { name: "Laser Fruit", provider: "Push Gaming", id: "PG048", image: "" },
+    { name: "Meow", provider: "Push Gaming", id: "PG049", image: "" },
+    { name: "Wild North", provider: "Push Gaming", id: "PG050", image: "" },
+
+    // ============================================
+    // THUNDERKICK - TOP 50
+    // ============================================
+    { name: "Esqueleto Explosivo", provider: "Thunderkick", id: "TK001", image: "https://altacdn.com/ig/img/games/287548-esqueleto-explosivo_thumbnailx2.jpg" },
+    { name: "Esqueleto Explosivo 2", provider: "Thunderkick", id: "TK002", image: "https://altacdn.com/ig/img/games/287481-esqueleto-explosivo-2_thumbnailx2.jpg" },
+    { name: "Pink Elephants", provider: "Thunderkick", id: "TK003", image: "https://altacdn.com/ig/img/games/287565-pink-elephants_thumbnailx2.jpg" },
+    { name: "Pink Elephants 2", provider: "Thunderkick", id: "TK004", image: "https://altacdn.com/ig/img/games/287478-pink-elephants-2_thumbnailx2.jpg" },
+    { name: "Fruit Warp", provider: "Thunderkick", id: "TK005", image: "https://altacdn.com/ig/img/games/287534-fruit-warp_thumbnailx2.jpg" },
+    { name: "Flame Busters", provider: "Thunderkick", id: "TK006", image: "https://altacdn.com/ig/img/games/287547-flame-busters_thumbnailx2.jpg" },
+    { name: "Divine Lotus", provider: "Thunderkick", id: "TK007", image: "https://altacdn.com/ig/img/games/287484-divine-lotus_thumbnailx2.jpg" },
+    { name: "Crystal Quest Arcane Tower", provider: "Thunderkick", id: "TK008", image: "" },
+    { name: "Crystal Quest Frostlands", provider: "Thunderkick", id: "TK009", image: "" },
+    { name: "Crystal Quest Deep Jungle", provider: "Thunderkick", id: "TK010", image: "" },
+    { name: "Beat the Beast: Quetzalcoatl's Trial", provider: "Thunderkick", id: "TK011", image: "" },
+    { name: "Beat the Beast: Mighty Sphinx", provider: "Thunderkick", id: "TK012", image: "" },
+    { name: "Beat the Beast: Kraken's Lair", provider: "Thunderkick", id: "TK013", image: "" },
+    { name: "Midas Golden Touch", provider: "Thunderkick", id: "TK014", image: "https://altacdn.com/ig/img/games/287570-midas-golden-touch_thumbnailx2.jpg" },
+    { name: "Rooster Fury", provider: "Thunderkick", id: "TK015", image: "" },
+    { name: "Sven's Postcard", provider: "Thunderkick", id: "TK016", image: "" },
+    { name: "Divine Riches Helios", provider: "Thunderkick", id: "TK017", image: "" },
+    { name: "Divine Riches", provider: "Thunderkick", id: "TK018", image: "" },
+    { name: "Pyramyth", provider: "Thunderkick", id: "TK019", image: "https://altacdn.com/ig/img/games/287322-pyramyth_thumbnailx2.jpg" },
+    { name: "Sword of Khans", provider: "Thunderkick", id: "TK020", image: "https://altacdn.com/ig/img/games/287480-sword-of-khans_thumbnailx2.jpg" },
+    { name: "Carnival Queen", provider: "Thunderkick", id: "TK021", image: "https://altacdn.com/ig/img/games/287584-carnival-queen_thumbnailx2.jpg" },
+    { name: "Jaguar Temple", provider: "Thunderkick", id: "TK022", image: "https://altacdn.com/ig/img/games/287531-jaguar-temple_thumbnailx2.jpg" },
+    { name: "Babushkas", provider: "Thunderkick", id: "TK023", image: "https://altacdn.com/ig/img/games/287574-babushkas_thumbnailx2.jpg" },
+    { name: "The Falcon Huntress", provider: "Thunderkick", id: "TK024", image: "https://altacdn.com/ig/img/games/287556-the-falcon-huntress_thumbnailx2.jpg" },
+    { name: "Phoenix Paradise", provider: "Thunderkick", id: "TK025", image: "https://altacdn.com/ig/img/games/287364-phoenix-paradise_thumbnailx2.jpg" },
+    { name: "Dragon Horn", provider: "Thunderkick", id: "TK026", image: "https://altacdn.com/ig/img/games/287494-dragon-horn_thumbnailx2.jpg" },
+    { name: "Luchadora", provider: "Thunderkick", id: "TK027", image: "https://altacdn.com/ig/img/games/287529-luchadora_thumbnailx2.jpg" },
+    { name: "Tiger Rush", provider: "Thunderkick", id: "TK028", image: "https://altacdn.com/ig/img/games/287502-tiger-rush_thumbnailx2.jpg" },
+    { name: "Arcader", provider: "Thunderkick", id: "TK029", image: "https://altacdn.com/ig/img/games/287588-arcader_thumbnailx2.jpg" },
+    { name: "Not Enough Kittens", provider: "Thunderkick", id: "TK030", image: "https://altacdn.com/ig/img/games/287519-not-enough-kittens_thumbnailx2.jpg" },
+    { name: "Sunset Delight", provider: "Thunderkick", id: "TK031", image: "https://altacdn.com/ig/img/games/287512-sunset-delight_thumbnailx2.jpg" },
+    { name: "Spectra", provider: "Thunderkick", id: "TK032", image: "https://altacdn.com/ig/img/games/287513-spectra_thumbnailx2.jpg" },
+    { name: "Barber Shop Uncut", provider: "Thunderkick", id: "TK033", image: "" },
+    { name: "Sticky Bombs", provider: "Thunderkick", id: "TK034", image: "" },
+    { name: "Yeti Battle of Greenhat Peak", provider: "Thunderkick", id: "TK035", image: "https://altacdn.com/ig/img/games/287496-yeti-battle-of-greenhat-peak_thumbnailx2.jpg" },
+    { name: "Ravens Eye", provider: "Thunderkick", id: "TK036", image: "https://altacdn.com/ig/img/games/287493-ravens-eye_thumbnailx2.jpg" },
+    { name: "Zoom", provider: "Thunderkick", id: "TK037", image: "https://altacdn.com/ig/img/games/287551-zoom_thumbnailx2.jpg" },
+    { name: "Full Moon Romance", provider: "Thunderkick", id: "TK038", image: "https://altacdn.com/ig/img/games/287532-full-moon-romance_thumbnailx2.jpg" },
+    { name: "Birds on a Wire", provider: "Thunderkick", id: "TK039", image: "https://altacdn.com/ig/img/games/287573-birds-on-a-wire_thumbnailx2.jpg" },
+    { name: "Wild Heist at Peacock Manor", provider: "Thunderkick", id: "TK040", image: "https://altacdn.com/ig/img/games/287552-wild-heist-at-peacock-manor_thumbnailx2.jpg" },
+    { name: "Bork the Berzerker", provider: "Thunderkick", id: "TK041", image: "https://altacdn.com/ig/img/games/287566-bork-the-berzerker-hack-%E2%80%98n-slash-edition_thumbnailx2.jpg" },
+    { name: "Sunny Shores", provider: "Thunderkick", id: "TK042", image: "" },
+    { name: "Magnetron", provider: "Thunderkick", id: "TK043", image: "" },
+    { name: "The Rift", provider: "Thunderkick", id: "TK044", image: "https://altacdn.com/ig/img/games/287511-the-rift_thumbnailx2.jpg" },
+    { name: "Riders of the Storm", provider: "Thunderkick", id: "TK045", image: "https://altacdn.com/ig/img/games/287569-riders-of-the-storm_thumbnailx2.jpg" },
+    { name: "1429 Uncharted Seas", provider: "Thunderkick", id: "TK046", image: "https://altacdn.com/ig/img/games/287582-1429-uncharted-seas_thumbnailx2.jpg" },
+    { name: "Turning Totems", provider: "Thunderkick", id: "TK047", image: "https://altacdn.com/ig/img/games/287555-turning-totems_thumbnailx2.jpg" },
+    { name: "Frog Grog", provider: "Thunderkick", id: "TK048", image: "https://altacdn.com/ig/img/games/287536-frog-grog_thumbnailx2.jpg" },
+    { name: "Oki Doki", provider: "Thunderkick", id: "TK049", image: "" },
+    { name: "Slots o' Gold", provider: "Thunderkick", id: "TK050", image: "" },
+
+    // ============================================
+    // PLAY'N GO - TOP 50
+    // ============================================
+    { name: "Book of Dead", provider: "Play'n GO", id: "PNG001", image: "https://altacdn.com/ig/img/games/251911-book-of-dead_thumbnailx2.jpg" },
+    { name: "Reactoonz", provider: "Play'n GO", id: "PNG002", image: "https://altacdn.com/ig/img/games/251964-reactoonz_thumbnailx2.jpg" },
+    { name: "Reactoonz 2", provider: "Play'n GO", id: "PNG003", image: "https://altacdn.com/ig/img/games/252220-reactoonz-2_thumbnailx2.jpg" },
+    { name: "Moon Princess", provider: "Play'n GO", id: "PNG004", image: "https://altacdn.com/ig/img/games/251966-moon-princess_thumbnailx2.jpg" },
+    { name: "Moon Princess 100", provider: "Play'n GO", id: "PNG005", image: "https://altacdn.com/ig/img/games/252470-moon-princess-100_thumbnailx2.jpg" },
+    { name: "Rise of Olympus", provider: "Play'n GO", id: "PNG006", image: "" },
+    { name: "Rise of Olympus 100", provider: "Play'n GO", id: "PNG007", image: "https://altacdn.com/ig/img/games/252590-rise-of-olympus-100_thumbnailx2.jpg" },
+    { name: "Doom of Dead", provider: "Play'n GO", id: "PNG008", image: "" },
+    { name: "Legacy of Dead", provider: "Play'n GO", id: "PNG009", image: "https://altacdn.com/ig/img/games/252176-legacy-of-dead_thumbnailx2.jpg" },
+    { name: "Rich Wilde and the Tome of Madness", provider: "Play'n GO", id: "PNG010", image: "" },
+    { name: "Fire Joker", provider: "Play'n GO", id: "PNG011", image: "https://altacdn.com/ig/img/games/251908-fire-joker_thumbnailx2.jpg" },
+    { name: "Gigantoonz", provider: "Play'n GO", id: "PNG012", image: "https://altacdn.com/ig/img/games/252423-gigantoonz_thumbnailx2.jpg" },
+    { name: "Sweet Alchemy", provider: "Play'n GO", id: "PNG013", image: "https://altacdn.com/ig/img/games/251971-sweet-alchemy_thumbnailx2.jpg" },
+    { name: "Sweet Alchemy 100", provider: "Play'n GO", id: "PNG014", image: "https://altacdn.com/ig/img/games/252700-sweet-alchemy-100_thumbnailx2.jpg" },
+    { name: "Coywolf Cash", provider: "Play'n GO", id: "PNG015", image: "https://altacdn.com/ig/img/games/252128-coywolf-cash_thumbnailx2.jpg" },
+    { name: "Gemix", provider: "Play'n GO", id: "PNG016", image: "https://altacdn.com/ig/img/games/251856-gemix_thumbnailx2.jpg" },
+    { name: "Gemix 2", provider: "Play'n GO", id: "PNG017", image: "https://altacdn.com/ig/img/games/252312-gemix-2_thumbnailx2.jpg" },
+    { name: "Viking Runecraft", provider: "Play'n GO", id: "PNG018", image: "" },
+    { name: "Charlie Chance in Hell to Pay", provider: "Play'n GO", id: "PNG019", image: "https://altacdn.com/ig/img/games/252204-charlie-chance-in-hell-to-pay_thumbnailx2.jpg" },
+    { name: "Scroll of Dead", provider: "Play'n GO", id: "PNG020", image: "https://altacdn.com/ig/img/games/252347-scroll-of-dead_thumbnailx2.jpg" },
+    { name: "Cat Wilde and the Doom of Dead", provider: "Play'n GO", id: "PNG021", image: "https://altacdn.com/ig/img/games/252206-cat-wilde-and-the-doom-of-dead_thumbnailx2.jpg" },
+    { name: "Ankh of Anubis", provider: "Play'n GO", id: "PNG022", image: "https://altacdn.com/ig/img/games/252109-ankh-of-anubis_thumbnailx2.jpg" },
+    { name: "Golden Osiris", provider: "Play'n GO", id: "PNG023", image: "https://altacdn.com/ig/img/games/252256-golden-osiris_thumbnailx2.jpg" },
+    { name: "Wild Blood", provider: "Play'n GO", id: "PNG024", image: "https://altacdn.com/ig/img/games/251803-wild-blood_thumbnailx2.jpg" },
+    { name: "Wild Blood 2", provider: "Play'n GO", id: "PNG025", image: "https://altacdn.com/ig/img/games/252145-wild-blood-2_thumbnailx2.jpg" },
+    { name: "Bull in a China Shop", provider: "Play'n GO", id: "PNG026", image: "https://altacdn.com/ig/img/games/252285-bull-in-a-china-shop_thumbnailx2.jpg" },
+    { name: "Rainforest Magic Bingo", provider: "Play'n GO", id: "PNG027", image: "https://altacdn.com/ig/img/games/252222-rainforest-magic-bingo_thumbnailx2.jpg" },
+    { name: "24K Dragon", provider: "Play'n GO", id: "PNG028", image: "https://altacdn.com/ig/img/games/252258-24k-dragon_thumbnailx2.jpg" },
+    { name: "Golden Ticket", provider: "Play'n GO", id: "PNG029", image: "https://altacdn.com/ig/img/games/251853-golden-ticket_thumbnailx2.jpg" },
+    { name: "Golden Ticket 2", provider: "Play'n GO", id: "PNG030", image: "https://altacdn.com/ig/img/games/252231-golden-ticket-2_thumbnailx2.jpg" },
+    { name: "Contact", provider: "Play'n GO", id: "PNG031", image: "https://altacdn.com/ig/img/games/252037-contact_thumbnailx2.jpg" },
+    { name: "Troll Hunters", provider: "Play'n GO", id: "PNG032", image: "https://altacdn.com/ig/img/games/251811-troll-hunters_thumbnailx2.jpg" },
+    { name: "Troll Hunters 2", provider: "Play'n GO", id: "PNG033", image: "https://altacdn.com/ig/img/games/252129-troll-hunters-2_thumbnailx2.jpg" },
+    { name: "Pimped", provider: "Play'n GO", id: "PNG034", image: "https://altacdn.com/ig/img/games/251864-pimped_thumbnailx2.jpg" },
+    { name: "Sea Hunter", provider: "Play'n GO", id: "PNG035", image: "https://altacdn.com/ig/img/games/251965-sea-hunter_thumbnailx2.jpg" },
+    { name: "Pearls of India", provider: "Play'n GO", id: "PNG036", image: "https://altacdn.com/ig/img/games/251842-pearls-of-india_thumbnailx2.jpg" },
+    { name: "House of Doom", provider: "Play'n GO", id: "PNG037", image: "https://altacdn.com/ig/img/games/252587-house-of-doom_thumbnailx2.jpg" },
+    { name: "House of Doom 2: The Crypt", provider: "Play'n GO", id: "PNG038", image: "https://altacdn.com/ig/img/games/252311-house-of-doom-2-the-crypt_thumbnailx2.jpg" },
+    { name: "Rage of the Seas", provider: "Play'n GO", id: "PNG039", image: "" },
+    { name: "Sails of Gold", provider: "Play'n GO", id: "PNG040", image: "https://altacdn.com/ig/img/games/251912-sails-of-gold_thumbnailx2.jpg" },
+    { name: "Lord Merlin and the Lady of the Lake", provider: "Play'n GO", id: "PNG041", image: "https://altacdn.com/ig/img/games/252315-lord-merlin-and-the-lady-of-the-lake_thumbnailx2.jpg" },
+    { name: "Eye of Atum", provider: "Play'n GO", id: "PNG042", image: "https://altacdn.com/ig/img/games/252531-eye-of-atum_thumbnailx2.jpg" },
+    { name: "Hugo", provider: "Play'n GO", id: "PNG043", image: "https://altacdn.com/ig/img/games/251932-hugo_thumbnailx2.jpg" },
+    { name: "Hugo 2", provider: "Play'n GO", id: "PNG044", image: "https://altacdn.com/ig/img/games/252002-hugo-2_thumbnailx2.jpg" },
+    { name: "Raging Rex", provider: "Play'n GO", id: "PNG045", image: "https://altacdn.com/ig/img/games/252039-raging-rex_thumbnailx2.jpg" },
+    { name: "Raging Rex 2", provider: "Play'n GO", id: "PNG046", image: "https://altacdn.com/ig/img/games/252478-raging-rex-2_thumbnailx2.jpg" },
+    { name: "Mystery Joker", provider: "Play'n GO", id: "PNG047", image: "https://altacdn.com/ig/img/games/251843-mystery-joker_thumbnailx2.jpg" },
+    { name: "Mystery Joker 6000", provider: "Play'n GO", id: "PNG048", image: "https://altacdn.com/ig/img/games/251983-mystery-joker-6000_thumbnailx2.jpg" },
+    { name: "Disco Diamonds", provider: "Play'n GO", id: "PNG049", image: "https://altacdn.com/ig/img/games/252257-disco-diamonds_thumbnailx2.jpg" },
+    { name: "Cloud Quest", provider: "Play'n GO", id: "PNG050", image: "https://altacdn.com/ig/img/games/251890-cloud-quest_thumbnailx2.jpg" },
+
+    // ============================================
+    // BELATRA - TOP 50
+    // ============================================
+    { name: "Lucky Drink", provider: "Belatra", id: "BEL001", image: "https://altacdn.com/ig/img/games/266689-lucky-drink_thumbnailx2.jpg" },
+    { name: "Lucky Drink in Egypt", provider: "Belatra", id: "BEL002", image: "" },
+    { name: "Cherry Cocktail", provider: "Belatra", id: "BEL003", image: "" },
+    { name: "Crazy Monkey", provider: "Belatra", id: "BEL004", image: "" },
+    { name: "Crazy Monkey 2", provider: "Belatra", id: "BEL005", image: "" },
+    { name: "Island", provider: "Belatra", id: "BEL006", image: "" },
+    { name: "Island 2", provider: "Belatra", id: "BEL007", image: "" },
+    { name: "Garage", provider: "Belatra", id: "BEL008", image: "" },
+    { name: "Pirate", provider: "Belatra", id: "BEL009", image: "" },
+    { name: "Pirate 2", provider: "Belatra", id: "BEL010", image: "" },
+    { name: "Keks", provider: "Belatra", id: "BEL011", image: "" },
+    { name: "Lucky Haunter", provider: "Belatra", id: "BEL012", image: "" },
+    { name: "Resident", provider: "Belatra", id: "BEL013", image: "" },
+    { name: "Fruit Cocktail", provider: "Belatra", id: "BEL014", image: "" },
+    { name: "Fruit Cocktail 2", provider: "Belatra", id: "BEL015", image: "" },
+    { name: "Aztec Gold", provider: "Belatra", id: "BEL016", image: "" },
+    { name: "Rock Climber", provider: "Belatra", id: "BEL017", image: "" },
+    { name: "Champagne", provider: "Belatra", id: "BEL018", image: "" },
+    { name: "Gnome", provider: "Belatra", id: "BEL019", image: "" },
+    { name: "Sweet Life", provider: "Belatra", id: "BEL020", image: "" },
+    { name: "Sweet Life 2", provider: "Belatra", id: "BEL021", image: "" },
+    { name: "Money Game", provider: "Belatra", id: "BEL022", image: "" },
+    { name: "Gryphon's Gold", provider: "Belatra", id: "BEL023", image: "" },
+    { name: "Gryphon's Gold Deluxe", provider: "Belatra", id: "BEL024", image: "" },
+    { name: "Magic Princess", provider: "Belatra", id: "BEL025", image: "" },
+    { name: "Chukcha", provider: "Belatra", id: "BEL026", image: "" },
+    { name: "Fairy Land", provider: "Belatra", id: "BEL027", image: "" },
+    { name: "Fairy Land 2", provider: "Belatra", id: "BEL028", image: "" },
+    { name: "Banana Splash", provider: "Belatra", id: "BEL029", image: "" },
+    { name: "Gold Fish", provider: "Belatra", id: "BEL030", image: "" },
+    { name: "Safari", provider: "Belatra", id: "BEL031", image: "" },
+    { name: "Sparta", provider: "Belatra", id: "BEL032", image: "" },
+    { name: "Secret Forest", provider: "Belatra", id: "BEL033", image: "" },
+    { name: "Troll Faces", provider: "Belatra", id: "BEL034", image: "" },
+    { name: "Volcano", provider: "Belatra", id: "BEL035", image: "" },
+    { name: "Viking's Fun", provider: "Belatra", id: "BEL036", image: "" },
+    { name: "Desert Treasure", provider: "Belatra", id: "BEL037", image: "" },
+    { name: "Desert Treasure II", provider: "Belatra", id: "BEL038", image: "" },
+    { name: "Elven Princesses", provider: "Belatra", id: "BEL039", image: "" },
+    { name: "Mega Jack", provider: "Belatra", id: "BEL040", image: "" },
+    { name: "Aladin's Lamp", provider: "Belatra", id: "BEL041", image: "" },
+    { name: "Dragon's Pearl", provider: "Belatra", id: "BEL042", image: "" },
+    { name: "Dragon's Deep", provider: "Belatra", id: "BEL043", image: "" },
+    { name: "Unicorn Magic", provider: "Belatra", id: "BEL044", image: "" },
+    { name: "Lucky Drink Xmas", provider: "Belatra", id: "BEL045", image: "" },
+    { name: "Happy Jungle", provider: "Belatra", id: "BEL046", image: "" },
+    { name: "Queen of Hearts", provider: "Belatra", id: "BEL047", image: "" },
+    { name: "Dolphin's Pearl", provider: "Belatra", id: "BEL048", image: "" },
+    { name: "Polar Fox", provider: "Belatra", id: "BEL049", image: "" },
+    { name: "Magic Forest", provider: "Belatra", id: "BEL050", image: "" },
+
+    // ============================================
+    // BGAMING - TOP 50
+    // ============================================
+    { name: "Aztec Magic", provider: "BGaming", id: "BG001", image: "https://altacdn.com/ig/img/games/253978-aztec-magic-bonanza_thumbnailx2.jpg" },
+    { name: "Aztec Magic Deluxe", provider: "BGaming", id: "BG002", image: "https://altacdn.com/ig/img/games/254370-aztec-magic-deluxe_thumbnailx2.jpg" },
+    { name: "Aztec Magic Megaways", provider: "BGaming", id: "BG003", image: "https://altacdn.com/ig/img/games/254102-aztec-magic-megaways_thumbnailx2.jpg" },
+    { name: "Elvis Frog in Vegas", provider: "BGaming", id: "BG004", image: "https://altacdn.com/ig/img/games/254278-elvis-frog-in-vegas_thumbnailx2.jpg" },
+    { name: "Elvis Frog TRUEWAYS", provider: "BGaming", id: "BG005", image: "https://altacdn.com/ig/img/games/253923-elvis-frog-trueways_thumbnailx2.jpg" },
+    { name: "Book of Cats", provider: "BGaming", id: "BG006", image: "https://altacdn.com/ig/img/games/254445-book-of-cats_thumbnailx2.jpg" },
+    { name: "Book of Cats Megaways", provider: "BGaming", id: "BG007", image: "https://altacdn.com/ig/img/games/254117-book-of-cats-megaways_thumbnailx2.jpg" },
+    { name: "Fruit Million", provider: "BGaming", id: "BG008", image: "https://altacdn.com/ig/img/games/254194-fruit-million_thumbnailx2.jpg" },
+    { name: "Lucky Lady Moon", provider: "BGaming", id: "BG009", image: "" },
+    { name: "Lucky Lady Moon Megaways", provider: "BGaming", id: "BG010", image: "" },
+    { name: "Alien Fruits", provider: "BGaming", id: "BG011", image: "https://altacdn.com/ig/img/games/255034-alien-fruits_thumbnailx2.jpg" },
+    { name: "Wild Cash", provider: "BGaming", id: "BG012", image: "https://altacdn.com/ig/img/games/254528-wild-cash_thumbnailx2.jpg" },
+    { name: "Wild Cash x9990", provider: "BGaming", id: "BG013", image: "https://altacdn.com/ig/img/games/254384-wild-cash-x9990_thumbnailx2.jpg" },
+    { name: "Bonanza Billion", provider: "BGaming", id: "BG014", image: "https://altacdn.com/ig/img/games/253971-bonanza-billion_thumbnailx2.jpg" },
+    { name: "Dig Dig Digger", provider: "BGaming", id: "BG015", image: "https://altacdn.com/ig/img/games/254440-dig-dig-digger_thumbnailx2.jpg" },
+    { name: "Platinum Lightning", provider: "BGaming", id: "BG016", image: "https://altacdn.com/ig/img/games/254283-platinum-lightning_thumbnailx2.jpg" },
+    { name: "Platinum Lightning Deluxe", provider: "BGaming", id: "BG017", image: "https://altacdn.com/ig/img/games/254296-platinum-lightning-deluxe_thumbnailx2.jpg" },
+    { name: "Doors of Sol", provider: "BGaming", id: "BG018", image: "" },
+    { name: "West Town", provider: "BGaming", id: "BG019", image: "https://altacdn.com/ig/img/games/254512-west-town_thumbnailx2.jpg" },
+    { name: "Gemhalla", provider: "BGaming", id: "BG020", image: "https://altacdn.com/ig/img/games/253935-gemhalla_thumbnailx2.jpg" },
+    { name: "Scrolls of Ra HD", provider: "BGaming", id: "BG021", image: "" },
+    { name: "Dragon's Gold 100", provider: "BGaming", id: "BG022", image: "https://altacdn.com/ig/img/games/254208-dragons-gold-100_thumbnailx2.jpg" },
+    { name: "Maneki 88 Gold", provider: "BGaming", id: "BG023", image: "https://altacdn.com/ig/img/games/254189-maneki-88-gold_thumbnailx2.jpg" },
+    { name: "Maneki 88 Fortunes", provider: "BGaming", id: "BG024", image: "https://altacdn.com/ig/img/games/254176-maneki-88-fortunes_thumbnailx2.jpg" },
+    { name: "Princess of the Ocean", provider: "BGaming", id: "BG025", image: "" },
+    { name: "Princess of the Ocean 2", provider: "BGaming", id: "BG026", image: "" },
+    { name: "Domnitors", provider: "BGaming", id: "BG027", image: "" },
+    { name: "Domnitors Deluxe", provider: "BGaming", id: "BG028", image: "" },
+    { name: "All Lucky Clovers", provider: "BGaming", id: "BG029", image: "" },
+    { name: "All Lucky Clovers 5", provider: "BGaming", id: "BG030", image: "https://altacdn.com/ig/img/games/254156-all-lucky-clovers-5_thumbnailx2.jpg" },
+    { name: "Four Aces", provider: "BGaming", id: "BG031", image: "" },
+    { name: "Four Aces II", provider: "BGaming", id: "BG032", image: "" },
+    { name: "Hot Coins Hold and Spin", provider: "BGaming", id: "BG033", image: "" },
+    { name: "Aloha King Elvis", provider: "BGaming", id: "BG034", image: "https://altacdn.com/ig/img/games/254264-aloha-king-elvis_thumbnailx2.jpg" },
+    { name: "Avalon: The Lost Kingdom", provider: "BGaming", id: "BG035", image: "https://altacdn.com/ig/img/games/254355-avalon-the-lost-kingdom_thumbnailx2.jpg" },
+    { name: "Candy Monsta", provider: "BGaming", id: "BG036", image: "https://altacdn.com/ig/img/games/254337-candy-monsta_thumbnailx2.jpg" },
+    { name: "Cherry Fiesta", provider: "BGaming", id: "BG037", image: "" },
+    { name: "Desert Treasure", provider: "BGaming", id: "BG038", image: "" },
+    { name: "Golden Profits", provider: "BGaming", id: "BG039", image: "https://altacdn.com/ig/img/games/272806-golden-profits_thumbnailx2.jpg" },
+    { name: "Lava Lions", provider: "BGaming", id: "BG040", image: "" },
+    { name: "Lucky Crumbling", provider: "BGaming", id: "BG041", image: "" },
+    { name: "Lucky Sweets", provider: "BGaming", id: "BG042", image: "" },
+    { name: "Mechanical Clover", provider: "BGaming", id: "BG043", image: "https://altacdn.com/ig/img/games/254552-mechanical-clover_thumbnailx2.jpg" },
+    { name: "Penny Pelican", provider: "BGaming", id: "BG044", image: "https://altacdn.com/ig/img/games/254348-penny-pelican_thumbnailx2.jpg" },
+    { name: "Riders of the Storm", provider: "BGaming", id: "BG045", image: "" },
+    { name: "Road 2 Riches", provider: "BGaming", id: "BG046", image: "https://altacdn.com/ig/img/games/254212-road-2-riches_thumbnailx2.jpg" },
+    { name: "Spinosaurus", provider: "BGaming", id: "BG047", image: "" },
+    { name: "Multihand Blackjack Pro", provider: "BGaming", id: "BG048", image: "https://altacdn.com/ig/img/games/254015-multihand-blackjack-pro_thumbnailx2.jpg" },
+    { name: "Scratch Dice", provider: "BGaming", id: "BG049", image: "https://altacdn.com/ig/img/games/253990-scratch-dice_thumbnailx2.jpg" },
+    { name: "Plinko", provider: "BGaming", id: "BG050", image: "https://altacdn.com/ig/img/games/253141-plinko_thumbnailx2.jpg" },
+];
+        
+        // ===== MODAL SYSTEM =====
+        function toggleStatsPopup() {
+            const popup = document.getElementById('statsPopup');
+            const toggleBtn = document.getElementById('statsToggleBtn');
             
-            // PLAY'N GO
-            { name: "Book of Dead", provider: "Play'n GO", id: "287600", image: "https://altacdn.com/ig/img/games/287600-book-of-dead_thumbnailx2.jpg" },
-            { name: "Reactoonz", provider: "Play'n GO", id: "287610", image: "https://altacdn.com/ig/img/games/287610-reactoonz_thumbnailx2.jpg" },
-            { name: "Fire Joker", provider: "Play'n GO", id: "287620", image: "https://altacdn.com/ig/img/games/287620-fire-joker_thumbnailx2.jpg" },
-            { name: "Tome of Madness", provider: "Play'n GO", id: "287630", image: "https://altacdn.com/ig/img/games/287630-tome-of-madness_thumbnailx2.jpg" },
-            { name: "Moon Princess", provider: "Play'n GO", id: "287640", image: "https://altacdn.com/ig/img/games/287640-moon-princess_thumbnailx2.jpg" },
-            { name: "Rise of Olympus", provider: "Play'n GO", id: "287650", image: "https://altacdn.com/ig/img/games/287650-rise-of-olympus_thumbnailx2.jpg" },
-            { name: "Legacy of Dead", provider: "Play'n GO", id: "287660", image: "https://altacdn.com/ig/img/games/287660-legacy-of-dead_thumbnailx2.jpg" },
-            
-            // NETENT
-            { name: "Starburst", provider: "NetEnt", id: "287400", image: "https://altacdn.com/ig/img/games/287400-starburst_thumbnailx2.jpg" },
-            { name: "Gonzo's Quest", provider: "NetEnt", id: "287410", image: "https://altacdn.com/ig/img/games/287410-gonzos-quest_thumbnailx2.jpg" },
-            { name: "Dead or Alive 2", provider: "NetEnt", id: "287420", image: "https://altacdn.com/ig/img/games/287420-dead-or-alive-2_thumbnailx2.jpg" },
-            { name: "Blood Suckers", provider: "NetEnt", id: "287430", image: "https://altacdn.com/ig/img/games/287430-blood-suckers_thumbnailx2.jpg" },
-            { name: "Jack and the Beanstalk", provider: "NetEnt", id: "287440", image: "https://altacdn.com/ig/img/games/287440-jack-and-the-beanstalk_thumbnailx2.jpg" },
-            
-            // HACKSAW GAMING
-            { name: "Wanted Dead or a Wild", provider: "Hacksaw Gaming", id: "287500", image: "https://altacdn.com/ig/img/games/287500-wanted-dead-or-a-wild_thumbnailx2.jpg" },
-            { name: "Chaos Crew 2", provider: "Hacksaw Gaming", id: "287510", image: "https://altacdn.com/ig/img/games/287510-chaos-crew-2_thumbnailx2.jpg" },
-            { name: "Le Bandit", provider: "Hacksaw Gaming", id: "287520", image: "https://altacdn.com/ig/img/games/287520-le-bandit_thumbnailx2.jpg" },
-            { name: "Stack 'Em", provider: "Hacksaw Gaming", id: "287530", image: "https://altacdn.com/ig/img/games/287530-stack-em_thumbnailx2.jpg" },
-            
-            // NOLIMIT CITY
-            { name: "Tombstone R.I.P", provider: "Nolimit City", id: "287700", image: "https://altacdn.com/ig/img/games/287700-tombstone-rip_thumbnailx2.jpg" },
-            { name: "Mental", provider: "Nolimit City", id: "287710", image: "https://altacdn.com/ig/img/games/287710-mental_thumbnailx2.jpg" },
-            { name: "San Quentin xWays", provider: "Nolimit City", id: "287720", image: "https://altacdn.com/ig/img/games/287720-san-quentin-xways_thumbnailx2.jpg" },
-            { name: "Fire in the Hole xBomb", provider: "Nolimit City", id: "287730", image: "https://altacdn.com/ig/img/games/287730-fire-in-the-hole-xbomb_thumbnailx2.jpg" },
-            
-            // OUTROS
-            { name: "Razor Returns", provider: "Push Gaming", id: "287815", image: "https://altacdn.com/ig/img/games/287815-razor-returns_thumbnailx2.jpg" },
-            { name: "Jammin' Jars", provider: "Push Gaming", id: "287900", image: "https://altacdn.com/ig/img/games/287900-jammin-jars_thumbnailx2.jpg" },
-            { name: "Razor Shark", provider: "Push Gaming", id: "287902", image: "https://altacdn.com/ig/img/games/287902-razor-shark_thumbnailx2.jpg" },
-        ];
+            if (popup.classList.contains('hidden')) {
+                popup.classList.remove('hidden');
+                toggleBtn.classList.remove('show');
+            } else {
+                popup.classList.add('hidden');
+                toggleBtn.classList.add('show');
+            }
+        }
+
+        function showModal(type, title, message) {
+            return new Promise((resolve) => {
+                const overlay = document.getElementById('modalOverlay');
+                const icon = document.getElementById('modalIcon');
+                const header = document.getElementById('modalHeader');
+                const body = document.getElementById('modalBody');
+                const buttonsContainer = document.getElementById('modalButtons');
+                const input = document.getElementById('modalInput');
+
+                const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+                icon.textContent = icons[type] || icons.info;
+                icon.className = `modal-icon ${type}`;
+                header.textContent = title;
+                body.textContent = message;
+                input.style.display = 'none';
+
+                buttonsContainer.innerHTML = '';
+                const btn = document.createElement('button');
+                btn.className = 'modal-btn modal-btn-primary';
+                btn.textContent = 'OK';
+                btn.onclick = () => {
+                    overlay.classList.remove('show');
+                    resolve(true);
+                };
+                buttonsContainer.appendChild(btn);
+                overlay.classList.add('show');
+            });
+        }
+
+        function showPrompt(title, message, placeholder = '') {
+            return new Promise((resolve) => {
+                const overlay = document.getElementById('modalOverlay');
+                const icon = document.getElementById('modalIcon');
+                const header = document.getElementById('modalHeader');
+                const body = document.getElementById('modalBody');
+                const buttonsContainer = document.getElementById('modalButtons');
+                const input = document.getElementById('modalInput');
+
+                icon.textContent = '💬';
+                icon.className = 'modal-icon info';
+                header.textContent = title;
+                body.textContent = message;
+                input.style.display = 'block';
+                input.value = '';
+                input.placeholder = placeholder;
+
+                buttonsContainer.innerHTML = '';
+                const btnOk = document.createElement('button');
+                btnOk.className = 'modal-btn modal-btn-primary';
+                btnOk.textContent = 'OK';
+                btnOk.onclick = () => {
+                    overlay.classList.remove('show');
+                    resolve(input.value);
+                };
+                const btnCancel = document.createElement('button');
+                btnCancel.className = 'modal-btn modal-btn-secondary';
+                btnCancel.textContent = 'Cancelar';
+                btnCancel.onclick = () => {
+                    overlay.classList.remove('show');
+                    resolve(null);
+                };
+                buttonsContainer.appendChild(btnOk);
+                buttonsContainer.appendChild(btnCancel);
+                overlay.classList.add('show');
+                setTimeout(() => input.focus(), 300);
+                input.onkeypress = (e) => { if (e.key === 'Enter') btnOk.click(); };
+            });
+        }
+
+        function showConfirm(title, message) {
+            return new Promise((resolve) => {
+                const overlay = document.getElementById('modalOverlay');
+                const icon = document.getElementById('modalIcon');
+                const header = document.getElementById('modalHeader');
+                const body = document.getElementById('modalBody');
+                const buttonsContainer = document.getElementById('modalButtons');
+                const input = document.getElementById('modalInput');
+
+                icon.textContent = '❓';
+                icon.className = 'modal-icon warning';
+                header.textContent = title;
+                body.textContent = message;
+                input.style.display = 'none';
+
+                buttonsContainer.innerHTML = '';
+                const btnYes = document.createElement('button');
+                btnYes.className = 'modal-btn modal-btn-primary';
+                btnYes.textContent = 'Sim';
+                btnYes.onclick = () => {
+                    overlay.classList.remove('show');
+                    resolve(true);
+                };
+                const btnNo = document.createElement('button');
+                btnNo.className = 'modal-btn modal-btn-secondary';
+                btnNo.textContent = 'Não';
+                btnNo.onclick = () => {
+                    overlay.classList.remove('show');
+                    resolve(false);
+                };
+                buttonsContainer.appendChild(btnYes);
+                buttonsContainer.appendChild(btnNo);
+                overlay.classList.add('show');
+            });
+        }
 
         // Data structure
         let data = {
@@ -733,13 +1424,13 @@
         function setStart() {
             const value = parseFloat(document.getElementById('startValue').value);
             if (isNaN(value) || value < 0) {
-                alert('⚠️ Por favor, insira um valor válido!');
+                showModal('error', 'Valor Inválido', 'Por favor, insira um valor válido!');
                 return;
             }
             data.stats.start = value;
             calculateStats();
             saveData();
-            alert('✅ Start definido com sucesso!');
+            showModal('success', 'Sucesso!', 'Start definido com sucesso!');
         }
 
         function updateStartValue() {
@@ -752,12 +1443,12 @@
             const bet = parseFloat(document.getElementById('slotBet').value);
 
             if (!name || !bet || bet <= 0) {
-                alert('⚠️ Por favor, preencha todos os campos corretamente!');
+                showModal('error', 'Campos Inválidos', 'Por favor, preencha todos os campos corretamente!');
                 return;
             }
 
             if (!image) {
-                alert('⚠️ Por favor, selecione um slot da lista para carregar a imagem automaticamente!');
+                showModal('warning', 'Imagem Necessária', 'Por favor, selecione um slot da lista para carregar a imagem automaticamente!');
                 return;
             }
 
@@ -785,19 +1476,19 @@
             autocompleteList.innerHTML = '';
             selectedSlotData = null;
 
-            alert('✅ Slot adicionado com sucesso!');
+            showModal('success', 'Sucesso!', 'Slot adicionado com sucesso!');
         }
 
-        function openSlot(id) {
+        async function openSlot(id) {
             const slot = data.slots.find(s => s.id === id);
             if (!slot) return;
 
-            const winAmount = prompt(`💰 Quanto ganhaste no slot "${slot.slotName}"?`);
+            const winAmount = await showPrompt('Registar Ganho', `Quanto ganhaste no slot "${slot.slotName}"?`, '0.00');
             if (winAmount === null) return;
 
             const amount = parseFloat(winAmount);
             if (isNaN(amount) || amount < 0) {
-                alert('⚠️ Valor inválido!');
+                showModal('error', 'Valor Inválido', 'Por favor, insira um valor válido!');
                 return;
             }
 
@@ -817,8 +1508,9 @@
             }, 10000);
         }
 
-        function deleteSlot(id) {
-            if (!confirm('🗑️ Tens certeza que queres apagar este slot?')) return;
+        async function deleteSlot(id) {
+            const confirmed = await showConfirm('Apagar Slot', 'Tens certeza que queres apagar este slot?');
+            if (!confirmed) return;
 
             data.slots = data.slots.filter(s => s.id !== id);
             calculateStats();
@@ -829,24 +1521,36 @@
         function calculateStats() {
             const totalBet = data.slots.reduce((sum, slot) => sum + (slot.betAmount || 0), 0);
             const openedSlots = data.slots.filter(s => s.opened);
-            const totalWin = openedSlots.reduce((sum, slot) => sum + (slot.winAmount || 0), 0);
+            const totalPay = openedSlots.reduce((sum, slot) => sum + (slot.winAmount || 0), 0);
 
-            data.stats.average = openedSlots.length > 0 ? totalWin / openedSlots.length : 0;
-            data.stats.breakEven = data.stats.start;
-            data.stats.multiplier = totalBet > 0 ? data.stats.start / totalBet : 0;
-            data.stats.profitLoss = totalWin - data.stats.start;
+            // AVG = Multiplicador médio dos slots abertos
+            const avgMultiplier = openedSlots.length > 0 
+                ? openedSlots.reduce((sum, slot) => {
+                    const bet = slot.betAmount || 1;
+                    return sum + ((slot.winAmount || 0) / bet);
+                }, 0) / openedSlots.length
+                : 0;
+
+            // B/E = Break Even Multiplier = Start / Total Bet
+            const beMultiplier = totalBet > 0 ? data.stats.start / totalBet : 0;
+
+            // Profit/Loss = Total Pay - Start
+            data.stats.profitLoss = totalPay - data.stats.start;
+            data.stats.avgMultiplier = avgMultiplier;
+            data.stats.beMultiplier = beMultiplier;
+            data.stats.totalPay = totalPay;
 
             updateStats();
         }
 
         function updateStats() {
             document.getElementById('statTarget').textContent = `€${data.stats.start.toFixed(2)}`;
-            document.getElementById('statAverage').textContent = `€${data.stats.average.toFixed(2)}`;
-            document.getElementById('statBreakEven').textContent = `€${data.stats.breakEven.toFixed(2)}`;
-            document.getElementById('statMultiplier').textContent = `${data.stats.multiplier.toFixed(2)}x`;
+            document.getElementById('statAverage').textContent = `${(data.stats.avgMultiplier || 0).toFixed(2)}x`;
+            document.getElementById('statBreakEven').textContent = `${(data.stats.beMultiplier || 0).toFixed(2)}x`;
+            document.getElementById('statTotalPay').textContent = `€${(data.stats.totalPay || 0).toFixed(2)}`;
             
             const profitElement = document.getElementById('statProfit');
-            const profit = data.stats.profitLoss;
+            const profit = data.stats.profitLoss || 0;
             profitElement.textContent = `€${profit.toFixed(2)}`;
             profitElement.style.color = profit >= 0 ? '#4ade80' : '#f87171';
         }
@@ -950,6 +1654,56 @@
             }
         }
 
+        async function toggleOverlay() {
+            if (!isFirebaseReady || !database) {
+                alert('⚠️ Firebase não conectado!');
+                return;
+            }
+
+            try {
+                const snapshot = await database.ref('overlay-visible').once('value');
+                const currentState = snapshot.val();
+                const newState = currentState === false ? true : false;
+                
+                await database.ref('overlay-visible').set(newState);
+                
+                const btn = document.getElementById('toggleOverlayBtn');
+                if (newState) {
+                    btn.textContent = '👁️ Esconder Overlay Bonus Hunt';
+                    btn.style.background = '#8b5cf6';
+                    console.log('👁️ Overlay mostrada');
+                } else {
+                    btn.textContent = '👁️ Mostrar Overlay Bonus Hunt';
+                    btn.style.background = '#ef4444';
+                    console.log('🙈 Overlay escondida');
+                }
+            } catch (error) {
+                console.error('❌ Erro ao toggle overlay:', error);
+                alert('⚠️ Erro ao controlar overlay!');
+            }
+        }
+
+        // Verificar estado inicial da overlay
+        async function checkOverlayState() {
+            if (!isFirebaseReady || !database) return;
+
+            try {
+                const snapshot = await database.ref('overlay-visible').once('value');
+                const isVisible = snapshot.val() !== false; // default true
+                
+                const btn = document.getElementById('toggleOverlayBtn');
+                if (isVisible) {
+                    btn.textContent = '👁️ Esconder Overlay Bonus Hunt';
+                    btn.style.background = '#8b5cf6';
+                } else {
+                    btn.textContent = '👁️ Mostrar Overlay Bonus Hunt';
+                    btn.style.background = '#ef4444';
+                }
+            } catch (error) {
+                console.error('❌ Erro ao verificar estado da overlay:', error);
+            }
+        }
+
         function exportData() {
             const dataStr = JSON.stringify(data, null, 2);
             const dataBlob = new Blob([dataStr], { type: 'application/json' });
@@ -985,8 +1739,9 @@
             reader.readAsText(file);
         }
 
-        function clearAll() {
-            if (!confirm('🗑️ Tens certeza que queres apagar TODOS os dados?')) return;
+        async function clearAll() {
+            const confirmed = await showConfirm('Limpar Tudo', 'Tens certeza que queres apagar TODOS os dados? Esta ação não pode ser desfeita!');
+            if (!confirmed) return;
 
             data = {
                 slots: [],
@@ -1004,12 +1759,13 @@
             renderSlots();
             updateStats();
             updateStartValue();
-            alert('✅ Todos os dados foram apagados!');
+            showModal('success', 'Dados Limpos', 'Todos os dados foram apagados com sucesso!');
         }
 
         // Inicializar
         setTimeout(() => {
             loadData();
+            checkOverlayState();
         }, 1000);
         
         console.log('✅ Painel carregado com Firebase!');
