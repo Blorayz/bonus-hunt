@@ -84,41 +84,56 @@
 
         .slot-image-wrapper {
             width: 100%;
-            height: 180px;
+            height: 400px;
             border-radius: 12px;
             overflow: hidden;
             margin-bottom: 15px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 8px 24px rgba(218, 165, 32, 0.4);
             position: relative;
-            border: 2px solid rgba(218, 165, 32, 0.4);
+            border: 3px solid #daa520;
+            background: linear-gradient(135deg, #1a1f35 0%, #0f1522 100%);
         }
 
         .slot-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
+        }
+
+        .slot-name-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.7), transparent);
+            padding: 20px;
+            padding-top: 60px;
         }
 
         .provider-badge {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 6px 12px;
+            top: 15px;
+            left: 15px;
+            background: rgba(218, 165, 32, 0.9);
+            color: #000;
+            padding: 8px 16px;
             border-radius: 8px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: 1px solid rgba(218, 165, 32, 0.3);
+            letter-spacing: 1px;
+            border: 2px solid #daa520;
+            box-shadow: 0 4px 12px rgba(218, 165, 32, 0.5);
         }
 
         .slot-name {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             color: #fff;
-            margin-bottom: 15px;
-            text-align: center;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            line-height: 1.3;
         }
 
         .stats-grid {
@@ -234,47 +249,397 @@
         }
 
         // ===== BASE DE DADOS DE SLOTS (com Max Win, RTP, Volatilidade) =====
-        const slotsDatabase = {
-            "Gates of Olympus": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
-            "Sweet Bonanza": { maxWin: "21100x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
-            "The Dog House": { maxWin: "6750x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
-            "Big Bass Bonanza": { maxWin: "2100x", rtp: "96.71%", volatility: "Medium", volatilityClass: "medium" },
-            "Sugar Rush": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
-            "Starlight Princess": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
-            "Wild West Gold": { maxWin: "10000x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
-            "Wolf Gold": { maxWin: "1000x", rtp: "96.01%", volatility: "Medium", volatilityClass: "medium" },
-            "Fruit Party": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
-            "Great Rhino Megaways": { maxWin: "20000x", rtp: "96.58%", volatility: "High", volatilityClass: "high" },
-            
-            "Book of Dead": { maxWin: "5000x", rtp: "96.21%", volatility: "High", volatilityClass: "high" },
-            "Reactoonz": { maxWin: "4570x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
-            "Fire Joker": { maxWin: "800x", rtp: "96.15%", volatility: "Medium", volatilityClass: "medium" },
-            "Tome of Madness": { maxWin: "2000x", rtp: "96.59%", volatility: "High", volatilityClass: "high" },
-            "Moon Princess": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
-            "Rise of Olympus": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
-            "Legacy of Dead": { maxWin: "5000x", rtp: "96.58%", volatility: "High", volatilityClass: "high" },
-            
-            "Starburst": { maxWin: "500x", rtp: "96.09%", volatility: "Low", volatilityClass: "low" },
-            "Gonzo's Quest": { maxWin: "2500x", rtp: "95.97%", volatility: "Medium", volatilityClass: "medium" },
-            "Dead or Alive 2": { maxWin: "111111x", rtp: "96.82%", volatility: "High", volatilityClass: "high" },
-            "Blood Suckers": { maxWin: "900x", rtp: "98.00%", volatility: "Medium", volatilityClass: "medium" },
-            
-            "Wanted Dead or a Wild": { maxWin: "12500x", rtp: "96.38%", volatility: "High", volatilityClass: "high" },
-            "Chaos Crew 2": { maxWin: "20000x", rtp: "96.30%", volatility: "High", volatilityClass: "high" },
-            "Le Bandit": { maxWin: "12500x", rtp: "96.30%", volatility: "High", volatilityClass: "high" },
-            
-            "Tombstone R.I.P": { maxWin: "300000x", rtp: "96.08%", volatility: "High", volatilityClass: "high" },
-            "Mental": { maxWin: "66666x", rtp: "96.08%", volatility: "High", volatilityClass: "high" },
-            "San Quentin xWays": { maxWin: "150000x", rtp: "96.03%", volatility: "High", volatilityClass: "high" },
-            "Fire in the Hole xBomb": { maxWin: "60000x", rtp: "96.06%", volatility: "High", volatilityClass: "high" },
-            
-            "Jammin' Jars": { maxWin: "20000x", rtp: "96.83%", volatility: "High", volatilityClass: "high" },
-            "Razor Shark": { maxWin: "2500x", rtp: "96.70%", volatility: "High", volatilityClass: "high" },
-            "Razor Returns": { maxWin: "50000x", rtp: "96.58%", volatility: "High", volatilityClass: "high" },
-            
-            // Pirate Bonanza da imagem
-            "Pirate Bonanza": { maxWin: "10000x", rtp: "96.31%", volatility: "High", volatilityClass: "high" }
-        };
+    const slotsDatabase = {
+    // ============================================
+    // PRAGMATIC PLAY
+    // ============================================
+    "Gates of Olympus": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "Sweet Bonanza": { maxWin: "21100x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
+    "The Dog House": { maxWin: "6750x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
+    "Big Bass Bonanza": { maxWin: "2100x", rtp: "96.71%", volatility: "Medium", volatilityClass: "medium" },
+    "Sugar Rush": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "Starlight Princess": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "Wild West Gold": { maxWin: "10000x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
+    "Wolf Gold": { maxWin: "1000x", rtp: "96.01%", volatility: "Medium", volatilityClass: "medium" },
+    "Fruit Party": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "Great Rhino Megaways": { maxWin: "20000x", rtp: "96.58%", volatility: "High", volatilityClass: "high" },
+    "Gates of Olympus 1000": { maxWin: "15000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "Sweet Bonanza 1000": { maxWin: "50000x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
+    "Big Bass Splash": { maxWin: "5000x", rtp: "96.71%", volatility: "Medium", volatilityClass: "medium" },
+    "Sugar Rush 1000": { maxWin: "25000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "Starlight Princess 1000": { maxWin: "15000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "The Dog House Megaways": { maxWin: "12305x", rtp: "96.55%", volatility: "High", volatilityClass: "high" },
+    "Big Bass Vegas Double Down Deluxe": { maxWin: "5000x", rtp: "96.07%", volatility: "Medium", volatilityClass: "medium" },
+    "Big Bass Floats My Boat": { maxWin: "5000x", rtp: "96.00%", volatility: "Medium", volatilityClass: "medium" },
+    "Big Bass Secrets of the Golden Lake": { maxWin: "5000x", rtp: "96.00%", volatility: "Medium", volatilityClass: "medium" },
+    "Fruit Party 2": { maxWin: "5000x", rtp: "96.53%", volatility: "High", volatilityClass: "high" },
+    "Wolf Gold Power Jackpot": { maxWin: "5000x", rtp: "96.01%", volatility: "Medium", volatilityClass: "medium" },
+    "Madame Destiny Megaways": { maxWin: "50000x", rtp: "96.57%", volatility: "High", volatilityClass: "high" },
+    "Wild West Gold Megaways": { maxWin: "12500x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
+    "Release the Kraken Megaways": { maxWin: "20000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "5 Lions Megaways": { maxWin: "46656x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "Buffalo King Megaways": { maxWin: "93750x", rtp: "96.06%", volatility: "High", volatilityClass: "high" },
+    "Extra Juicy Megaways": { maxWin: "52000x", rtp: "96.52%", volatility: "High", volatilityClass: "high" },
+    "Vikings Unleashed Megaways": { maxWin: "10000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "Power of Merlin Megaways": { maxWin: "50000x", rtp: "96.55%", volatility: "High", volatilityClass: "high" },
+    "Mustang Gold": { maxWin: "12250x", rtp: "96.53%", volatility: "Medium", volatilityClass: "medium" },
+    "Chilli Heat": { maxWin: "3285x", rtp: "96.50%", volatility: "Medium", volatilityClass: "medium" },
+    "Buffalo King": { maxWin: "93750x", rtp: "96.06%", volatility: "High", volatilityClass: "high" },
+    "5 Lions": { maxWin: "2500x", rtp: "96.50%", volatility: "Medium", volatilityClass: "medium" },
+    "Aztec Gems": { maxWin: "1000x", rtp: "96.52%", volatility: "Medium", volatilityClass: "medium" },
+    "Gems Bonanza": { maxWin: "10000x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
+    "Hot to Burn": { maxWin: "1000x", rtp: "96.71%", volatility: "High", volatilityClass: "high" },
+    "Joker's Jewels": { maxWin: "1000x", rtp: "96.50%", volatility: "Medium", volatilityClass: "medium" },
+    "Lucky Mouse": { maxWin: "500x", rtp: "96.51%", volatility: "Medium", volatilityClass: "medium" },
+    "Pirate Gold": { maxWin: "32270x", rtp: "96.49%", volatility: "Medium", volatilityClass: "medium" },
+    "The Catfather": { maxWin: "10000x", rtp: "96.50%", volatility: "Medium", volatilityClass: "medium" },
+    "Dragon Kingdom": { maxWin: "2520x", rtp: "96.47%", volatility: "Medium", volatilityClass: "medium" },
+    "Caishen's Gold": { maxWin: "2500x", rtp: "96.48%", volatility: "Medium", volatilityClass: "medium" },
+    "Black Bull": { maxWin: "1000x", rtp: "96.49%", volatility: "Medium", volatilityClass: "medium" },
+    "John Hunter and the Tomb of the Scarab Queen": { maxWin: "10500x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "Zeus vs Hades Gods of War": { maxWin: "15000x", rtp: "96.07%", volatility: "High", volatilityClass: "high" },
+    "Bomb Bonanza": { maxWin: "5000x", rtp: "96.49%", volatility: "High", volatilityClass: "high" },
+    "Aztec Bonanza": { maxWin: "5000x", rtp: "96.53%", volatility: "High", volatilityClass: "high" },
+    "Fire Strike": { maxWin: "20000x", rtp: "96.57%", volatility: "High", volatilityClass: "high" },
+    "Wild Wild Riches": { maxWin: "10000x", rtp: "96.58%", volatility: "High", volatilityClass: "high" },
+    "Wisdom of Athena": { maxWin: "5000x", rtp: "96.07%", volatility: "High", volatilityClass: "high" },
+
+    // ============================================
+    // HACKSAW GAMING
+    // ============================================
+    "Wanted Dead or a Wild": { maxWin: "12500x", rtp: "96.38%", volatility: "High", volatilityClass: "high" },
+    "Le Bandit": { maxWin: "12500x", rtp: "96.30%", volatility: "High", volatilityClass: "high" },
+    "Chaos Crew": { maxWin: "15000x", rtp: "96.30%", volatility: "High", volatilityClass: "high" },
+    "Wanted Dead or a Wild Apaches": { maxWin: "15000x", rtp: "96.31%", volatility: "High", volatilityClass: "high" },
+    "Donny Dough": { maxWin: "20000x", rtp: "96.29%", volatility: "High", volatilityClass: "high" },
+    "Dork Unit": { maxWin: "11000x", rtp: "96.21%", volatility: "High", volatilityClass: "high" },
+    "Chaos Crew 2": { maxWin: "20000x", rtp: "96.30%", volatility: "High", volatilityClass: "high" },
+    "Stick 'Em": { maxWin: "15000x", rtp: "96.28%", volatility: "High", volatilityClass: "high" },
+    "The Bowery Boys": { maxWin: "11900x", rtp: "96.28%", volatility: "High", volatilityClass: "high" },
+    "Itero": { maxWin: "10000x", rtp: "96.32%", volatility: "High", volatilityClass: "high" },
+    "Stack 'Em": { maxWin: "10000x", rtp: "96.24%", volatility: "High", volatilityClass: "high" },
+    "RIP City": { maxWin: "10000x", rtp: "96.28%", volatility: "High", volatilityClass: "high" },
+    "Cubes": { maxWin: "9000x", rtp: "96.23%", volatility: "High", volatilityClass: "high" },
+    "Cubes 2": { maxWin: "12000x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Curry in a Hurry": { maxWin: "10000x", rtp: "96.26%", volatility: "High", volatilityClass: "high" },
+    "Hades Gigablox": { maxWin: "12500x", rtp: "96.28%", volatility: "High", volatilityClass: "high" },
+    "Rocket Reels": { maxWin: "10000x", rtp: "96.34%", volatility: "High", volatilityClass: "high" },
+    "M3GAN": { maxWin: "10000x", rtp: "96.25%", volatility: "High", volatilityClass: "high" },
+    "Joker Bombs": { maxWin: "10000x", rtp: "96.32%", volatility: "High", volatilityClass: "high" },
+    "The General's Hot Fiesta": { maxWin: "10000x", rtp: "96.29%", volatility: "High", volatilityClass: "high" },
+    "Gladiator Legends": { maxWin: "20000x", rtp: "96.36%", volatility: "High", volatilityClass: "high" },
+    "It's Time": { maxWin: "15000x", rtp: "96.30%", volatility: "High", volatilityClass: "high" },
+    "Xpander": { maxWin: "25000x", rtp: "96.26%", volatility: "High", volatilityClass: "high" },
+    "Xways Hoarder xSplit": { maxWin: "55000x", rtp: "96.28%", volatility: "High", volatilityClass: "high" },
+    "Dead Canary": { maxWin: "15000x", rtp: "96.31%", volatility: "High", volatilityClass: "high" },
+    "Bomb Squad": { maxWin: "10000x", rtp: "96.27%", volatility: "High", volatilityClass: "high" },
+    "Pocketz": { maxWin: "10000x", rtp: "96.23%", volatility: "High", volatilityClass: "high" },
+    "Hand of Anubis": { maxWin: "10000x", rtp: "96.24%", volatility: "High", volatilityClass: "high" },
+    "Pirate Booty": { maxWin: "10000x", rtp: "96.31%", volatility: "High", volatilityClass: "high" },
+    "Hop 'n' Pop": { maxWin: "10000x", rtp: "96.27%", volatility: "High", volatilityClass: "high" },
+    "Joker Supreme": { maxWin: "10000x", rtp: "96.29%", volatility: "High", volatilityClass: "high" },
+    "Stacked": { maxWin: "10000x", rtp: "96.25%", volatility: "High", volatilityClass: "high" },
+    "Outlaws Inc.": { maxWin: "10000x", rtp: "96.26%", volatility: "High", volatilityClass: "high" },
+    "Mystery Mission: To the Moon": { maxWin: "10000x", rtp: "96.30%", volatility: "High", volatilityClass: "high" },
+    "Dual Spin xXx": { maxWin: "7777x", rtp: "96.24%", volatility: "High", volatilityClass: "high" },
+    "Canny The Can": { maxWin: "10000x", rtp: "96.28%", volatility: "High", volatilityClass: "high" },
+    "Golden Genie and the Walking Wilds": { maxWin: "10000x", rtp: "96.29%", volatility: "High", volatilityClass: "high" },
+    "Buffalo Stack'n'Sync": { maxWin: "30000x", rtp: "96.32%", volatility: "High", volatilityClass: "high" },
+    "Warrior Graveyard xNudge": { maxWin: "16807x", rtp: "96.29%", volatility: "High", volatilityClass: "high" },
+    "Cashosaurus": { maxWin: "10000x", rtp: "96.27%", volatility: "High", volatilityClass: "high" },
+    "El Jackpotto": { maxWin: "12000x", rtp: "96.28%", volatility: "High", volatilityClass: "high" },
+    "Razor Shark": { maxWin: "2500x", rtp: "96.70%", volatility: "High", volatilityClass: "high" },
+    "The Dog House Dog or Alive": { maxWin: "10000x", rtp: "96.30%", volatility: "High", volatilityClass: "high" },
+    "Gates of Gatot Kaca": { maxWin: "5000x", rtp: "96.31%", volatility: "High", volatilityClass: "high" },
+    "Santa's Stack": { maxWin: "10000x", rtp: "96.26%", volatility: "High", volatilityClass: "high" },
+    "Bowery Boys vs. The Mummy": { maxWin: "15000x", rtp: "96.29%", volatility: "High", volatilityClass: "high" },
+    "Tomb of Akhenaten": { maxWin: "10000x", rtp: "96.28%", volatility: "High", volatilityClass: "high" },
+    "Fat Banker": { maxWin: "20000x", rtp: "96.27%", volatility: "High", volatilityClass: "high" },
+    "Toshi Video Club": { maxWin: "25000x", rtp: "96.30%", volatility: "High", volatilityClass: "high" },
+    "Giga Jar": { maxWin: "10000x", rtp: "96.25%", volatility: "High", volatilityClass: "high" },
+
+    // ============================================
+    // PUSH GAMING
+    // ============================================
+    "Jammin' Jars": { maxWin: "20000x", rtp: "96.83%", volatility: "High", volatilityClass: "high" },
+    "Jammin' Jars 2": { maxWin: "50000x", rtp: "96.44%", volatility: "High", volatilityClass: "high" },
+    "Razor Shark": { maxWin: "2500x", rtp: "96.70%", volatility: "High", volatilityClass: "high" },
+    "Fat Rabbit": { maxWin: "20000x", rtp: "96.45%", volatility: "High", volatilityClass: "high" },
+    "Retro Tapes": { maxWin: "5000x", rtp: "96.80%", volatility: "High", volatilityClass: "high" },
+    "Big Bamboo": { maxWin: "50000x", rtp: "96.13%", volatility: "High", volatilityClass: "high" },
+    "Wild Swarm": { maxWin: "2940x", rtp: "97.03%", volatility: "High", volatilityClass: "high" },
+    "Mystery Museum": { maxWin: "10000x", rtp: "96.59%", volatility: "High", volatilityClass: "high" },
+    "Mad Cars": { maxWin: "10000x", rtp: "96.57%", volatility: "High", volatilityClass: "high" },
+    "Mount Mazuma": { maxWin: "20000x", rtp: "96.52%", volatility: "High", volatilityClass: "high" },
+    "Dinopolis": { maxWin: "50000x", rtp: "96.41%", volatility: "High", volatilityClass: "high" },
+    "Deadly 5": { maxWin: "20000x", rtp: "96.56%", volatility: "High", volatilityClass: "high" },
+    "Tiki Tumble": { maxWin: "30000x", rtp: "96.49%", volatility: "High", volatilityClass: "high" },
+    "Midnight Marauder": { maxWin: "25000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "Nightfall": { maxWin: "10000x", rtp: "96.48%", volatility: "High", volatilityClass: "high" },
+    "Blaze of Ra": { maxWin: "5000x", rtp: "96.41%", volatility: "Medium", volatilityClass: "medium" },
+    "Bison Moon": { maxWin: "50000x", rtp: "96.43%", volatility: "High", volatilityClass: "high" },
+    "Fire Hopper": { maxWin: "7500x", rtp: "96.42%", volatility: "High", volatilityClass: "high" },
+    "Fat Drac": { maxWin: "50000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "Viking Clash": { maxWin: "1000x", rtp: "96.56%", volatility: "Medium", volatilityClass: "medium" },
+    "Booty Bay": { maxWin: "25000x", rtp: "96.48%", volatility: "High", volatilityClass: "high" },
+    "Wild Trigger": { maxWin: "7500x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
+    "Cat Wilde and the Doom of Dead": { maxWin: "5000x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Land of Zenith": { maxWin: "25000x", rtp: "96.54%", volatility: "High", volatilityClass: "high" },
+    "Chilli Heat Megaways": { maxWin: "10000x", rtp: "96.52%", volatility: "High", volatilityClass: "high" },
+    "Chaos Crew Scratch": { maxWin: "20000x", rtp: "96.30%", volatility: "High", volatilityClass: "high" },
+    "Wheel of Wonders": { maxWin: "20000x", rtp: "96.45%", volatility: "High", volatilityClass: "high" },
+    "Gold Digger": { maxWin: "11000x", rtp: "96.46%", volatility: "High", volatilityClass: "high" },
+    "Miami Multiplier": { maxWin: "25000x", rtp: "96.49%", volatility: "High", volatilityClass: "high" },
+    "Shadow Society": { maxWin: "25000x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
+    "Wild Flower": { maxWin: "3030x", rtp: "96.42%", volatility: "Medium", volatilityClass: "medium" },
+    "Blue Wizard": { maxWin: "5000x", rtp: "96.48%", volatility: "High", volatilityClass: "high" },
+    "Joker Troupe": { maxWin: "7500x", rtp: "96.63%", volatility: "High", volatilityClass: "high" },
+    "Immortal Fruits": { maxWin: "10000x", rtp: "96.53%", volatility: "High", volatilityClass: "high" },
+    "Wizard Shop": { maxWin: "10000x", rtp: "96.49%", volatility: "High", volatilityClass: "high" },
+    "Wild Celebrity Bus Megaways": { maxWin: "20000x", rtp: "96.47%", volatility: "High", volatilityClass: "high" },
+    "Stacked Fire 7s": { maxWin: "5000x", rtp: "96.52%", volatility: "High", volatilityClass: "high" },
+    "Phoenix Forge": { maxWin: "50000x", rtp: "96.42%", volatility: "High", volatilityClass: "high" },
+    "Goose Golden Egg": { maxWin: "7500x", rtp: "96.48%", volatility: "High", volatilityClass: "high" },
+    "The Falcon Huntress": { maxWin: "8000x", rtp: "96.27%", volatility: "Medium", volatilityClass: "medium" },
+    "Poltava Flames of War": { maxWin: "2500x", rtp: "96.50%", volatility: "Medium", volatilityClass: "medium" },
+    "Jammin' Jars 3": { maxWin: "50000x", rtp: "96.45%", volatility: "High", volatilityClass: "high" },
+    "Rainbow Mania": { maxWin: "10000x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
+    "Battle Dwarf": { maxWin: "5000x", rtp: "96.31%", volatility: "High", volatilityClass: "high" },
+    "Gems & Stones": { maxWin: "4000x", rtp: "96.08%", volatility: "Medium", volatilityClass: "medium" },
+    "Humpty Dumpty": { maxWin: "1000x", rtp: "96.50%", volatility: "Medium", volatilityClass: "medium" },
+    "Fat Santa": { maxWin: "50000x", rtp: "96.45%", volatility: "High", volatilityClass: "high" },
+    "Laser Fruit": { maxWin: "16807x", rtp: "96.03%", volatility: "High", volatilityClass: "high" },
+    "Meow": { maxWin: "2500x", rtp: "96.46%", volatility: "Medium", volatilityClass: "medium" },
+    "Wild North": { maxWin: "3000x", rtp: "96.55%", volatility: "Medium", volatilityClass: "medium" },
+
+    // ============================================
+    // THUNDERKICK
+    // ============================================
+    "Esqueleto Explosivo": { maxWin: "700x", rtp: "96.00%", volatility: "Medium", volatilityClass: "medium" },
+    "Esqueleto Explosivo 2": { maxWin: "5000x", rtp: "96.13%", volatility: "High", volatilityClass: "high" },
+    "Pink Elephants": { maxWin: "8200x", rtp: "96.10%", volatility: "High", volatilityClass: "high" },
+    "Pink Elephants 2": { maxWin: "10000x", rtp: "96.13%", volatility: "High", volatilityClass: "high" },
+    "Fruit Warp": { maxWin: "11000x", rtp: "97.00%", volatility: "Medium", volatilityClass: "medium" },
+    "Flame Busters": { maxWin: "2200x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+    "Divine Lotus": { maxWin: "7770x", rtp: "96.14%", volatility: "High", volatilityClass: "high" },
+    "Crystal Quest Arcane Tower": { maxWin: "15000x", rtp: "96.15%", volatility: "High", volatilityClass: "high" },
+    "Crystal Quest Frostlands": { maxWin: "15000x", rtp: "96.14%", volatility: "High", volatilityClass: "high" },
+    "Crystal Quest Deep Jungle": { maxWin: "15000x", rtp: "96.14%", volatility: "High", volatilityClass: "high" },
+    "Beat the Beast: Quetzalcoatl's Trial": { maxWin: "22222x", rtp: "96.16%", volatility: "High", volatilityClass: "high" },
+    "Beat the Beast: Mighty Sphinx": { maxWin: "22222x", rtp: "96.15%", volatility: "High", volatilityClass: "high" },
+    "Beat the Beast: Kraken's Lair": { maxWin: "22222x", rtp: "96.15%", volatility: "High", volatilityClass: "high" },
+    "Midas Golden Touch": { maxWin: "10100x", rtp: "96.10%", volatility: "High", volatilityClass: "high" },
+    "Rooster Fury": { maxWin: "10000x", rtp: "96.14%", volatility: "High", volatilityClass: "high" },
+    "Sven's Postcard": { maxWin: "10000x", rtp: "96.13%", volatility: "High", volatilityClass: "high" },
+    "Divine Riches Helios": { maxWin: "6000x", rtp: "96.10%", volatility: "High", volatilityClass: "high" },
+    "Divine Riches": { maxWin: "6000x", rtp: "96.10%", volatility: "High", volatilityClass: "high" },
+    "Pyramyth": { maxWin: "10000x", rtp: "96.10%", volatility: "High", volatilityClass: "high" },
+    "Sword of Khans": { maxWin: "10466x", rtp: "96.15%", volatility: "High", volatilityClass: "high" },
+    "Carnival Queen": { maxWin: "6750x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+    "Jaguar Temple": { maxWin: "20100x", rtp: "96.10%", volatility: "High", volatilityClass: "high" },
+    "Babushkas": { maxWin: "3840x", rtp: "95.80%", volatility: "Low", volatilityClass: "low" },
+    "The Falcon Huntress": { maxWin: "8000x", rtp: "96.27%", volatility: "Medium", volatilityClass: "medium" },
+    "Phoenix Paradise": { maxWin: "5000x", rtp: "96.14%", volatility: "Medium", volatilityClass: "medium" },
+    "Dragon Horn": { maxWin: "7575x", rtp: "96.14%", volatility: "High", volatilityClass: "high" },
+    "Luchadora": { maxWin: "5000x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Tiger Rush": { maxWin: "6232x", rtp: "96.10%", volatility: "High", volatilityClass: "high" },
+    "Arcader": { maxWin: "9000x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+    "Not Enough Kittens": { maxWin: "10000x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+    "Sunset Delight": { maxWin: "2000x", rtp: "96.30%", volatility: "Low", volatilityClass: "low" },
+    "Spectra": { maxWin: "1000x", rtp: "96.40%", volatility: "Low", volatilityClass: "low" },
+    "Barber Shop Uncut": { maxWin: "5000x", rtp: "97.00%", volatility: "Medium", volatilityClass: "medium" },
+    "Sticky Bombs": { maxWin: "4864x", rtp: "96.10%", volatility: "High", volatilityClass: "high" },
+    "Yeti Battle of Greenhat Peak": { maxWin: "9920x", rtp: "96.10%", volatility: "High", volatilityClass: "high" },
+    "Ravens Eye": { maxWin: "10000x", rtp: "96.10%", volatility: "High", volatilityClass: "high" },
+    "Zoom": { maxWin: "1500x", rtp: "96.20%", volatility: "Medium", volatilityClass: "medium" },
+    "Full Moon Romance": { maxWin: "8000x", rtp: "96.10%", volatility: "High", volatilityClass: "high" },
+    "Birds on a Wire": { maxWin: "17429x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Wild Heist at Peacock Manor": { maxWin: "22222x", rtp: "96.14%", volatility: "High", volatilityClass: "high" },
+    "Bork the Berzerker": { maxWin: "2000x", rtp: "97.30%", volatility: "High", volatilityClass: "high" },
+    "Sunny Shores": { maxWin: "1500x", rtp: "96.20%", volatility: "Medium", volatilityClass: "medium" },
+    "Magnetron": { maxWin: "2500x", rtp: "96.00%", volatility: "Medium", volatilityClass: "medium" },
+    "The Rift": { maxWin: "4095x", rtp: "96.30%", volatility: "Medium", volatilityClass: "medium" },
+    "Riders of the Storm": { maxWin: "20000x", rtp: "96.13%", volatility: "High", volatilityClass: "high" },
+    "1429 Uncharted Seas": { maxWin: "670x", rtp: "98.50%", volatility: "Low", volatilityClass: "low" },
+    "Turning Totems": { maxWin: "2000x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+    "Frog Grog": { maxWin: "2000x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+    "Oki Doki": { maxWin: "500x", rtp: "96.80%", volatility: "Low", volatilityClass: "low" },
+    "Slots o' Gold": { maxWin: "4000x", rtp: "96.00%", volatility: "Medium", volatilityClass: "medium" },
+
+    // ============================================
+    // PLAY'N GO
+    // ============================================
+    "Book of Dead": { maxWin: "5000x", rtp: "96.21%", volatility: "High", volatilityClass: "high" },
+    "Reactoonz": { maxWin: "4570x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
+    "Reactoonz 2": { maxWin: "5083x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Moon Princess": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "Moon Princess 100": { maxWin: "15000x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Rise of Olympus": { maxWin: "5000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "Rise of Olympus 100": { maxWin: "15000x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Doom of Dead": { maxWin: "5000x", rtp: "96.21%", volatility: "High", volatilityClass: "high" },
+    "Legacy of Dead": { maxWin: "5000x", rtp: "96.58%", volatility: "High", volatilityClass: "high" },
+    "Rich Wilde and the Tome of Madness": { maxWin: "2000x", rtp: "96.59%", volatility: "High", volatilityClass: "high" },
+    "Fire Joker": { maxWin: "800x", rtp: "96.15%", volatility: "Medium", volatilityClass: "medium" },
+    "Gigantoonz": { maxWin: "4000x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Sweet Alchemy": { maxWin: "6300x", rtp: "96.52%", volatility: "High", volatilityClass: "high" },
+    "Sweet Alchemy 100": { maxWin: "10000x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Coywolf Cash": { maxWin: "50000x", rtp: "96.28%", volatility: "High", volatilityClass: "high" },
+    "Gemix": { maxWin: "6498x", rtp: "96.75%", volatility: "High", volatilityClass: "high" },
+    "Gemix 2": { maxWin: "7500x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Viking Runecraft": { maxWin: "5000x", rtp: "96.70%", volatility: "High", volatilityClass: "high" },
+    "Charlie Chance in Hell to Pay": { maxWin: "7500x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Scroll of Dead": { maxWin: "5000x", rtp: "96.28%", volatility: "High", volatilityClass: "high" },
+    "Cat Wilde and the Doom of Dead": { maxWin: "5000x", rtp: "96.23%", volatility: "High", volatilityClass: "high" },
+    "Ankh of Anubis": { maxWin: "8000x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Golden Osiris": { maxWin: "5000x", rtp: "96.27%", volatility: "High", volatilityClass: "high" },
+    "Wild Blood": { maxWin: "2500x", rtp: "96.17%", volatility: "High", volatilityClass: "high" },
+    "Wild Blood 2": { maxWin: "10000x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Bull in a China Shop": { maxWin: "6000x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Rainforest Magic Bingo": { maxWin: "5000x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "24K Dragon": { maxWin: "24000x", rtp: "96.18%", volatility: "High", volatilityClass: "high" },
+    "Golden Ticket": { maxWin: "5000x", rtp: "96.73%", volatility: "High", volatilityClass: "high" },
+    "Golden Ticket 2": { maxWin: "5000x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Contact": { maxWin: "7500x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Troll Hunters": { maxWin: "1656x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "Troll Hunters 2": { maxWin: "10000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "Pimped": { maxWin: "5000x", rtp: "96.51%", volatility: "High", volatilityClass: "high" },
+    "Sea Hunter": { maxWin: "1500x", rtp: "96.64%", volatility: "High", volatilityClass: "high" },
+    "Pearls of India": { maxWin: "2000x", rtp: "96.87%", volatility: "Medium", volatilityClass: "medium" },
+    "House of Doom": { maxWin: "5000x", rtp: "96.11%", volatility: "High", volatilityClass: "high" },
+    "House of Doom 2: The Crypt": { maxWin: "10000x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Rage of the Seas": { maxWin: "10000x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Sails of Gold": { maxWin: "5000x", rtp: "96.25%", volatility: "High", volatilityClass: "high" },
+    "Lord Merlin and the Lady of the Lake": { maxWin: "5000x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Eye of Atum": { maxWin: "5000x", rtp: "96.28%", volatility: "High", volatilityClass: "high" },
+    "Hugo": { maxWin: "10000x", rtp: "96.40%", volatility: "High", volatilityClass: "high" },
+    "Hugo 2": { maxWin: "10000x", rtp: "96.50%", volatility: "High", volatilityClass: "high" },
+    "Raging Rex": { maxWin: "5000x", rtp: "96.34%", volatility: "High", volatilityClass: "high" },
+    "Raging Rex 2": { maxWin: "30000x", rtp: "96.15%", volatility: "High", volatilityClass: "high" },
+    "Mystery Joker": { maxWin: "1000x", rtp: "96.98%", volatility: "High", volatilityClass: "high" },
+    "Mystery Joker 6000": { maxWin: "6000x", rtp: "96.98%", volatility: "High", volatilityClass: "high" },
+    "Disco Diamonds": { maxWin: "5000x", rtp: "96.20%", volatility: "High", volatilityClass: "high" },
+    "Cloud Quest": { maxWin: "2000x", rtp: "96.52%", volatility: "Medium", volatilityClass: "medium" },
+
+    // ============================================
+    // BELATRA
+    // ============================================
+    "Lucky Drink": { maxWin: "5000x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+    "Lucky Drink in Egypt": { maxWin: "5000x", rtp: "96.12%", volatility: "Medium", volatilityClass: "medium" },
+    "Cherry Cocktail": { maxWin: "2000x", rtp: "96.15%", volatility: "Medium", volatilityClass: "medium" },
+    "Crazy Monkey": { maxWin: "5000x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+    "Crazy Monkey 2": { maxWin: "5000x", rtp: "96.12%", volatility: "Medium", volatilityClass: "medium" },
+    "Island": { maxWin: "5000x", rtp: "96.08%", volatility: "Medium", volatilityClass: "medium" },
+    "Island 2": { maxWin: "5000x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+    "Garage": { maxWin: "5000x", rtp: "96.15%", volatility: "High", volatilityClass: "high" },
+    "Pirate": { maxWin: "5000x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+    "Pirate 2": { maxWin: "5000x", rtp: "96.12%", volatility: "Medium", volatilityClass: "medium" },
+    "Keks": { maxWin: "5000x", rtp: "96.13%", volatility: "Medium", volatilityClass: "medium" },
+    "Lucky Haunter": { maxWin: "5000x", rtp: "96.11%", volatility: "Medium", volatilityClass: "medium" },
+    "Resident": { maxWin: "5000x", rtp: "96.14%", volatility: "High", volatilityClass: "high" },
+    "Fruit Cocktail": { maxWin: "2000x", rtp: "96.09%", volatility: "Medium", volatilityClass: "medium" },
+    "Fruit Cocktail 2": { maxWin: "2000x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+    "Aztec Gold": { maxWin: "5000x", rtp: "96.12%", volatility: "High", volatilityClass: "high" },
+    "Rock Climber": { maxWin: "5000x", rtp: "96.15%", volatility: "High", volatilityClass: "high" },
+    "Champagne": { maxWin: "2000x", rtp: "96.08%", volatility: "Medium", volatilityClass: "medium" },
+    "Gnome": { maxWin: "5000x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+    "Sweet Life": { maxWin: "5000x", rtp: "96.11%", volatility: "Medium", volatilityClass: "medium" },
+    "Sweet Life 2": { maxWin: "5000x", rtp: "96.13%", volatility: "Medium", volatilityClass: "medium" },
+    "Money Game": { maxWin: "5000x", rtp: "96.14%", volatility: "High", volatilityClass: "high" },
+    "Gryphon's Gold": { maxWin: "5000x", rtp: "96.12%", volatility: "High", volatilityClass: "high" },
+    "Gryphon's Gold Deluxe": { maxWin: "5000x", rtp: "96.15%", volatility: "High", volatilityClass: "high" },
+    "Magic Princess": { maxWin: "5000x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+    "Chukcha": { maxWin: "5000x", rtp: "96.08%", volatility: "Medium", volatilityClass: "medium" },
+    "Fairy Land": { maxWin: "5000x", rtp: "96.11%", volatility: "Medium", volatilityClass: "medium" },
+    "Fairy Land 2": { maxWin: "5000x", rtp: "96.13%", volatility: "Medium", volatilityClass: "medium" },
+    "Banana Splash": { maxWin: "5000x", rtp: "96.09%", volatility: "Medium", volatilityClass: "medium" },
+    "Gold Fish": { maxWin: "5000x", rtp: "96.12%", volatility: "Medium", volatilityClass: "medium" },
+    "Safari": { maxWin: "5000x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+    "Sparta": { maxWin: "5000x", rtp: "96.15%", volatility: "High", volatilityClass: "high" },
+    "Secret Forest": { maxWin: "5000x", rtp: "96.11%", volatility: "Medium", volatilityClass: "medium" },
+    "Troll Faces": { maxWin: "5000x", rtp: "96.08%", volatility: "Medium", volatilityClass: "medium" },
+    "Volcano": { maxWin: "5000x", rtp: "96.14%", volatility: "High", volatilityClass: "high" },
+    "Viking's Fun": { maxWin: "5000x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+    "Desert Treasure": { maxWin: "5000x", rtp: "96.12%", volatility: "High", volatilityClass: "high" },
+    "Desert Treasure II": { maxWin: "5000x", rtp: "96.15%", volatility: "High", volatilityClass: "high" },
+    "Elven Princesses": { maxWin: "5000x", rtp: "96.09%", volatility: "Medium", volatilityClass: "medium" },
+    "Mega Jack": { maxWin: "5000x", rtp: "96.13%", volatility: "Medium", volatilityClass: "medium" },
+    "Aladin's Lamp": { maxWin: "5000x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+    "Dragon's Pearl": { maxWin: "5000x", rtp: "96.11%", volatility: "High", volatilityClass: "high" },
+    "Dragon's Deep": { maxWin: "5000x", rtp: "96.14%", volatility: "High", volatilityClass: "high" },
+    "Unicorn Magic": { maxWin: "5000x", rtp: "96.08%", volatility: "Medium", volatilityClass: "medium" },
+    "Lucky Drink Xmas": { maxWin: "5000x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+    "Happy Jungle": { maxWin: "5000x", rtp: "96.12%", volatility: "Medium", volatilityClass: "medium" },
+    "Queen of Hearts": { maxWin: "5000x", rtp: "96.09%", volatility: "Medium", volatilityClass: "medium" },
+    "Dolphin's Pearl": { maxWin: "5000x", rtp: "96.11%", volatility: "Medium", volatilityClass: "medium" },
+    "Polar Fox": { maxWin: "5000x", rtp: "96.13%", volatility: "Medium", volatilityClass: "medium" },
+    "Magic Forest": { maxWin: "5000x", rtp: "96.10%", volatility: "Medium", volatilityClass: "medium" },
+
+    // ============================================
+    // BGAMING
+    // ============================================
+    "Aztec Magic": { maxWin: "2500x", rtp: "97.00%", volatility: "High", volatilityClass: "high" },
+    "Aztec Magic Deluxe": { maxWin: "3750x", rtp: "96.53%", volatility: "High", volatilityClass: "high" },
+    "Aztec Magic Megaways": { maxWin: "10000x", rtp: "96.81%", volatility: "High", volatilityClass: "high" },
+    "Elvis Frog in Vegas": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Elvis Frog TRUEWAYS": { maxWin: "10000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Book of Cats": { maxWin: "5000x", rtp: "97.10%", volatility: "High", volatilityClass: "high" },
+    "Book of Cats Megaways": { maxWin: "10000x", rtp: "96.87%", volatility: "High", volatilityClass: "high" },
+    "Fruit Million": { maxWin: "1000000x", rtp: "96.38%", volatility: "High", volatilityClass: "high" },
+    "Lucky Lady Moon": { maxWin: "5000x", rtp: "97.02%", volatility: "High", volatilityClass: "high" },
+    "Lucky Lady Moon Megaways": { maxWin: "10000x", rtp: "96.92%", volatility: "High", volatilityClass: "high" },
+    "Alien Fruits": { maxWin: "5000x", rtp: "97.00%", volatility: "High", volatilityClass: "high" },
+    "Wild Cash": { maxWin: "2500x", rtp: "96.57%", volatility: "Medium", volatilityClass: "medium" },
+    "Wild Cash x9990": { maxWin: "9990x", rtp: "96.58%", volatility: "High", volatilityClass: "high" },
+    "Bonanza Billion": { maxWin: "5000x", rtp: "97.01%", volatility: "High", volatilityClass: "high" },
+    "Dig Dig Digger": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Platinum Lightning": { maxWin: "2500x", rtp: "96.94%", volatility: "Medium", volatilityClass: "medium" },
+    "Platinum Lightning Deluxe": { maxWin: "5000x", rtp: "96.76%", volatility: "High", volatilityClass: "high" },
+    "Doors of Sol": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "West Town": { maxWin: "5000x", rtp: "96.49%", volatility: "High", volatilityClass: "high" },
+    "Gemhalla": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Scrolls of Ra HD": { maxWin: "5000x", rtp: "97.00%", volatility: "High", volatilityClass: "high" },
+    "Dragon's Gold 100": { maxWin: "10000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Maneki 88 Gold": { maxWin: "10000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Maneki 88 Fortunes": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Princess of the Ocean": { maxWin: "5000x", rtp: "97.03%", volatility: "High", volatilityClass: "high" },
+    "Princess of the Ocean 2": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Domnitors": { maxWin: "2500x", rtp: "97.00%", volatility: "Medium", volatilityClass: "medium" },
+    "Domnitors Deluxe": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "All Lucky Clovers": { maxWin: "2500x", rtp: "97.00%", volatility: "Medium", volatilityClass: "medium" },
+    "All Lucky Clovers 5": { maxWin: "2500x", rtp: "96.95%", volatility: "Medium", volatilityClass: "medium" },
+    "Four Aces": { maxWin: "5000x", rtp: "97.00%", volatility: "Medium", volatilityClass: "medium" },
+    "Four Aces II": { maxWin: "5000x", rtp: "96.00%", volatility: "Medium", volatilityClass: "medium" },
+    "Hot Coins Hold and Spin": { maxWin: "5000x", rtp: "96.00%", volatility: "Medium", volatilityClass: "medium" },
+    "Aloha King Elvis": { maxWin: "2500x", rtp: "96.17%", volatility: "Medium", volatilityClass: "medium" },
+    "Avalon: The Lost Kingdom": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Candy Monsta": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Cherry Fiesta": { maxWin: "2500x", rtp: "96.53%", volatility: "Medium", volatilityClass: "medium" },
+    "Desert Treasure": { maxWin: "5000x", rtp: "97.00%", volatility: "Medium", volatilityClass: "medium" },
+    "Golden Profits": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Lava Lions": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Lucky Crumbling": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Lucky Sweets": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Mechanical Clover": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Penny Pelican": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Riders of the Storm": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Road 2 Riches": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Spinosaurus": { maxWin: "5000x", rtp: "96.00%", volatility: "High", volatilityClass: "high" },
+    "Multihand Blackjack Pro": { maxWin: "1000x", rtp: "99.60%", volatility: "Low", volatilityClass: "low" },
+    "Scratch Dice": { maxWin: "5000x", rtp: "96.00%", volatility: "Medium", volatilityClass: "medium" },
+    "Plinko": { maxWin: "1000x", rtp: "99.00%", volatility: "Low", volatilityClass: "low" },
+
+    // Additional popular slots from other providers
+    "Starburst": { maxWin: "500x", rtp: "96.09%", volatility: "Low", volatilityClass: "low" },
+    "Gonzo's Quest": { maxWin: "2500x", rtp: "95.97%", volatility: "Medium", volatilityClass: "medium" },
+    "Dead or Alive 2": { maxWin: "111111x", rtp: "96.82%", volatility: "High", volatilityClass: "high" },
+    "Blood Suckers": { maxWin: "900x", rtp: "98.00%", volatility: "Medium", volatilityClass: "medium" },
+    "Tombstone R.I.P": { maxWin: "300000x", rtp: "96.08%", volatility: "High", volatilityClass: "high" },
+    "Mental": { maxWin: "66666x", rtp: "96.08%", volatility: "High", volatilityClass: "high" },
+    "San Quentin xWays": { maxWin: "150000x", rtp: "96.03%", volatility: "High", volatilityClass: "high" },
+    "Fire in the Hole xBomb": { maxWin: "60000x", rtp: "96.06%", volatility: "High", volatilityClass: "high" },
+    "Razor Returns": { maxWin: "50000x", rtp: "96.58%", volatility: "High", volatilityClass: "high" },
+    "Pirate Bonanza": { maxWin: "10000x", rtp: "96.31%", volatility: "High", volatilityClass: "high" }
+};
 
         // ===== STATE =====
         let currentSlot = null;
@@ -317,11 +682,12 @@
                     <img src="${slot.imageUrl || ''}" 
                          alt="${slot.slotName}" 
                          class="slot-image"
-                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'180\'%3E%3Crect fill=\'%231a1f35\' width=\'300\' height=\'180\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%23daa520\' font-size=\'60\'%3E🎰%3C/text%3E%3C/svg%3E'">
+                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'400\'%3E%3Crect fill=\'%231a1f35\' width=\'300\' height=\'400\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%23daa520\' font-size=\'60\'%3E🎰%3C/text%3E%3C/svg%3E'">
                     <div class="provider-badge">${slot.provider || 'Unknown'}</div>
+                    <div class="slot-name-overlay">
+                        <div class="slot-name">${slot.slotName}</div>
+                    </div>
                 </div>
-
-                <div class="slot-name">${slot.slotName}</div>
 
                 <div class="stats-grid">
                     <div class="stat-box">
