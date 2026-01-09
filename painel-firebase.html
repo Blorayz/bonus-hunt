@@ -35,6 +35,27 @@
             position: relative;
         }
 
+        .help-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            color: white;
+            border: 2px solid rgba(139, 92, 246, 0.4);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        .help-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+        }
+
         .header h1 {
             background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
             -webkit-background-clip: text;
@@ -613,17 +634,78 @@
         .modal-icon.error { color: #f87171; }
         .modal-icon.warning { color: #fbbf24; }
         .modal-icon.info { color: #60a5fa; }
+
+        /* HELP MODAL */
+        .help-content {
+            text-align: left;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .help-section {
+            margin-bottom: 25px;
+        }
+
+        .help-section h3 {
+            color: #8b5cf6;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .help-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 3px solid #8b5cf6;
+        }
+
+        .help-problem {
+            color: #f87171;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .help-solution {
+            color: #a1a1aa;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .discord-link {
+            display: inline-block;
+            background: #5865F2;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(88, 101, 242, 0.4);
+        }
+
+        .discord-link:hover {
+            background: #4752C4;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
+            <button class="help-btn" onclick="showHelp()">❓ Ajuda</button>
             <div class="connection-status">
                 <div class="status-dot" id="statusDot"></div>
                 <span id="statusText">Desconectado</span>
             </div>
             <h1>🎰 Painel de Controle</h1>
-            <p>BY BLORAYZ</p>
+            <p>Bonus Hunt Manager - AltaCDN Images</p>
         </div>
 
         <!-- Start Section -->
@@ -1106,6 +1188,99 @@
 ];
         
         // ===== MODAL SYSTEM =====
+        function showHelp() {
+            const overlay = document.getElementById('modalOverlay');
+            const icon = document.getElementById('modalIcon');
+            const header = document.getElementById('modalHeader');
+            const body = document.getElementById('modalBody');
+            const buttonsContainer = document.getElementById('modalButtons');
+            const input = document.getElementById('modalInput');
+
+            icon.textContent = '❓';
+            icon.className = 'modal-icon info';
+            header.textContent = 'Ajuda & Suporte';
+            input.style.display = 'none';
+
+            body.innerHTML = `
+                <div class="help-content">
+                    <div class="help-section">
+                        <h3>🔥 Problemas Comuns</h3>
+                        
+                        <div class="help-item">
+                            <div class="help-problem">❌ Firebase não conecta</div>
+                            <div class="help-solution">
+                                • Verifica se tens internet<br>
+                                • Recarrega a página (F5)<br>
+                                • Limpa cache do navegador (Ctrl+Shift+Del)
+                            </div>
+                        </div>
+
+                        <div class="help-item">
+                            <div class="help-problem">❌ Overlay não aparece no OBS</div>
+                            <div class="help-solution">
+                                • Verifica se o URL está correto<br>
+                                • Usa Browser Source (não Window Capture)<br>
+                                • Define Width: 1920 e Height: 1080<br>
+                                • Ativa "Shutdown source when not visible"
+                            </div>
+                        </div>
+
+                        <div class="help-item">
+                            <div class="help-problem">❌ Slots não aparecem na overlay</div>
+                            <div class="help-solution">
+                                • Verifica se Firebase está conectado (verde)<br>
+                                • Adiciona pelo menos 1 slot no painel<br>
+                                • Espera 2-3 segundos para sincronizar<br>
+                                • Recarrega o browser source no OBS
+                            </div>
+                        </div>
+
+                        <div class="help-item">
+                            <div class="help-problem">❌ Estatísticas erradas</div>
+                            <div class="help-solution">
+                                • Verifica se o valor inicial (Start) está correto<br>
+                                • Confirma se as apostas estão bem inseridas<br>
+                                • Usa o botão ✏️ para corrigir valores<br>
+                                • Recalcula automaticamente ao editar
+                            </div>
+                        </div>
+
+                        <div class="help-item">
+                            <div class="help-problem">❌ Playing Now não aparece</div>
+                            <div class="help-solution">
+                                • Clica no botão 🎮 ao lado do slot<br>
+                                • Ou escreve nome do slot e seleciona da lista<br>
+                                • Verifica se a overlay do Playing Now está ativa no OBS<br>
+                                • Clica em "⏸️ Limpar Now Playing" para resetar
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="help-section">
+                        <h3>💬 Precisa de mais ajuda?</h3>
+                        <p style="color: #a1a1aa; margin-bottom: 10px;">
+                            Contacta o blorayz no Discord para suporte direto!
+                        </p>
+                        <a href="https://discord.com/users/blorayz" target="_blank" class="discord-link">
+                            <svg style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px;" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+                            </svg>
+                            Contactar blorayz
+                        </a>
+                    </div>
+                </div>
+            `;
+
+            buttonsContainer.innerHTML = '';
+            const btn = document.createElement('button');
+            btn.className = 'modal-btn modal-btn-primary';
+            btn.textContent = 'Fechar';
+            btn.onclick = () => overlay.classList.remove('show');
+            buttonsContainer.appendChild(btn);
+
+            overlay.classList.add('show');
+        }
+
         function toggleStatsPopup() {
             const popup = document.getElementById('statsPopup');
             const toggleBtn = document.getElementById('statsToggleBtn');
@@ -1119,7 +1294,7 @@
             }
         }
 
-        function showModal(type, title, message) {
+        function showModal(type, title, message, buttons = ['OK']) {
             return new Promise((resolve) => {
                 const overlay = document.getElementById('modalOverlay');
                 const icon = document.getElementById('modalIcon');
@@ -1136,14 +1311,17 @@
                 input.style.display = 'none';
 
                 buttonsContainer.innerHTML = '';
-                const btn = document.createElement('button');
-                btn.className = 'modal-btn modal-btn-primary';
-                btn.textContent = 'OK';
-                btn.onclick = () => {
-                    overlay.classList.remove('show');
-                    resolve(true);
-                };
-                buttonsContainer.appendChild(btn);
+                buttons.forEach((btnText, index) => {
+                    const btn = document.createElement('button');
+                    btn.className = `modal-btn ${index === 0 ? 'modal-btn-primary' : 'modal-btn-secondary'}`;
+                    btn.textContent = btnText;
+                    btn.onclick = () => {
+                        overlay.classList.remove('show');
+                        resolve(btnText);
+                    };
+                    buttonsContainer.appendChild(btn);
+                });
+
                 overlay.classList.add('show');
             });
         }
@@ -1518,6 +1696,84 @@
             renderSlots();
         }
 
+        async function editSlot(id) {
+            const slot = data.slots.find(s => s.id === id);
+            if (!slot) return;
+
+            // Modal de escolha
+            const choice = await showModal('info', 'Editar Slot', 'O que queres editar?', slot.opened ? ['💰 Aposta', '💎 Ganho', 'Cancelar'] : ['💰 Aposta', 'Cancelar']);
+            
+            if (choice === 'Cancelar') return;
+
+            if (choice === '💰 Aposta') {
+                await editBet(id);
+            } else if (choice === '💎 Ganho') {
+                await editWin(id);
+            }
+        }
+
+        async function editBet(id) {
+            const slot = data.slots.find(s => s.id === id);
+            if (!slot) return;
+
+            const currentBet = slot.betAmount || slot.bet || 0;
+            const newBet = await showPrompt(
+                'Editar Aposta', 
+                `Editar valor da aposta de "${slot.slotName}"`, 
+                currentBet.toFixed(2)
+            );
+            
+            if (newBet === null || newBet === '') return;
+
+            const amount = parseFloat(newBet);
+            if (isNaN(amount) || amount <= 0) {
+                showModal('error', 'Valor Inválido', 'Por favor, insira um valor válido!');
+                return;
+            }
+
+            slot.betAmount = amount;
+            slot.bet = amount;
+            
+            calculateStats();
+            saveData();
+            renderSlots();
+            
+            showModal('success', 'Aposta Atualizada', `Aposta atualizada para €${amount.toFixed(2)}`);
+        }
+
+        async function editWin(id) {
+            const slot = data.slots.find(s => s.id === id);
+            if (!slot) return;
+
+            if (!slot.opened) {
+                showModal('warning', 'Slot Fechado', 'Este slot ainda não foi aberto!');
+                return;
+            }
+
+            const currentWin = slot.winAmount || 0;
+            const newWin = await showPrompt(
+                'Editar Ganho', 
+                `Editar ganho de "${slot.slotName}"`, 
+                currentWin.toFixed(2)
+            );
+            
+            if (newWin === null || newWin === '') return;
+
+            const amount = parseFloat(newWin);
+            if (isNaN(amount) || amount < 0) {
+                showModal('error', 'Valor Inválido', 'Por favor, insira um valor válido!');
+                return;
+            }
+
+            slot.winAmount = amount;
+            
+            calculateStats();
+            saveData();
+            renderSlots();
+            
+            showModal('success', 'Ganho Atualizado', `Ganho atualizado para €${amount.toFixed(2)}`);
+        }
+
         function calculateStats() {
             const totalBet = data.slots.reduce((sum, slot) => sum + (slot.betAmount || 0), 0);
             const openedSlots = data.slots.filter(s => s.opened);
@@ -1588,6 +1844,7 @@
                             <button class="btn btn-success btn-small" onclick="setPlayingNow(${slot.id})" style="background: #8b5cf6;" title="Mostrar no overlay">🎮</button>
                             <button class="btn btn-warning btn-small" onclick="openSlot(${slot.id})" title="Abrir e registar ganho">✓</button>
                         ` : ''}
+                        <button class="btn btn-secondary btn-small" onclick="editSlot(${slot.id})" title="Editar slot" style="background: #3b82f6;">✏️</button>
                         <button class="btn btn-danger btn-small" onclick="deleteSlot(${slot.id})" title="Apagar slot">🗑️</button>
                     </div>
                 </div>
