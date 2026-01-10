@@ -694,6 +694,26 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6);
         }
+
+        /* FOOTER */
+        .footer {
+            margin-top: 50px;
+            padding: 30px 20px;
+            border-top: 1px solid rgba(139, 92, 246, 0.2);
+            text-align: center;
+        }
+
+        .disclaimer {
+            font-size: 0.75em;
+            line-height: 1.6;
+            color: rgba(161, 161, 170, 0.4);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .disclaimer strong {
+            color: rgba(161, 161, 170, 0.5);
+        }
     </style>
 </head>
 <body>
@@ -705,7 +725,7 @@
                 <span id="statusText">Desconectado</span>
             </div>
             <h1>🎰 Painel de Controle</h1>
-            <p>BY BLORAYZ</p>
+            <p>Bonus Hunt Manager - AltaCDN Images</p>
         </div>
 
         <!-- Start Section -->
@@ -721,7 +741,7 @@
         <div class="add-slot-section">
             <h2>➕ Adicionar Slot</h2>
             <div class="form-group">
-                <label>🔍 Procurar Slot</label>
+                <label>🔍 Procurar Slot (Base de dados AltaCDN)</label>
                 <input type="text" id="slotName" placeholder="Ex: Gates of Olympus, Sweet Bonanza, Book of Dead..." autocomplete="off">
                 <div id="autocompleteList" class="autocomplete-items"></div>
             </div>
@@ -788,6 +808,16 @@
         </div>
 
         <input type="file" id="importFile" accept=".json" style="display: none;" onchange="handleImport(event)">
+
+        <!-- Footer com Disclaimer -->
+        <div class="footer">
+            <div class="disclaimer">
+                <strong>DISCLAIMER:</strong><br><br>
+                Este site é propriedade exclusiva do cliente e destina-se apenas a utilizadores devidamente autorizados. O acesso, navegação e utilização dos conteúdos aqui disponibilizados estão sujeitos a autorização prévia e às condições definidas pelo proprietário.<br><br>
+                Qualquer uso indevido, reprodução, divulgação ou modificação de informações sem consentimento expresso é estritamente proibido e poderá dar origem a responsabilidade legal.<br><br>
+                Ao aceder a este site, o utilizador declara que compreende e aceita integralmente os termos acima descritos.
+            </div>
+        </div>
     </div>
 
     <!-- MODAL OVERLAY -->
