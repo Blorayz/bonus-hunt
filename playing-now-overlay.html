@@ -25,14 +25,14 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            width: 320px;
+            width: 450px;
             background: linear-gradient(135deg, #1a1f35 0%, #0f1522 100%);
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 30px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
-            border: 2px solid rgba(218, 165, 32, 0.4);
+            border: 3px solid rgba(218, 165, 32, 0.4);
             opacity: 0;
-            transform: translateX(400px);
+            transform: translateX(500px);
             transition: all 0.5s ease;
         }
 
@@ -43,21 +43,21 @@
 
         .playing-now-container.hidden {
             opacity: 0;
-            transform: translateX(400px);
+            transform: translateX(500px);
         }
 
         .header {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid rgba(218, 165, 32, 0.3);
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid rgba(218, 165, 32, 0.3);
         }
 
         .pulse-dot {
-            width: 12px;
-            height: 12px;
+            width: 16px;
+            height: 16px;
             background: #4ade80;
             border-radius: 50%;
             animation: pulse 2s infinite;
@@ -75,22 +75,22 @@
         }
 
         .header-text {
-            font-size: 14px;
+            font-size: 20px;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             color: #daa520;
         }
 
         .slot-image-wrapper {
             width: 100%;
-            height: 400px;
-            border-radius: 12px;
+            height: 550px;
+            border-radius: 15px;
             overflow: hidden;
-            margin-bottom: 15px;
-            box-shadow: 0 8px 24px rgba(218, 165, 32, 0.4);
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.5);
             position: relative;
-            border: 3px solid #daa520;
+            border: 4px solid #daa520;
             background: linear-gradient(135deg, #1a1f35 0%, #0f1522 100%);
         }
 
@@ -113,55 +113,55 @@
 
         .provider-badge {
             position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(218, 165, 32, 0.9);
+            top: 20px;
+            left: 20px;
+            background: rgba(218, 165, 32, 0.95);
             color: #000;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 12px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 16px;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 2px solid #daa520;
-            box-shadow: 0 4px 12px rgba(218, 165, 32, 0.5);
+            letter-spacing: 1.5px;
+            border: 3px solid #daa520;
+            box-shadow: 0 6px 16px rgba(218, 165, 32, 0.6);
         }
 
         .slot-name {
-            font-size: 20px;
+            font-size: 28px;
             font-weight: bold;
             color: #fff;
             margin: 0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
             line-height: 1.3;
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         .stat-box {
             background: rgba(0, 0, 0, 0.3);
-            padding: 12px 8px;
-            border-radius: 10px;
+            padding: 16px 10px;
+            border-radius: 12px;
             text-align: center;
-            border: 1px solid rgba(218, 165, 32, 0.3);
+            border: 2px solid rgba(218, 165, 32, 0.3);
         }
 
         .stat-label {
-            font-size: 10px;
+            font-size: 14px;
             color: #daa520;
             text-transform: uppercase;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             font-weight: 600;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
 
         .stat-value {
-            font-size: 14px;
+            font-size: 22px;
             font-weight: bold;
             color: #fff;
         }
@@ -210,7 +210,7 @@
     <div class="playing-now-container" id="playingNow">
         <div class="header">
             <div class="pulse-dot"></div>
-            <div class="header-text">🎮 Playing Now</div>
+            <div class="header-text">Playing Now</div>
         </div>
 
         <div id="slotContent">
@@ -667,13 +667,25 @@
         const content = document.getElementById('slotContent');
 
         // ===== GET SLOT INFO =====
-        function getSlotInfo(slotName) {
-            // Procura exata
+        function getSlotInfo(slot) {
+            const slotName = slot.slotName || slot.name;
+            
+            // PRIORIDADE 1: Se o slot tem stats próprias (slots customizados), usa essas
+            if (slot.rtp || slot.volatility || slot.maxWin) {
+                return {
+                    maxWin: slot.maxWin || "N/A",
+                    rtp: slot.rtp ? `${slot.rtp}%` : "N/A",
+                    volatility: slot.volatility || "N/A",
+                    volatilityClass: getVolatilityClass(slot.volatility)
+                };
+            }
+
+            // PRIORIDADE 2: Procura na base de dados por nome exato
             if (slotsDatabase[slotName]) {
                 return slotsDatabase[slotName];
             }
 
-            // Procura parcial (case insensitive)
+            // PRIORIDADE 3: Procura parcial (case insensitive)
             const lowerName = slotName.toLowerCase();
             for (const [key, value] of Object.entries(slotsDatabase)) {
                 if (key.toLowerCase().includes(lowerName) || lowerName.includes(key.toLowerCase())) {
@@ -690,9 +702,18 @@
             };
         }
 
+        function getVolatilityClass(volatility) {
+            if (!volatility) return "medium";
+            const vol = volatility.toLowerCase();
+            if (vol.includes("alta") || vol.includes("high") || vol.includes("muito")) return "high";
+            if (vol.includes("média") || vol.includes("medium")) return "medium";
+            if (vol.includes("baixa") || vol.includes("low")) return "low";
+            return "medium";
+        }
+
         // ===== RENDER SLOT =====
         function renderSlot(slot) {
-            const info = getSlotInfo(slot.slotName);
+            const info = getSlotInfo(slot);
 
             content.innerHTML = `
                 <div class="slot-image-wrapper">
