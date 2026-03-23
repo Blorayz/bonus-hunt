@@ -111,10 +111,29 @@
         .empty-state { width: 100%; text-align: center; padding: 40px 20px; color: #666; }
         .empty-state-icon { font-size: 3em; margin-bottom: 15px; opacity: 0.5; }
         .empty-state-text { font-size: 1.1em; opacity: 0.7; }
+        
+        /* Indicador de ordenação */
+        .sort-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(218, 165, 32, 0.9);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: none;
+        }
+        .sort-indicator.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
     <div class="overlay-container">
+        <div class="sort-indicator" id="sortIndicator">Ordenado</div>
         <div class="left-panel">
             <div class="hunt-header">
                 <div class="hunt-title">🎰 Bonus Hunt</div>
@@ -204,8 +223,14 @@
             progressPercent: document.getElementById('progressPercent'),
             totalPayValue: document.getElementById('totalPayValue'),
             profitLossValue: document.getElementById('profitLossValue'),
-            slotsContainer: document.getElementById('slotsContainer')
+            slotsContainer: document.getElementById('slotsContainer'),
+            sortIndicator: document.getElementById('sortIndicator')
         };
+
+        // Estado global
+        let currentSortOrder = null; // null = original, 'asc' = menor bet, 'desc' = maior bet
+        let currentSlots = [];
+        let currentStats = {};
 
         function formatCurrency(value) { return `€${parseFloat(value || 0).toFixed(2)}`; }
         function formatMultiplier(value) { return `${parseFloat(value || 0).toFixed(2)}x`; }
@@ -261,11 +286,28 @@
             `;
         }
 
+        function getSortedSlots(slots, sortOrder) {
+            if (!sortOrder) return slots;
+            
+            const sorted = [...slots];
+            if (sortOrder === 'asc') {
+                sorted.sort((a, b) => (a.betAmount || 0) - (b.betAmount || 0));
+            } else if (sortOrder === 'desc') {
+                sorted.sort((a, b) => (b.betAmount || 0) - (a.betAmount || 0));
+            }
+            return sorted;
+        }
+
         function updateUI(data) {
             const stats = calculateStats(data);
 
             // SEMPRE usar toArray() — garante array real mesmo que Firebase devolva objeto
             const slots = toArray(data.slots);
+            currentSlots = slots;
+            currentStats = stats;
+
+            // Aplicar ordenação atual
+            const sortedSlots = getSortedSlots(slots, currentSortOrder);
 
             // Stats
             elements.targetValue.textContent = formatCurrency(stats.target);
@@ -292,15 +334,14 @@
                 elements.profitLossValue.classList.remove('positive', 'negative');
             }
 
-            // Slots — ordenar do maior bet para o menor
-            if (slots.length === 0) {
+            // Slots
+            if (sortedSlots.length === 0) {
                 elements.slotsContainer.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-state-icon">🎰</div>
                         <div class="empty-state-text">No bonus added</div>
                     </div>`;
             } else {
-                const sortedSlots = [...slots].sort((a, b) => (b.betAmount || 0) - (a.betAmount || 0));
                 elements.slotsContainer.innerHTML = sortedSlots.map((slot, index) =>
                     createSlotCard(slot, index)
                 ).join('');
@@ -313,7 +354,7 @@
             isPaused = true;
             setTimeout(() => { isPaused = false; }, PAUSE_DURATION);
 
-            console.log('📊 UI atualizada — slots:', slots.length, '| abertos:', stats.openedSlots);
+            console.log('📊 UI atualizada — slots:', slots.length, '| abertos:', stats.openedSlots, '| ordenação:', currentSortOrder);
         }
 
         function loadData() {
@@ -322,6 +363,33 @@
                 const data = snapshot.val();
                 if (data) updateUI(data);
             }, (error) => { console.error('❌ Erro:', error); });
+        }
+
+        // ===== LISTENER PARA SORT ORDER =====
+        function loadSortOrder() {
+            if (!database) return;
+            database.ref('bonus-hunt/sortOrder').on('value', (snapshot) => {
+                const sortOrder = snapshot.val();
+                currentSortOrder = sortOrder || null;
+                
+                // Atualizar indicador visual
+                if (elements.sortIndicator) {
+                    if (currentSortOrder) {
+                        elements.sortIndicator.classList.add('active');
+                        elements.sortIndicator.textContent = currentSortOrder === 'asc' ? '↑ Menor Bet' : '↓ Maior Bet';
+                    } else {
+                        elements.sortIndicator.classList.remove('active');
+                    }
+                }
+                
+                // Re-renderizar com a nova ordenação
+                if (currentSlots.length > 0) {
+                    const data = { slots: currentSlots, stats: currentStats };
+                    updateUI(data);
+                }
+                
+                console.log('📊 SortOrder atualizado:', currentSortOrder);
+            }, (error) => { console.error('❌ Erro ao ler sortOrder:', error); });
         }
 
         function setupOverlayVisibility() {
@@ -375,6 +443,7 @@
         }, SCROLL_INTERVAL);
 
         loadData();
+        loadSortOrder(); // NOVO: Carregar ordenação
         setupOverlayVisibility();
     </script>
 </body>
