@@ -1855,6 +1855,16 @@
                             if (!serverData.slots) serverData.slots = [];
                             if (!serverData.customSlots) serverData.customSlots = [];
                             if (!serverData.stats) serverData.stats = { start: 0, multiplier: 0, average: 0, breakEven: 0, profitLoss: 0, huntNumber: 1 };
+                            
+                            // Carregar sortOrder do Firebase se existir
+                            if (serverData.sortOrder !== undefined) {
+                                sortOrder = serverData.sortOrder;
+                                // Atualizar UI dos botões
+                                document.getElementById('sortAscBtn').classList.toggle('active', sortOrder === 'asc');
+                                document.getElementById('sortDescBtn').classList.toggle('active', sortOrder === 'desc');
+                                document.getElementById('sortNoneBtn').classList.toggle('active', sortOrder === null);
+                            }
+                            
                             const dataChanged = JSON.stringify(serverData) !== JSON.stringify(data);
                             if (dataChanged) {
                                 data = serverData;
@@ -1873,7 +1883,12 @@
             if (!isFirebaseReady || !database) { updateConnectionStatus(false); return false; }
             for (let i = 0; i < retries; i++) {
                 try {
-                    await database.ref('bonus-hunt').set(data);
+                    // Incluir sortOrder nos dados a guardar
+                    const dataToSave = {
+                        ...data,
+                        sortOrder: sortOrder
+                    };
+                    await database.ref('bonus-hunt').set(dataToSave);
                     updateConnectionStatus(true);
                     return true;
                 } catch (error) {
@@ -2036,13 +2051,24 @@
             profitElement.style.color = profit >= 0 ? '#4ade80' : '#f87171';
         }
 
-        // ===== SORT FUNCTION =====
-        function sortSlots(order) {
+        // ===== SORT FUNCTION - ATUALIZADA PARA SINCRONIZAR COM OVERLAY =====
+        async function sortSlots(order) {
             sortOrder = order;
+            
             // Atualizar estilos dos botões
             document.getElementById('sortAscBtn').classList.toggle('active', order === 'asc');
             document.getElementById('sortDescBtn').classList.toggle('active', order === 'desc');
             document.getElementById('sortNoneBtn').classList.toggle('active', order === null);
+            
+            // GUARDAR NO FIREBASE - Isto é a chave para sincronizar com a overlay!
+            if (isFirebaseReady && database) {
+                try {
+                    await database.ref('bonus-hunt/sortOrder').set(order);
+                } catch (error) {
+                    console.error('❌ Erro ao guardar sortOrder:', error);
+                }
+            }
+            
             renderSlots();
         }
 
@@ -2168,7 +2194,15 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
-                    data = JSON.parse(e.target.result);
+                    const importedData = JSON.parse(e.target.result);
+                    data = importedData;
+                    // Restaurar sortOrder se existir no import
+                    if (importedData.sortOrder !== undefined) {
+                        sortOrder = importedData.sortOrder;
+                        document.getElementById('sortAscBtn').classList.toggle('active', sortOrder === 'asc');
+                        document.getElementById('sortDescBtn').classList.toggle('active', sortOrder === 'desc');
+                        document.getElementById('sortNoneBtn').classList.toggle('active', sortOrder === null);
+                    }
                     saveData(); renderSlots(); updateStats(); updateStartValue();
                     alert('✅ Dados importados com sucesso!');
                 } catch (error) { alert('⚠️ Erro ao importar dados: ' + error.message); }
@@ -2180,6 +2214,11 @@
             const confirmed = await showConfirm('Limpar Tudo', 'Tens certeza que queres apagar TODOS os dados? Esta ação não pode ser desfeita!');
             if (!confirmed) return;
             data = { slots: [], stats: { start: 0, multiplier: 0, average: 0, breakEven: 0, profitLoss: 0, huntNumber: 1 } };
+            sortOrder = null;
+            // Resetar botões de ordenação
+            document.getElementById('sortAscBtn').classList.remove('active');
+            document.getElementById('sortDescBtn').classList.remove('active');
+            document.getElementById('sortNoneBtn').classList.add('active');
             saveData(); renderSlots(); updateStats(); updateStartValue();
             showModal('success', 'Dados Limpos', 'Todos os dados foram apagados com sucesso!');
         }
