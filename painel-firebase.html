@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎰 Painel de Controle - Bonus Hunt (AltaCDN)</title>
+    <title>🎰 Painel de Controle - Bonus Hunt</title>
     <style>
         * {
             margin: 0;
@@ -159,7 +159,6 @@
             margin-bottom: 20px;
         }
 
-        /* BOTÃO CRIAR SLOT CUSTOM */
         .create-custom-btn {
             margin-top: 15px;
             width: 100%;
@@ -182,7 +181,6 @@
             box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
         }
 
-        /* MODAL CRIAR SLOT */
         .custom-slot-modal {
             display: none;
             position: fixed;
@@ -270,7 +268,6 @@
             object-fit: cover;
         }
 
-        /* LISTA DE GESTÃO DE SLOTS */
         .manage-slot-item {
             background: rgba(0,0,0,0.3);
             border-radius: 12px;
@@ -429,10 +426,50 @@
             margin-bottom: 30px;
         }
 
-        .slots-list h2 {
-            color: #fbbf24;
+        /* ===== SORT BAR ===== */
+        .slots-list-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
+
+        .slots-list-header h2 {
+            color: #fbbf24;
+            margin: 0;
+        }
+
+        .sort-buttons {
+            display: flex;
+            gap: 8px;
+            margin-left: auto;
+        }
+
+        .sort-btn {
+            padding: 7px 14px;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #a1a1aa;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sort-btn:hover {
+            border-color: rgba(139, 92, 246, 0.6);
+            color: #e4e4e7;
+        }
+
+        .sort-btn.active {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            border-color: #8b5cf6;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+        }
+        /* ===== END SORT BAR ===== */
 
         .slot-card {
             background: linear-gradient(135deg, rgba(30, 30, 46, 0.8), rgba(37, 37, 56, 0.8));
@@ -592,10 +629,6 @@
             box-shadow: 0 12px 32px rgba(139, 92, 246, 0.6);
         }
 
-        .stats-section.scrolled {
-            box-shadow: 0 12px 40px rgba(139, 92, 246, 0.4);
-        }
-
         .stats-section h2 {
             color: #a78bfa;
             margin: 0;
@@ -684,7 +717,6 @@
             margin-left: 5px;
         }
 
-        /* MODALS PERSONALIZADOS */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -720,14 +752,8 @@
         }
 
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .modal-header {
@@ -811,7 +837,6 @@
         .modal-icon.warning { color: #fbbf24; }
         .modal-icon.info { color: #60a5fa; }
 
-        /* HELP MODAL */
         .help-content {
             text-align: left;
             max-height: 60vh;
@@ -871,7 +896,6 @@
             box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6);
         }
 
-        /* FOOTER */
         .footer {
             margin-top: 50px;
             padding: 30px 20px;
@@ -932,7 +956,6 @@
             </div>
             <button class="btn btn-success" onclick="addSlot()">➕ Adicionar Slot</button>
             
-            <!-- BOTÕES GESTÃO DE SLOTS -->
             <div style="display: flex; gap: 10px; margin-top: 15px;">
                 <button class="create-custom-btn" onclick="openCustomSlotModal()" style="flex: 1;">
                     ✨ Criar Slot
@@ -950,32 +973,27 @@
                     <h2>✨ Criar Slot</h2>
                     <button class="custom-slot-modal-close" onclick="closeCustomSlotModal()">×</button>
                 </div>
-
                 <div class="custom-form-grid">
                     <div class="form-group">
                         <label>🎰 Nome do Slot *</label>
                         <input type="text" id="customName" placeholder="Ex: Gates of Olympus">
                     </div>
-
                     <div class="form-group">
                         <label>🏢 Provider</label>
                         <input type="text" id="customProvider" placeholder="Ex: Pragmatic Play">
                     </div>
-
                     <div class="form-group">
                         <label>🖼️ URL da Imagem *</label>
                         <input type="text" id="customImage" placeholder="https://exemplo.com/imagem.jpg">
                         <div class="image-preview-modal" id="customImagePreview"></div>
                     </div>
-
                     <div class="form-group">
                         <label>🎲 RTP (%)</label>
                         <input type="number" id="customRTP" step="0.01" min="0" max="100" placeholder="Ex: 96.50">
                     </div>
-
                     <div class="form-group">
                         <label>🔥 Volatilidade</label>
-                        <select id="customVol">
+                        <select id="customVol" style="width:100%;padding:12px;border:2px solid rgba(59,130,246,0.3);border-radius:8px;background:rgba(0,0,0,0.3);color:#e4e4e7;">
                             <option value="">Selecionar...</option>
                             <option value="Low">Low</option>
                             <option value="Medium">Medium</option>
@@ -983,25 +1001,18 @@
                             <option value="Very High">Very High</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label>🎯 Max Win</label>
                         <input type="text" id="customMaxWin" placeholder="Ex: 5000x">
                     </div>
-
                     <div class="form-group">
                         <label>📝 Notas</label>
                         <input type="text" id="customNotes" placeholder="Ex: Compra bonus melhor...">
                     </div>
                 </div>
-
                 <div style="display: flex; gap: 10px;">
-                    <button class="btn btn-success" onclick="saveCustomSlot()" style="flex: 1;">
-                        💾 Guardar
-                    </button>
-                    <button class="btn" onclick="closeCustomSlotModal()" style="flex: 0.3; background: #6b7280;">
-                        ✕ Cancelar
-                    </button>
+                    <button class="btn btn-success" onclick="saveCustomSlot()" style="flex: 1;">💾 Guardar</button>
+                    <button class="btn" onclick="closeCustomSlotModal()" style="flex: 0.3; background: #6b7280;">✕ Cancelar</button>
                 </div>
             </div>
         </div>
@@ -1043,15 +1054,10 @@
                     <h2>⚙️ Gerir Todos as Slots (<span id="manageSlotsCount">0</span>)</h2>
                     <button class="custom-slot-modal-close" onclick="closeManageSlotsModal()">×</button>
                 </div>
-
-                <!-- BARRA DE PESQUISA -->
                 <div class="form-group" style="margin-bottom: 20px;">
                     <input type="text" id="manageSearchInput" placeholder="🔍 Pesquisar slots..." style="width: 100%; padding: 12px; border-radius: 8px; border: 2px solid rgba(139, 92, 246, 0.3); background: rgba(0,0,0,0.3); color: #e4e4e7;">
                 </div>
-
-                <div id="manageSlotsListContainer" style="max-height: 500px; overflow-y: auto;">
-                    <!-- Lista será preenchida via JS -->
-                </div>
+                <div id="manageSlotsListContainer" style="max-height: 500px; overflow-y: auto;"></div>
             </div>
         </div>
 
@@ -1062,32 +1068,27 @@
                     <h2>✏️ Editar Slot</h2>
                     <button class="custom-slot-modal-close" onclick="closeEditSlotModal()">×</button>
                 </div>
-
                 <div class="custom-form-grid">
                     <div class="form-group">
                         <label>🎰 Nome do Slot *</label>
                         <input type="text" id="editName" placeholder="Ex: Gates of Olympus">
                     </div>
-
                     <div class="form-group">
                         <label>🏢 Provider</label>
                         <input type="text" id="editProvider" placeholder="Ex: Pragmatic Play">
                     </div>
-
                     <div class="form-group">
                         <label>🖼️ URL da Imagem *</label>
                         <input type="text" id="editImage" placeholder="https://exemplo.com/imagem.jpg">
                         <div class="image-preview-modal" id="editImagePreview"></div>
                     </div>
-
                     <div class="form-group">
                         <label>🎲 RTP (%)</label>
                         <input type="number" id="editRTP" step="0.01" min="0" max="100" placeholder="Ex: 96.50">
                     </div>
-
                     <div class="form-group">
                         <label>🔥 Volatilidade</label>
-                        <select id="editVol">
+                        <select id="editVol" style="width:100%;padding:12px;border:2px solid rgba(59,130,246,0.3);border-radius:8px;background:rgba(0,0,0,0.3);color:#e4e4e7;">
                             <option value="">Selecionar...</option>
                             <option value="Low">Low</option>
                             <option value="Medium">Medium</option>
@@ -1095,39 +1096,36 @@
                             <option value="Very High">Very High</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label>🎯 Max Win</label>
                         <input type="text" id="editMaxWin" placeholder="Ex: 5000x">
                     </div>
-
                     <div class="form-group">
                         <label>📝 Notas</label>
                         <input type="text" id="editNotes" placeholder="Ex: Compra bonus melhor...">
                     </div>
                 </div>
-
                 <div style="display: flex; gap: 10px;">
-                    <button class="btn btn-success" onclick="updateCustomSlot()" style="flex: 1;">
-                        💾 Atualizar
-                    </button>
-                    <button class="btn" onclick="closeEditSlotModal()" style="flex: 0.3; background: #6b7280;">
-                        ✕ Cancelar
-                    </button>
+                    <button class="btn btn-success" onclick="updateCustomSlot()" style="flex: 1;">💾 Atualizar</button>
+                    <button class="btn" onclick="closeEditSlotModal()" style="flex: 0.3; background: #6b7280;">✕ Cancelar</button>
                 </div>
-
                 <input type="hidden" id="editingSlotId" value="">
             </div>
         </div>
 
         <!-- Toggle Stats Button -->
-        <button class="stats-toggle-btn" id="statsToggleBtn" onclick="toggleStatsPopup()">
-            📊 Estatísticas
-        </button>
+        <button class="stats-toggle-btn" id="statsToggleBtn" onclick="toggleStatsPopup()">📊 Estatísticas</button>
 
         <!-- Slots List -->
         <div class="slots-list">
-            <h2>🎮 Slots (<span id="slotCount">0</span>)</h2>
+            <div class="slots-list-header">
+                <h2>🎮 Slots (<span id="slotCount">0</span>)</h2>
+                <div class="sort-buttons">
+                    <button id="sortAscBtn" class="sort-btn" onclick="sortSlots('asc')" title="Ordenar aposta: menor para maior">↑ Bet</button>
+                    <button id="sortDescBtn" class="sort-btn" onclick="sortSlots('desc')" title="Ordenar aposta: maior para menor">↓ Bet</button>
+                    <button id="sortNoneBtn" class="sort-btn active" onclick="sortSlots(null)" title="Ordem original de adição">⇄ Original</button>
+                </div>
+            </div>
             <div id="slotsList"></div>
         </div>
 
@@ -1142,7 +1140,6 @@
 
         <input type="file" id="importFile" accept=".json" style="display: none;" onchange="handleImport(event)">
 
-        <!-- Footer com Disclaimer -->
         <div class="footer">
             <div class="disclaimer">
                 <strong>DISCLAIMER:</strong><br><br>
@@ -1170,7 +1167,7 @@
 
     <script>
         // BASE DE DADOS
- const altacdnSlots = [
+        const altacdnSlots = [
     // ============================================
     // PRAGMATIC PLAY - TOP 50
     // ============================================
@@ -1226,17 +1223,17 @@
     { name: "Fire Strike", provider: "Pragmatic Play", id: "PP122", image: "https://altacdn.com/ig/img/games/269206-fire-strike_thumbnailx2.jpg" },
     { name: "Wild Wild Riches", provider: "Pragmatic Play", id: "PP230", image: "https://altacdn.com/ig/img/games/269177-wild-wild-riches_thumbnailx2.jpg" },
     { name: "Wisdom of Athena", provider: "Pragmatic Play", id: "PP232", image: "https://altacdn.com/ig/img/games/269190-wisdom-of-athena_thumbnailx2.jpg" },
-   { name: "Wisdom of Athena 1000", provider: "Pragmatic Play", id: "PP163", image: "https://altacdn.com/ig/img/games/269096-wisdom-of-athena-1000_thumbnailx2.jpg" },
- { name: "Big Bass Amazon Xtreme", provider: "Pragmatic Play", id: "PP150", image: "https://altacdn.com/ig/img/games/269140-big-bass-amazon-xtreme_thumbnailx2.jpg" },
- { name: "Big Bass Christmas Bash", provider: "Pragmatic Play", id: "PP151", image: "https://altacdn.com/ig/img/games/269180-big-bass-christmas-bash_thumbnailx2.jpg" },
- { name: "Big Bass Crash", provider: "Pragmatic Play", id: "PP152", image: "https://altacdn.com/ig/img/games/301234-big-bass-crash_thumbnailx2.jpg" },
- { name: "Big Bass Day at the Races", provider: "Pragmatic Play", id: "PP153", image: "https://altacdn.com/ig/img/games/299876-big-bass-day-at-the-races_thumbnailx2.jpg" },
- { name: "Big Bass Halloween", provider: "Pragmatic Play", id: "PP155", image: "https://altacdn.com/ig/img/games/269136-big-bass-halloween_thumbnailx2.jpg" },
- { name: "Big Bass Hold & Spinner", provider: "Pragmatic Play", id: "PP156", image: "https://altacdn.com/ig/img/games/269131-big-bass-hold-spinner_thumbnailx2.jpg" },
- { name: "Big Bass Hold & Spinner Megaways", provider: "Pragmatic Play", id: "PP157", image: "https://altacdn.com/ig/img/games/302345-big-bass-hold-spinner-megaways_thumbnailx2.jpg" },
- { name: "Big Bass Keeping it Reel", provider: "Pragmatic Play", id: "PP158", image: "https://altacdn.com/ig/img/games/269200-big-bass-bonanza-keeping-it-reel_thumbnailx2.jpg" },
- { name: "Big Bass Mission Fishin", provider: "Pragmatic Play", id: "PP159", image: "https://altacdn.com/ig/img/games/269145-big-bass-mission-fishin_thumbnailx2.jpg" },
- { name: "Bigger Bass Blizzard Christmas Catch", provider: "Pragmatic Play", id: "PP162", image: "https://altacdn.com/ig/img/games/296543-bigger-bass-blizzard-christmas_thumbnailx2.jpg" },
+    { name: "Wisdom of Athena 1000", provider: "Pragmatic Play", id: "PP163", image: "https://altacdn.com/ig/img/games/269096-wisdom-of-athena-1000_thumbnailx2.jpg" },
+    { name: "Big Bass Amazon Xtreme", provider: "Pragmatic Play", id: "PP150", image: "https://altacdn.com/ig/img/games/269140-big-bass-amazon-xtreme_thumbnailx2.jpg" },
+    { name: "Big Bass Christmas Bash", provider: "Pragmatic Play", id: "PP151", image: "https://altacdn.com/ig/img/games/269180-big-bass-christmas-bash_thumbnailx2.jpg" },
+    { name: "Big Bass Crash", provider: "Pragmatic Play", id: "PP152", image: "https://altacdn.com/ig/img/games/301234-big-bass-crash_thumbnailx2.jpg" },
+    { name: "Big Bass Day at the Races", provider: "Pragmatic Play", id: "PP153", image: "https://altacdn.com/ig/img/games/299876-big-bass-day-at-the-races_thumbnailx2.jpg" },
+    { name: "Big Bass Halloween", provider: "Pragmatic Play", id: "PP155", image: "https://altacdn.com/ig/img/games/269136-big-bass-halloween_thumbnailx2.jpg" },
+    { name: "Big Bass Hold & Spinner", provider: "Pragmatic Play", id: "PP156", image: "https://altacdn.com/ig/img/games/269131-big-bass-hold-spinner_thumbnailx2.jpg" },
+    { name: "Big Bass Hold & Spinner Megaways", provider: "Pragmatic Play", id: "PP157", image: "https://altacdn.com/ig/img/games/302345-big-bass-hold-spinner-megaways_thumbnailx2.jpg" },
+    { name: "Big Bass Keeping it Reel", provider: "Pragmatic Play", id: "PP158", image: "https://altacdn.com/ig/img/games/269200-big-bass-bonanza-keeping-it-reel_thumbnailx2.jpg" },
+    { name: "Big Bass Mission Fishin", provider: "Pragmatic Play", id: "PP159", image: "https://altacdn.com/ig/img/games/269145-big-bass-mission-fishin_thumbnailx2.jpg" },
+    { name: "Bigger Bass Blizzard Christmas Catch", provider: "Pragmatic Play", id: "PP162", image: "https://altacdn.com/ig/img/games/296543-bigger-bass-blizzard-christmas_thumbnailx2.jpg" },
     // ============================================
     // HACKSAW GAMING - TOP 50
     // ============================================
@@ -1285,15 +1282,13 @@
     { name: "The Dog House Dog or Alive", provider: "Hacksaw Gaming", id: "HS043", image: "" },
     { name: "Gates of Gatot Kaca", provider: "Hacksaw Gaming", id: "HS044", image: "" },
     { name: "Santa's Stack", provider: "Hacksaw Gaming", id: "HS045", image: "" },
-    { name: "Bowery Boys vs. The Mummy", provider: "Hacksom Gaming", id: "HS046", image: "" },
+    { name: "Bowery Boys vs. The Mummy", provider: "Hacksaw Gaming", id: "HS046", image: "" },
     { name: "Tomb of Akhenaten", provider: "Hacksaw Gaming", id: "HS047", image: "" },
     { name: "Fat Banker", provider: "Hacksaw Gaming", id: "HS048", image: "https://altacdn.com/ig/img/games/287791-fat-banker_thumbnailx2.jpg" },
     { name: "Toshi Video Club", provider: "Hacksaw Gaming", id: "HS049", image: "https://altacdn.com/ig/img/games/255844-toshi-video-club_thumbnailx2.jpg" },
     { name: "Giga Jar", provider: "Hacksaw Gaming", id: "HS050", image: "" },
     { name: "Slayers Inc", provider: "Hacksaw Gaming", id: "HG153", image: "https://altacdn.com/ig/img/games/256091-slayers-inc_thumbnailx2.jpg" },
     { name: "Frkn Bananas", provider: "Hacksaw Gaming", id: "HG154", image: "https://altacdn.com/ig/img/games/256271-frkn-bananas_thumbnailx2.jpg" },
-
-
     // ============================================
     // PUSH GAMING - TOP 50
     // ============================================
@@ -1347,7 +1342,6 @@
     { name: "Laser Fruit", provider: "Push Gaming", id: "PG048", image: "" },
     { name: "Meow", provider: "Push Gaming", id: "PG049", image: "" },
     { name: "Wild North", provider: "Push Gaming", id: "PG050", image: "" },
-
     // ============================================
     // THUNDERKICK - TOP 50
     // ============================================
@@ -1401,7 +1395,6 @@
     { name: "Frog Grog", provider: "Thunderkick", id: "TK048", image: "https://altacdn.com/ig/img/games/287536-frog-grog_thumbnailx2.jpg" },
     { name: "Oki Doki", provider: "Thunderkick", id: "TK049", image: "" },
     { name: "Slots o' Gold", provider: "Thunderkick", id: "TK050", image: "" },
-
     // ============================================
     // PLAY'N GO - TOP 50
     // ============================================
@@ -1455,7 +1448,6 @@
     { name: "Mystery Joker 6000", provider: "Play'n GO", id: "PNG048", image: "https://altacdn.com/ig/img/games/251983-mystery-joker-6000_thumbnailx2.jpg" },
     { name: "Disco Diamonds", provider: "Play'n GO", id: "PNG049", image: "https://altacdn.com/ig/img/games/252257-disco-diamonds_thumbnailx2.jpg" },
     { name: "Cloud Quest", provider: "Play'n GO", id: "PNG050", image: "https://altacdn.com/ig/img/games/251890-cloud-quest_thumbnailx2.jpg" },
-
     // ============================================
     // BELATRA - TOP 50
     // ============================================
@@ -1509,7 +1501,6 @@
     { name: "Dolphin's Pearl", provider: "Belatra", id: "BEL048", image: "" },
     { name: "Polar Fox", provider: "Belatra", id: "BEL049", image: "" },
     { name: "Magic Forest", provider: "Belatra", id: "BEL050", image: "" },
-
     // ============================================
     // BGAMING - TOP 50
     // ============================================
@@ -1564,7 +1555,10 @@
     { name: "Scratch Dice", provider: "BGaming", id: "BG049", image: "https://altacdn.com/ig/img/games/253990-scratch-dice_thumbnailx2.jpg" },
     { name: "Plinko", provider: "BGaming", id: "BG050", image: "https://altacdn.com/ig/img/games/253141-plinko_thumbnailx2.jpg" },
 ];
-        
+
+        // ===== SORT STATE =====
+        let sortOrder = null; // null = original, 'asc' = menor bet primeiro, 'desc' = maior bet primeiro
+
         // ===== MODAL SYSTEM =====
         function showHelp() {
             const overlay = document.getElementById('modalOverlay');
@@ -1583,62 +1577,30 @@
                 <div class="help-content">
                     <div class="help-section">
                         <h3>🔥 Problemas Comuns</h3>
-                        
                         <div class="help-item">
                             <div class="help-problem">❌ Firebase não conecta</div>
-                            <div class="help-solution">
-                                • Verifica se tens internet<br>
-                                • Recarrega a página (F5)<br>
-                                • Limpa cache do navegador (Ctrl+Shift+Del)
-                            </div>
+                            <div class="help-solution">• Verifica se tens internet<br>• Recarrega a página (F5)<br>• Limpa cache do navegador (Ctrl+Shift+Del)</div>
                         </div>
-
                         <div class="help-item">
                             <div class="help-problem">❌ Overlay não aparece no OBS</div>
-                            <div class="help-solution">
-                                • Verifica se o URL está correto<br>
-                                • Usa Browser Source (não Window Capture)<br>
-                                • Define Width: 1920 e Height: 1080<br>
-                                • Ativa "Shutdown source when not visible"
-                            </div>
+                            <div class="help-solution">• Verifica se o URL está correto<br>• Usa Browser Source (não Window Capture)<br>• Define Width: 1920 e Height: 1080<br>• Ativa "Shutdown source when not visible"</div>
                         </div>
-
                         <div class="help-item">
                             <div class="help-problem">❌ Slots não aparecem na overlay</div>
-                            <div class="help-solution">
-                                • Verifica se Firebase está conectado (verde)<br>
-                                • Adiciona pelo menos 1 slot no painel<br>
-                                • Espera 2-3 segundos para sincronizar<br>
-                                • Recarrega o browser source no OBS
-                            </div>
+                            <div class="help-solution">• Verifica se Firebase está conectado (verde)<br>• Adiciona pelo menos 1 slot no painel<br>• Espera 2-3 segundos para sincronizar<br>• Recarrega o browser source no OBS</div>
                         </div>
-
                         <div class="help-item">
                             <div class="help-problem">❌ Estatísticas erradas</div>
-                            <div class="help-solution">
-                                • Verifica se o valor inicial (Start) está correto<br>
-                                • Confirma se as apostas estão bem inseridas<br>
-                                • Usa o botão ✏️ para corrigir valores<br>
-                                • Recalcula automaticamente ao editar
-                            </div>
+                            <div class="help-solution">• Verifica se o valor inicial (Start) está correto<br>• Confirma se as apostas estão bem inseridas<br>• Usa o botão ✏️ para corrigir valores<br>• Recalcula automaticamente ao editar</div>
                         </div>
-
                         <div class="help-item">
                             <div class="help-problem">❌ Playing Now não aparece</div>
-                            <div class="help-solution">
-                                • Clica no botão 🎮 ao lado do slot<br>
-                                • Ou escreve nome do slot e seleciona da lista<br>
-                                • Verifica se a overlay do Playing Now está ativa no OBS<br>
-                                • Clica em "⏸️ Limpar Now Playing" para resetar
-                            </div>
+                            <div class="help-solution">• Clica no botão 🎮 ao lado do slot<br>• Ou escreve nome do slot e seleciona da lista<br>• Verifica se a overlay do Playing Now está ativa no OBS<br>• Clica em "⏸️ Limpar Now Playing" para resetar</div>
                         </div>
                     </div>
-
                     <div class="help-section">
                         <h3>💬 Precisa de mais ajuda?</h3>
-                        <p style="color: #a1a1aa; margin-bottom: 10px;">
-                            Contacta o blorayz no Discord para suporte direto!
-                        </p>
+                        <p style="color: #a1a1aa; margin-bottom: 10px;">Contacta o blorayz no Discord para suporte direto!</p>
                         <a href="https://discord.com/users/blorayz" target="_blank" class="discord-link">
                             <svg style="width: 20px; height: 20px; vertical-align: middle; margin-right: 8px;" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
@@ -1655,14 +1617,12 @@
             btn.textContent = 'Fechar';
             btn.onclick = () => overlay.classList.remove('show');
             buttonsContainer.appendChild(btn);
-
             overlay.classList.add('show');
         }
 
         function toggleStatsPopup() {
             const popup = document.getElementById('statsPopup');
             const toggleBtn = document.getElementById('statsToggleBtn');
-            
             if (popup.classList.contains('hidden')) {
                 popup.classList.remove('hidden');
                 toggleBtn.classList.remove('show');
@@ -1693,13 +1653,9 @@
                     const btn = document.createElement('button');
                     btn.className = `modal-btn ${index === 0 ? 'modal-btn-primary' : 'modal-btn-secondary'}`;
                     btn.textContent = btnText;
-                    btn.onclick = () => {
-                        overlay.classList.remove('show');
-                        resolve(btnText);
-                    };
+                    btn.onclick = () => { overlay.classList.remove('show'); resolve(btnText); };
                     buttonsContainer.appendChild(btn);
                 });
-
                 overlay.classList.add('show');
             });
         }
@@ -1725,17 +1681,11 @@
                 const btnOk = document.createElement('button');
                 btnOk.className = 'modal-btn modal-btn-primary';
                 btnOk.textContent = 'OK';
-                btnOk.onclick = () => {
-                    overlay.classList.remove('show');
-                    resolve(input.value);
-                };
+                btnOk.onclick = () => { overlay.classList.remove('show'); resolve(input.value); };
                 const btnCancel = document.createElement('button');
                 btnCancel.className = 'modal-btn modal-btn-secondary';
                 btnCancel.textContent = 'Cancelar';
-                btnCancel.onclick = () => {
-                    overlay.classList.remove('show');
-                    resolve(null);
-                };
+                btnCancel.onclick = () => { overlay.classList.remove('show'); resolve(null); };
                 buttonsContainer.appendChild(btnOk);
                 buttonsContainer.appendChild(btnCancel);
                 overlay.classList.add('show');
@@ -1763,17 +1713,11 @@
                 const btnYes = document.createElement('button');
                 btnYes.className = 'modal-btn modal-btn-primary';
                 btnYes.textContent = 'Sim';
-                btnYes.onclick = () => {
-                    overlay.classList.remove('show');
-                    resolve(true);
-                };
+                btnYes.onclick = () => { overlay.classList.remove('show'); resolve(true); };
                 const btnNo = document.createElement('button');
                 btnNo.className = 'modal-btn modal-btn-secondary';
                 btnNo.textContent = 'Não';
-                btnNo.onclick = () => {
-                    overlay.classList.remove('show');
-                    resolve(false);
-                };
+                btnNo.onclick = () => { overlay.classList.remove('show'); resolve(false); };
                 buttonsContainer.appendChild(btnYes);
                 buttonsContainer.appendChild(btnNo);
                 overlay.classList.add('show');
@@ -1783,15 +1727,8 @@
         // Data structure
         let data = {
             slots: [],
-            customSlots: [], // Slots personalizados
-            stats: {
-                start: 0,
-                multiplier: 0,
-                average: 0,
-                breakEven: 0,
-                profitLoss: 0,
-                huntNumber: 1
-            }
+            customSlots: [],
+            stats: { start: 0, multiplier: 0, average: 0, breakEven: 0, profitLoss: 0, huntNumber: 1 }
         };
 
         let selectedSlotData = null;
@@ -1800,7 +1737,6 @@
         const autocompleteList = document.getElementById('autocompleteList');
         const imagePreview = document.getElementById('imagePreview');
 
-        // Autocomplete - Inclui slots customizados
         slotNameInput.addEventListener('input', function() {
             const value = this.value.toLowerCase();
             autocompleteList.innerHTML = '';
@@ -1812,19 +1748,16 @@
                 return;
             }
 
-            // Procurar nos slots customizados
             const customMatches = (data.customSlots || []).filter(slot => 
                 slot.name.toLowerCase().includes(value) || 
                 (slot.provider && slot.provider.toLowerCase().includes(value))
             );
 
-            // Procurar na base de dados
             const altaMatches = altacdnSlots.filter(slot => 
                 slot.name.toLowerCase().includes(value) || 
                 slot.provider.toLowerCase().includes(value)
             );
 
-            // Mostrar slots customizados PRIMEIRO
             if (customMatches.length > 0) {
                 customMatches.forEach(slot => {
                     const div = document.createElement('div');
@@ -1836,27 +1769,18 @@
                             <div class="autocomplete-item-provider">${slot.provider || 'Custom'}</div>
                         </div>
                     `;
-                    
                     div.addEventListener('click', function() {
                         slotNameInput.value = slot.name;
                         slotImageInput.value = slot.image;
-                        selectedSlotData = {
-                            name: slot.name,
-                            provider: slot.provider || 'Custom',
-                            image: slot.image,
-                            isCustom: true
-                        };
-                        
+                        selectedSlotData = { name: slot.name, provider: slot.provider || 'Custom', image: slot.image, isCustom: true };
                         imagePreview.innerHTML = `<img src="${slot.image}" alt="${slot.name}">`;
                         autocompleteList.innerHTML = '';
                         sendToPlayingNowFromAutocomplete(selectedSlotData);
                     });
-                    
                     autocompleteList.appendChild(div);
                 });
             }
 
-            // Depois mostrar slots da base de dados
             if (altaMatches.length > 0) {
                 altaMatches.slice(0, 20).forEach(slot => {
                     const div = document.createElement('div');
@@ -1868,17 +1792,14 @@
                             <div class="autocomplete-item-provider">${slot.provider}</div>
                         </div>
                     `;
-                    
                     div.addEventListener('click', function() {
                         slotNameInput.value = slot.name;
                         slotImageInput.value = slot.image;
                         selectedSlotData = slot;
-                        
                         imagePreview.innerHTML = `<img src="${slot.image}" alt="${slot.name}">`;
                         autocompleteList.innerHTML = '';
                         sendToPlayingNowFromAutocomplete(slot);
                     });
-                    
                     autocompleteList.appendChild(div);
                 });
             }
@@ -1888,11 +1809,8 @@
             }
         });
 
-        // Close autocomplete on click outside
         document.addEventListener('click', function(e) {
-            if (!slotNameInput.contains(e.target)) {
-                autocompleteList.innerHTML = '';
-            }
+            if (!slotNameInput.contains(e.target)) autocompleteList.innerHTML = '';
         });
 
         // ===== FIREBASE CONFIG =====
@@ -1907,7 +1825,6 @@
             measurementId: "G-RYR1BHTYCS"
         };
 
-        // Initialize Firebase
         let database;
         let isFirebaseReady = false;
 
@@ -1916,9 +1833,6 @@
                 firebase.initializeApp(firebaseConfig);
                 database = firebase.database();
                 isFirebaseReady = true;
-                console.log('✅ Firebase inicializado!');
-            } else {
-                console.error('❌ Firebase SDK não carregou!');
             }
         } catch (error) {
             console.error('❌ Erro ao inicializar Firebase:', error);
@@ -1927,104 +1841,52 @@
         function updateConnectionStatus(isConnected) {
             const dot = document.getElementById('statusDot');
             const text = document.getElementById('statusText');
-            
-            if (isConnected) {
-                dot.classList.add('connected');
-                text.textContent = 'Conectado';
-            } else {
-                dot.classList.remove('connected');
-                text.textContent = 'Desconectado';
-            }
+            if (isConnected) { dot.classList.add('connected'); text.textContent = 'Conectado'; }
+            else { dot.classList.remove('connected'); text.textContent = 'Desconectado'; }
         }
 
         function loadData() {
-            console.log('🔄 loadData chamado');
-            
-            if (!isFirebaseReady || !database) {
-                console.log('⚠️ Firebase não pronto:', { isFirebaseReady, database: !!database });
-                updateConnectionStatus(false);
-                return;
-            }
-
+            if (!isFirebaseReady || !database) { updateConnectionStatus(false); return; }
             try {
-                console.log('📡 Conectando ao Firebase...');
-                
                 database.ref('bonus-hunt').on('value', (snapshot) => {
                     try {
                         const serverData = snapshot.val();
-                        console.log('📥 Dados recebidos do Firebase:', serverData);
-                        
                         if (serverData) {
-                            // Garantir estrutura correta
                             if (!serverData.slots) serverData.slots = [];
                             if (!serverData.customSlots) serverData.customSlots = [];
-                            if (!serverData.stats) serverData.stats = {
-                                start: 0,
-                                multiplier: 0,
-                                average: 0,
-                                breakEven: 0,
-                                profitLoss: 0,
-                                huntNumber: 1
-                            };
-                            
+                            if (!serverData.stats) serverData.stats = { start: 0, multiplier: 0, average: 0, breakEven: 0, profitLoss: 0, huntNumber: 1 };
                             const dataChanged = JSON.stringify(serverData) !== JSON.stringify(data);
                             if (dataChanged) {
                                 data = serverData;
-                                console.log('✅ Dados atualizados:', data);
                                 renderSlots();
                                 updateStats();
                                 updateStartValue();
                             }
-                        } else {
-                            console.log('⚠️ Nenhum dado no Firebase, usando dados padrão');
                         }
-                        
                         updateConnectionStatus(true);
-                    } catch (error) {
-                        console.error('❌ Erro ao processar dados:', error);
-                        updateConnectionStatus(false);
-                    }
-                }, (error) => {
-                    console.error('❌ Erro ao carregar dados:', error);
-                    updateConnectionStatus(false);
-                });
-            } catch (error) {
-                console.error('❌ Erro no loadData:', error);
-                updateConnectionStatus(false);
-            }
+                    } catch (error) { updateConnectionStatus(false); }
+                }, () => { updateConnectionStatus(false); });
+            } catch (error) { updateConnectionStatus(false); }
         }
 
         async function saveData(retries = 3) {
-            if (!isFirebaseReady || !database) {
-                console.error('❌ Firebase não está pronto!');
-                updateConnectionStatus(false);
-                return false;
-            }
-
+            if (!isFirebaseReady || !database) { updateConnectionStatus(false); return false; }
             for (let i = 0; i < retries; i++) {
                 try {
                     await database.ref('bonus-hunt').set(data);
                     updateConnectionStatus(true);
-                    console.log('✅ Dados salvos!');
                     return true;
                 } catch (error) {
-                    console.error(`❌ Tentativa ${i + 1}/${retries} falhou:`, error);
-                    if (i < retries - 1) {
-                        await new Promise(resolve => setTimeout(resolve, 500));
-                    }
+                    if (i < retries - 1) await new Promise(resolve => setTimeout(resolve, 500));
                 }
             }
-            
             updateConnectionStatus(false);
             return false;
         }
 
         function setStart() {
             const value = parseFloat(document.getElementById('startValue').value);
-            if (isNaN(value) || value < 0) {
-                showModal('error', 'Valor Inválido', 'Por favor, insira um valor válido!');
-                return;
-            }
+            if (isNaN(value) || value < 0) { showModal('error', 'Valor Inválido', 'Por favor, insira um valor válido!'); return; }
             data.stats.start = value;
             calculateStats();
             saveData();
@@ -2040,15 +1902,8 @@
             const image = document.getElementById('slotImage').value.trim();
             const bet = parseFloat(document.getElementById('slotBet').value);
 
-            if (!name || !bet || bet <= 0) {
-                showModal('error', 'Campos Inválidos', 'Por favor, preencha todos os campos corretamente!');
-                return;
-            }
-
-            if (!image) {
-                showModal('warning', 'Imagem Necessária', 'Por favor, selecione um slot da lista para carregar a imagem automaticamente!');
-                return;
-            }
+            if (!name || !bet || bet <= 0) { showModal('error', 'Campos Inválidos', 'Por favor, preencha todos os campos corretamente!'); return; }
+            if (!image) { showModal('warning', 'Imagem Necessária', 'Por favor, selecione um slot da lista para carregar a imagem automaticamente!'); return; }
 
             const slot = {
                 id: Date.now(),
@@ -2061,7 +1916,6 @@
                 winAmount: 0
             };
 
-            // Se for slot customizado, adicionar as stats
             if (selectedSlotData && selectedSlotData.isCustom) {
                 const customSlot = data.customSlots.find(s => s.name === selectedSlotData.name);
                 if (customSlot) {
@@ -2077,7 +1931,6 @@
             saveData();
             renderSlots();
 
-            // Clear form
             document.getElementById('slotName').value = '';
             document.getElementById('slotImage').value = '';
             document.getElementById('slotBet').value = '';
@@ -2096,31 +1949,20 @@
             if (winAmount === null || winAmount === '') return;
 
             const amount = parseFloat(winAmount);
-            if (isNaN(amount) || amount < 0) {
-                showModal('error', 'Valor Inválido', 'Por favor, insira um valor válido!');
-                return;
-            }
+            if (isNaN(amount) || amount < 0) { showModal('error', 'Valor Inválido', 'Por favor, insira um valor válido!'); return; }
 
             slot.opened = true;
             slot.winAmount = amount;
-            
-            // Mostra no overlay "Playing Now" quando abre
             setPlayingNow(id);
-            
             calculateStats();
             saveData();
             renderSlots();
-            
-            // Remove do "Playing Now" após 10 segundos
-            setTimeout(() => {
-                clearPlayingNow();
-            }, 10000);
+            setTimeout(() => { clearPlayingNow(); }, 10000);
         }
 
         async function deleteSlot(id) {
             const confirmed = await showConfirm('Apagar Slot', 'Tens certeza que queres apagar este slot?');
             if (!confirmed) return;
-
             data.slots = data.slots.filter(s => s.id !== id);
             calculateStats();
             saveData();
@@ -2130,78 +1972,41 @@
         async function editSlot(id) {
             const slot = data.slots.find(s => s.id === id);
             if (!slot) return;
-
-            // Modal de escolha
             const choice = await showModal('info', 'Editar Slot', 'O que queres editar?', slot.opened ? ['💰 Aposta', '💎 Ganho', 'Cancelar'] : ['💰 Aposta', 'Cancelar']);
-            
             if (choice === 'Cancelar') return;
-
-            if (choice === '💰 Aposta') {
-                await editBet(id);
-            } else if (choice === '💎 Ganho') {
-                await editWin(id);
-            }
+            if (choice === '💰 Aposta') await editBet(id);
+            else if (choice === '💎 Ganho') await editWin(id);
         }
 
         async function editBet(id) {
             const slot = data.slots.find(s => s.id === id);
             if (!slot) return;
-
             const currentBet = slot.betAmount || slot.bet || 0;
-            const newBet = await showPrompt(
-                'Editar Aposta', 
-                `Editar valor da aposta de "${slot.slotName}"`, 
-                currentBet.toFixed(2)
-            );
-            
+            const newBet = await showPrompt('Editar Aposta', `Editar valor da aposta de "${slot.slotName}"`, currentBet.toFixed(2));
             if (newBet === null || newBet === '') return;
-
             const amount = parseFloat(newBet);
-            if (isNaN(amount) || amount <= 0) {
-                showModal('error', 'Valor Inválido', 'Por favor, insira um valor válido!');
-                return;
-            }
-
+            if (isNaN(amount) || amount <= 0) { showModal('error', 'Valor Inválido', 'Por favor, insira um valor válido!'); return; }
             slot.betAmount = amount;
             slot.bet = amount;
-            
             calculateStats();
             saveData();
             renderSlots();
-            
             showModal('success', 'Aposta Atualizada', `Aposta atualizada para €${amount.toFixed(2)}`);
         }
 
         async function editWin(id) {
             const slot = data.slots.find(s => s.id === id);
             if (!slot) return;
-
-            if (!slot.opened) {
-                showModal('warning', 'Slot Fechado', 'Este slot ainda não foi aberto!');
-                return;
-            }
-
+            if (!slot.opened) { showModal('warning', 'Slot Fechado', 'Este slot ainda não foi aberto!'); return; }
             const currentWin = slot.winAmount || 0;
-            const newWin = await showPrompt(
-                'Editar Ganho', 
-                `Editar ganho de "${slot.slotName}"`, 
-                currentWin.toFixed(2)
-            );
-            
+            const newWin = await showPrompt('Editar Ganho', `Editar ganho de "${slot.slotName}"`, currentWin.toFixed(2));
             if (newWin === null || newWin === '') return;
-
             const amount = parseFloat(newWin);
-            if (isNaN(amount) || amount < 0) {
-                showModal('error', 'Valor Inválido', 'Por favor, insira um valor válido!');
-                return;
-            }
-
+            if (isNaN(amount) || amount < 0) { showModal('error', 'Valor Inválido', 'Por favor, insira um valor válido!'); return; }
             slot.winAmount = amount;
-            
             calculateStats();
             saveData();
             renderSlots();
-            
             showModal('success', 'Ganho Atualizado', `Ganho atualizado para €${amount.toFixed(2)}`);
         }
 
@@ -2209,24 +2014,14 @@
             const totalBet = data.slots.reduce((sum, slot) => sum + (slot.betAmount || 0), 0);
             const openedSlots = data.slots.filter(s => s.opened);
             const totalPay = openedSlots.reduce((sum, slot) => sum + (slot.winAmount || 0), 0);
-
-            // AVG = Multiplicador médio dos slots abertos
-            const avgMultiplier = openedSlots.length > 0 
-                ? openedSlots.reduce((sum, slot) => {
-                    const bet = slot.betAmount || 1;
-                    return sum + ((slot.winAmount || 0) / bet);
-                }, 0) / openedSlots.length
+            const avgMultiplier = openedSlots.length > 0
+                ? openedSlots.reduce((sum, slot) => { const bet = slot.betAmount || 1; return sum + ((slot.winAmount || 0) / bet); }, 0) / openedSlots.length
                 : 0;
-
-            // B/E = Break Even Multiplier = Start / Total Bet
             const beMultiplier = totalBet > 0 ? data.stats.start / totalBet : 0;
-
-            // Profit/Loss = Total Pay - Start
             data.stats.profitLoss = totalPay - data.stats.start;
             data.stats.avgMultiplier = avgMultiplier;
             data.stats.beMultiplier = beMultiplier;
             data.stats.totalPay = totalPay;
-
             updateStats();
         }
 
@@ -2235,11 +2030,20 @@
             document.getElementById('statAverage').textContent = `${(data.stats.avgMultiplier || 0).toFixed(2)}x`;
             document.getElementById('statBreakEven').textContent = `${(data.stats.beMultiplier || 0).toFixed(2)}x`;
             document.getElementById('statTotalPay').textContent = `€${(data.stats.totalPay || 0).toFixed(2)}`;
-            
             const profitElement = document.getElementById('statProfit');
             const profit = data.stats.profitLoss || 0;
             profitElement.textContent = `€${profit.toFixed(2)}`;
             profitElement.style.color = profit >= 0 ? '#4ade80' : '#f87171';
+        }
+
+        // ===== SORT FUNCTION =====
+        function sortSlots(order) {
+            sortOrder = order;
+            // Atualizar estilos dos botões
+            document.getElementById('sortAscBtn').classList.toggle('active', order === 'asc');
+            document.getElementById('sortDescBtn').classList.toggle('active', order === 'desc');
+            document.getElementById('sortNoneBtn').classList.toggle('active', order === null);
+            renderSlots();
         }
 
         function renderSlots() {
@@ -2257,7 +2061,15 @@
                 return;
             }
 
-            container.innerHTML = data.slots.map(slot => `
+            // Ordenar cópia — não altera o array original no Firebase
+            let slotsToRender = [...data.slots];
+            if (sortOrder === 'asc') {
+                slotsToRender.sort((a, b) => (a.betAmount || 0) - (b.betAmount || 0));
+            } else if (sortOrder === 'desc') {
+                slotsToRender.sort((a, b) => (b.betAmount || 0) - (a.betAmount || 0));
+            }
+
+            container.innerHTML = slotsToRender.map(slot => `
                 <div class="slot-card ${slot.opened ? 'opened' : ''}">
                     <img src="${slot.imageUrl}" alt="${slot.slotName}" class="slot-icon">
                     <div class="slot-info">
@@ -2285,43 +2097,17 @@
         async function setPlayingNow(slotId) {
             const slot = data.slots.find(s => s.id === slotId);
             if (!slot) return;
-
-            if (!isFirebaseReady || !database) {
-                alert('⚠️ Firebase não conectado!');
-                return;
-            }
-
+            if (!isFirebaseReady || !database) { alert('⚠️ Firebase não conectado!'); return; }
             try {
-                await database.ref('playing-now').set({
-                    slot: slot,
-                    timestamp: Date.now()
-                });
-                console.log('🎮 Playing Now definido:', slot.slotName);
-                // Não mostrar alert, apenas confirmar no console
-            } catch (error) {
-                console.error('❌ Erro ao definir Playing Now:', error);
-                alert('⚠️ Erro ao definir slot atual!');
-            }
+                await database.ref('playing-now').set({ slot: slot, timestamp: Date.now() });
+            } catch (error) { console.error('❌ Erro ao definir Playing Now:', error); }
         }
 
         async function sendToPlayingNowFromAutocomplete(slotData) {
-            if (!isFirebaseReady || !database) {
-                console.warn('⚠️ Firebase não conectado ainda');
-                return;
-            }
-
+            if (!isFirebaseReady || !database) return;
             try {
                 const betValue = parseFloat(document.getElementById('slotBet').value) || 0;
-                
-                const tempSlot = {
-                    id: Date.now(),
-                    slotName: slotData.name,
-                    provider: slotData.provider,
-                    imageUrl: slotData.image,
-                    betAmount: betValue
-                };
-
-                // Se for slot customizado, adicionar as stats
+                const tempSlot = { id: Date.now(), slotName: slotData.name, provider: slotData.provider, imageUrl: slotData.image, betAmount: betValue };
                 if (slotData.isCustom) {
                     const customSlot = data.customSlots.find(s => s.name === slotData.name);
                     if (customSlot) {
@@ -2331,76 +2117,36 @@
                         if (customSlot.notes) tempSlot.notes = customSlot.notes;
                     }
                 }
-                
-                await database.ref('playing-now').set({
-                    slot: tempSlot,
-                    timestamp: Date.now()
-                });
-                console.log('🎮 Slot enviado para Playing Now:', slotData.name);
-            } catch (error) {
-                console.error('❌ Erro ao enviar para Playing Now:', error);
-            }
+                await database.ref('playing-now').set({ slot: tempSlot, timestamp: Date.now() });
+            } catch (error) { console.error('❌ Erro ao enviar para Playing Now:', error); }
         }
 
         async function clearPlayingNow() {
             if (!isFirebaseReady || !database) return;
-
-            try {
-                await database.ref('playing-now').remove();
-                console.log('⏸️ Playing Now limpo');
-            } catch (error) {
-                console.error('❌ Erro ao limpar Playing Now:', error);
-            }
+            try { await database.ref('playing-now').remove(); } catch (error) { console.error('❌ Erro:', error); }
         }
 
         async function toggleOverlay() {
-            if (!isFirebaseReady || !database) {
-                alert('⚠️ Firebase não conectado!');
-                return;
-            }
-
+            if (!isFirebaseReady || !database) { alert('⚠️ Firebase não conectado!'); return; }
             try {
                 const snapshot = await database.ref('overlay-visible').once('value');
-                const currentState = snapshot.val();
-                const newState = currentState === false ? true : false;
-                
+                const newState = snapshot.val() === false ? true : false;
                 await database.ref('overlay-visible').set(newState);
-                
                 const btn = document.getElementById('toggleOverlayBtn');
-                if (newState) {
-                    btn.textContent = '👁️ Esconder Overlay Bonus Hunt';
-                    btn.style.background = '#8b5cf6';
-                    console.log('👁️ Overlay mostrada');
-                } else {
-                    btn.textContent = '👁️ Mostrar Overlay Bonus Hunt';
-                    btn.style.background = '#ef4444';
-                    console.log('🙈 Overlay escondida');
-                }
-            } catch (error) {
-                console.error('❌ Erro ao toggle overlay:', error);
-                alert('⚠️ Erro ao controlar overlay!');
-            }
+                if (newState) { btn.textContent = '👁️ Esconder Overlay Bonus Hunt'; btn.style.background = '#8b5cf6'; }
+                else { btn.textContent = '👁️ Mostrar Overlay Bonus Hunt'; btn.style.background = '#ef4444'; }
+            } catch (error) { console.error('❌ Erro ao toggle overlay:', error); }
         }
 
-        // Verificar estado inicial da overlay
         async function checkOverlayState() {
             if (!isFirebaseReady || !database) return;
-
             try {
                 const snapshot = await database.ref('overlay-visible').once('value');
-                const isVisible = snapshot.val() !== false; // default true
-                
+                const isVisible = snapshot.val() !== false;
                 const btn = document.getElementById('toggleOverlayBtn');
-                if (isVisible) {
-                    btn.textContent = '👁️ Esconder Overlay Bonus Hunt';
-                    btn.style.background = '#8b5cf6';
-                } else {
-                    btn.textContent = '👁️ Mostrar Overlay Bonus Hunt';
-                    btn.style.background = '#ef4444';
-                }
-            } catch (error) {
-                console.error('❌ Erro ao verificar estado da overlay:', error);
-            }
+                if (isVisible) { btn.textContent = '👁️ Esconder Overlay Bonus Hunt'; btn.style.background = '#8b5cf6'; }
+                else { btn.textContent = '👁️ Mostrar Overlay Bonus Hunt'; btn.style.background = '#ef4444'; }
+            } catch (error) { console.error('❌ Erro:', error); }
         }
 
         function exportData() {
@@ -2414,26 +2160,18 @@
             URL.revokeObjectURL(url);
         }
 
-        function importData() {
-            document.getElementById('importFile').click();
-        }
+        function importData() { document.getElementById('importFile').click(); }
 
         function handleImport(event) {
             const file = event.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     data = JSON.parse(e.target.result);
-                    saveData();
-                    renderSlots();
-                    updateStats();
-                    updateStartValue();
+                    saveData(); renderSlots(); updateStats(); updateStartValue();
                     alert('✅ Dados importados com sucesso!');
-                } catch (error) {
-                    alert('⚠️ Erro ao importar dados: ' + error.message);
-                }
+                } catch (error) { alert('⚠️ Erro ao importar dados: ' + error.message); }
             };
             reader.readAsText(file);
         }
@@ -2441,71 +2179,31 @@
         async function clearAll() {
             const confirmed = await showConfirm('Limpar Tudo', 'Tens certeza que queres apagar TODOS os dados? Esta ação não pode ser desfeita!');
             if (!confirmed) return;
-
-            data = {
-                slots: [],
-                stats: {
-                    start: 0,
-                    multiplier: 0,
-                    average: 0,
-                    breakEven: 0,
-                    profitLoss: 0,
-                    huntNumber: 1
-                }
-            };
-
-            saveData();
-            renderSlots();
-            updateStats();
-            updateStartValue();
+            data = { slots: [], stats: { start: 0, multiplier: 0, average: 0, breakEven: 0, profitLoss: 0, huntNumber: 1 } };
+            saveData(); renderSlots(); updateStats(); updateStartValue();
             showModal('success', 'Dados Limpos', 'Todos os dados foram apagados com sucesso!');
         }
 
-        // Inicializar
-        setTimeout(() => {
-            loadData();
-            checkOverlayState();
-        }, 1000);
-        
-        console.log('✅ Painel carregado com Firebase!');
+        setTimeout(() => { loadData(); checkOverlayState(); }, 1000);
 
         // ====================================
         // SLOTS PERSONALIZADOS
         // ====================================
-
-        function openCustomSlotModal() {
-            document.getElementById('customSlotModal').classList.add('active');
-        }
-
-        function closeCustomSlotModal() {
-            document.getElementById('customSlotModal').classList.remove('active');
-            clearCustomForm();
-        }
+        function openCustomSlotModal() { document.getElementById('customSlotModal').classList.add('active'); }
+        function closeCustomSlotModal() { document.getElementById('customSlotModal').classList.remove('active'); clearCustomForm(); }
 
         function clearCustomForm() {
-            document.getElementById('customName').value = '';
-            document.getElementById('customProvider').value = '';
-            document.getElementById('customImage').value = '';
-            document.getElementById('customRTP').value = '';
+            ['customName','customProvider','customImage','customRTP','customMaxWin','customNotes'].forEach(id => document.getElementById(id).value = '');
             document.getElementById('customVol').value = '';
-            document.getElementById('customMaxWin').value = '';
-            document.getElementById('customNotes').value = '';
             document.getElementById('customImagePreview').innerHTML = '';
             document.getElementById('customImagePreview').classList.remove('active');
         }
 
-        // Preview imagem no modal
         document.getElementById('customImage').addEventListener('input', function() {
             const url = this.value.trim();
             const preview = document.getElementById('customImagePreview');
-            
-            if (url) {
-                preview.innerHTML = `<img src="${url}" onerror="this.src='https://via.placeholder.com/150x200?text=Erro'">`;
-                preview.classList.add('active');
-            } else {
-                preview.innerHTML = '';
-                preview.classList.remove('active');
-            }
+            if (url) { preview.innerHTML = `<img src="${url}" onerror="this.src='https://via.placeholder.com/150x200?text=Erro'">`; preview.classList.add('active'); }
+            else { preview.innerHTML = ''; preview.classList.remove('active'); }
         });
 
         function saveCustomSlot() {
@@ -2517,117 +2215,54 @@
             const maxWin = document.getElementById('customMaxWin').value.trim();
             const notes = document.getElementById('customNotes').value.trim();
 
-            // Validações
-            if (!name) {
-                showModal('error', 'Nome obrigatório', 'Por favor, insere o nome do slot!');
-                return;
-            }
-
-            if (!image) {
-                showModal('error', 'Imagem obrigatória', 'Por favor, insere a URL da imagem!');
-                return;
-            }
-
+            if (!name) { showModal('error', 'Nome obrigatório', 'Por favor, insere o nome do slot!'); return; }
+            if (!image) { showModal('error', 'Imagem obrigatória', 'Por favor, insere a URL da imagem!'); return; }
             if (!data.customSlots) data.customSlots = [];
 
-            // Criar slot
-            const newSlot = {
-                id: Date.now(),
-                name: name,
-                provider: provider || 'Custom',
-                image: image,
-                rtp: rtp,
-                volatility: volatility,
-                maxWin: maxWin,
-                notes: notes
-            };
-
+            const newSlot = { id: Date.now(), name, provider: provider || 'Custom', image, rtp, volatility, maxWin, notes };
             data.customSlots.push(newSlot);
             saveData();
             closeCustomSlotModal();
-
             showModal('success', 'Slot Criado!', `${name} foi adicionado! Agora vai aparecer quando pesquisares.`);
         }
 
-        // Fechar modal ao clicar fora
-        document.getElementById('customSlotModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeCustomSlotModal();
-            }
-        });
+        document.getElementById('customSlotModal').addEventListener('click', function(e) { if (e.target === this) closeCustomSlotModal(); });
 
         // ====================================
         // GERIR SLOTS PERSONALIZADOS
         // ====================================
-
         function openManageSlotsModal() {
             renderManageSlotsList();
             document.getElementById('manageSlotsModal').classList.add('active');
             document.getElementById('manageSearchInput').value = '';
         }
 
-        function closeManageSlotsModal() {
-            document.getElementById('manageSlotsModal').classList.remove('active');
-        }
+        function closeManageSlotsModal() { document.getElementById('manageSlotsModal').classList.remove('active'); }
 
         function renderManageSlotsList(searchTerm = '') {
             const container = document.getElementById('manageSlotsListContainer');
             const count = document.getElementById('manageSlotsCount');
-            
             if (!data.customSlots) data.customSlots = [];
-            
-            // Combinar slots customizados + base de dados
-            let allSlots = [];
-            
-            // Adicionar slots customizados
-            data.customSlots.forEach(slot => {
-                allSlots.push({
-                    ...slot,
-                    isCustom: true
-                });
-            });
-            
-            // Adicionar slots da base de dados (primeiros 50 se não houver pesquisa, ou filtrados)
+
+            let allSlots = data.customSlots.map(slot => ({ ...slot, isCustom: true }));
+
             if (searchTerm) {
                 const term = searchTerm.toLowerCase();
-                const dbMatches = altacdnSlots.filter(slot => 
-                    slot.name.toLowerCase().includes(term) || 
-                    slot.provider.toLowerCase().includes(term)
-                ).slice(0, 50); // Limitar a 50
-                
-                dbMatches.forEach(slot => {
-                    allSlots.push({
-                        id: `db_${slot.name}`,
-                        name: slot.name,
-                        provider: slot.provider,
-                        image: slot.image,
-                        isCustom: false,
-                        isFromDB: true
-                    });
-                });
+                const dbMatches = altacdnSlots.filter(slot =>
+                    slot.name.toLowerCase().includes(term) || slot.provider.toLowerCase().includes(term)
+                ).slice(0, 50);
+                dbMatches.forEach(slot => allSlots.push({ id: `db_${slot.name}`, name: slot.name, provider: slot.provider, image: slot.image, isCustom: false, isFromDB: true }));
             }
-            
-            // Filtrar por pesquisa (slots customizados)
+
             if (searchTerm) {
                 const term = searchTerm.toLowerCase();
-                allSlots = allSlots.filter(slot => 
-                    slot.name.toLowerCase().includes(term) || 
-                    (slot.provider && slot.provider.toLowerCase().includes(term))
-                );
+                allSlots = allSlots.filter(slot => slot.name.toLowerCase().includes(term) || (slot.provider && slot.provider.toLowerCase().includes(term)));
             }
 
             count.textContent = allSlots.length;
 
             if (allSlots.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-manage-slots">
-                        <div class="empty-manage-slots-icon">🔍</div>
-                        <p>Nenhum slot encontrado!</p>
-                        <p style="font-size: 0.9em; margin-top: 5px;">
-                            Tenta outra pesquisa.
-                        </p>
-                    </div>
-                `;
+                container.innerHTML = `<div class="empty-manage-slots"><div class="empty-manage-slots-icon">🔍</div><p>Nenhum slot encontrado!</p></div>`;
                 return;
             }
 
@@ -2636,7 +2271,6 @@
                 if (slot.rtp) stats.push(`RTP: ${slot.rtp}%`);
                 if (slot.volatility) stats.push(`Vol: ${slot.volatility}`);
                 if (slot.maxWin) stats.push(`Max: ${slot.maxWin}`);
-                
                 return `
                     <div class="manage-slot-item">
                         <img src="${slot.image}" onerror="this.src='https://via.placeholder.com/60x90?text=?'">
@@ -2647,67 +2281,41 @@
                             ${slot.notes ? `<div class="manage-slot-stats">📝 ${slot.notes}</div>` : ''}
                         </div>
                         <div class="manage-slot-actions">
-                            <button class="btn btn-secondary btn-small" onclick="openEditSlotModalDirect('${slot.name.replace(/'/g, "\\'")}', ${slot.isCustom ? slot.id : 'null'})" style="background: #3b82f6;" title="Editar">
-                                ✏️ Editar
-                            </button>
-                            ${slot.isCustom ? `
-                                <button class="btn btn-danger btn-small" onclick="deleteCustomSlotFromManage(${slot.id})" title="Apagar">
-                                    🗑️
-                                </button>
-                            ` : ''}
+                            <button class="btn btn-secondary btn-small" onclick="openEditSlotModalDirect('${slot.name.replace(/'/g, "\\'")}', ${slot.isCustom ? slot.id : 'null'})" style="background: #3b82f6;">✏️ Editar</button>
+                            ${slot.isCustom ? `<button class="btn btn-danger btn-small" onclick="deleteCustomSlotFromManage(${slot.id})">🗑️</button>` : ''}
                         </div>
                     </div>
                 `;
             }).join('');
         }
 
-        // Pesquisa em tempo real
         document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.getElementById('manageSearchInput');
-            if (searchInput) {
-                searchInput.addEventListener('input', function() {
-                    renderManageSlotsList(this.value);
-                });
-            }
+            if (searchInput) searchInput.addEventListener('input', function() { renderManageSlotsList(this.value); });
         });
+
+        // Live search fallback (in case DOMContentLoaded already fired)
+        document.getElementById('manageSearchInput').addEventListener('input', function() { renderManageSlotsList(this.value); });
 
         function openEditSlotModalDirect(slotName, customId = null) {
             let slot;
-            
-            // Se tem ID custom, buscar nos custom slots
             if (customId !== null) {
                 slot = data.customSlots.find(s => s.id === customId);
             } else {
-                // Se não é custom, buscar na base de dados AltaCDN
                 const dbSlot = altacdnSlots.find(s => s.name === slotName);
                 if (!dbSlot) return;
-                
-                // Criar como slot customizado se ainda não existir
                 const existingCustom = data.customSlots.find(s => s.name === slotName);
                 if (existingCustom) {
                     slot = existingCustom;
                 } else {
-                    // Criar novo slot customizado baseado no da base de dados
-                    slot = {
-                        id: Date.now(),
-                        name: dbSlot.name,
-                        provider: dbSlot.provider,
-                        image: dbSlot.image,
-                        rtp: '',
-                        volatility: '',
-                        maxWin: '',
-                        notes: ''
-                    };
-                    
+                    slot = { id: Date.now(), name: dbSlot.name, provider: dbSlot.provider, image: dbSlot.image, rtp: '', volatility: '', maxWin: '', notes: '' };
                     if (!data.customSlots) data.customSlots = [];
                     data.customSlots.push(slot);
                     saveData();
                 }
             }
-            
             if (!slot) return;
 
-            // Preencher formulário
             document.getElementById('editName').value = slot.name || '';
             document.getElementById('editProvider').value = slot.provider || '';
             document.getElementById('editImage').value = slot.image || '';
@@ -2716,44 +2324,26 @@
             document.getElementById('editMaxWin').value = slot.maxWin || '';
             document.getElementById('editNotes').value = slot.notes || '';
             document.getElementById('editingSlotId').value = slot.id;
-
-            // Preview imagem
             updateEditImagePreview();
-
-            // Fechar modal de gestão e abrir modal de edição
             closeManageSlotsModal();
             document.getElementById('editSlotModal').classList.add('active');
         }
 
-        function closeEditSlotModal() {
-            document.getElementById('editSlotModal').classList.remove('active');
-            document.getElementById('editingSlotId').value = '';
-        }
+        function closeEditSlotModal() { document.getElementById('editSlotModal').classList.remove('active'); document.getElementById('editingSlotId').value = ''; }
 
         function updateEditImagePreview() {
             const url = document.getElementById('editImage').value.trim();
             const preview = document.getElementById('editImagePreview');
-            
-            if (url) {
-                preview.innerHTML = `<img src="${url}" onerror="this.src='https://via.placeholder.com/150x200?text=Erro'">`;
-                preview.classList.add('active');
-            } else {
-                preview.innerHTML = '';
-                preview.classList.remove('active');
-            }
+            if (url) { preview.innerHTML = `<img src="${url}" onerror="this.src='https://via.placeholder.com/150x200?text=Erro'">`; preview.classList.add('active'); }
+            else { preview.innerHTML = ''; preview.classList.remove('active'); }
         }
 
-        // Auto-preview da imagem ao editar
         document.getElementById('editImage').addEventListener('input', updateEditImagePreview);
 
         function updateCustomSlot() {
             const slotId = parseInt(document.getElementById('editingSlotId').value);
             const slot = data.customSlots.find(s => s.id === slotId);
-            
-            if (!slot) {
-                showModal('error', 'Erro', 'Slot não encontrado!');
-                return;
-            }
+            if (!slot) { showModal('error', 'Erro', 'Slot não encontrado!'); return; }
 
             const name = document.getElementById('editName').value.trim();
             const provider = document.getElementById('editProvider').value.trim();
@@ -2763,34 +2353,16 @@
             const maxWin = document.getElementById('editMaxWin').value.trim();
             const notes = document.getElementById('editNotes').value.trim();
 
-            // Validações
-            if (!name) {
-                showModal('error', 'Nome obrigatório', 'Por favor, insere o nome do slot!');
-                return;
-            }
-
-            if (!image) {
-                showModal('error', 'Imagem obrigatória', 'Por favor, insere a URL da imagem!');
-                return;
-            }
+            if (!name) { showModal('error', 'Nome obrigatório', 'Por favor, insere o nome do slot!'); return; }
+            if (!image) { showModal('error', 'Imagem obrigatória', 'Por favor, insere a URL da imagem!'); return; }
 
             const oldName = slot.name;
+            slot.name = name; slot.provider = provider || 'Custom'; slot.image = image;
+            slot.rtp = rtp; slot.volatility = volatility; slot.maxWin = maxWin; slot.notes = notes;
 
-            // Atualizar slot customizado
-            slot.name = name;
-            slot.provider = provider || 'Custom';
-            slot.image = image;
-            slot.rtp = rtp;
-            slot.volatility = volatility;
-            slot.maxWin = maxWin;
-            slot.notes = notes;
-
-            // ATUALIZAR SLOTS NA BONUS HUNT que usam este slot
             data.slots.forEach(huntSlot => {
                 if (huntSlot.slotName === oldName || huntSlot.libraryId === slotId) {
-                    huntSlot.slotName = name;
-                    huntSlot.provider = provider || 'Custom';
-                    huntSlot.imageUrl = image;
+                    huntSlot.slotName = name; huntSlot.provider = provider || 'Custom'; huntSlot.imageUrl = image;
                     if (rtp) huntSlot.rtp = rtp;
                     if (volatility) huntSlot.volatility = volatility;
                     if (maxWin) huntSlot.maxWin = maxWin;
@@ -2799,54 +2371,28 @@
             });
 
             saveData();
-            renderSlots(); // Atualizar lista da bonus hunt
+            renderSlots();
             closeEditSlotModal();
             showModal('success', 'Slot Atualizado!', `${name} foi atualizado em tudo!`);
-            
-            // Reabrir modal de gestão para continuar a gerir slots
-            setTimeout(() => {
-                openManageSlotsModal();
-            }, 1000);
+            setTimeout(() => { openManageSlotsModal(); }, 1000);
         }
 
         async function deleteCustomSlotFromManage(slotId) {
             const slot = data.customSlots.find(s => s.id === slotId);
             if (!slot) return;
-
-            const confirmed = await showConfirm(
-                'Apagar Slot Personalizado', 
-                `Tens certeza que queres apagar "${slot.name}"? Ele será removido de tudo (pesquisas, bonus hunt, etc).`
-            );
-            
+            const confirmed = await showConfirm('Apagar Slot Personalizado', `Tens certeza que queres apagar "${slot.name}"?`);
             if (!confirmed) return;
-
             const slotName = slot.name;
-
-            // Remover dos customSlots
             data.customSlots = data.customSlots.filter(s => s.id !== slotId);
-
-            // Remover da bonus hunt se existir
             data.slots = data.slots.filter(s => s.slotName !== slotName && s.libraryId !== slotId);
-
             saveData();
-            renderSlots(); // Atualizar bonus hunt
+            renderSlots();
             renderManageSlotsList(document.getElementById('manageSearchInput').value);
-
             showModal('success', 'Apagado!', `${slotName} foi removido de tudo.`);
         }
 
-        // Fechar modais ao clicar fora
-        document.getElementById('manageSlotsModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeManageSlotsModal();
-            }
-        });
-
-        document.getElementById('editSlotModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeEditSlotModal();
-            }
-        });
+        document.getElementById('manageSlotsModal').addEventListener('click', function(e) { if (e.target === this) closeManageSlotsModal(); });
+        document.getElementById('editSlotModal').addEventListener('click', function(e) { if (e.target === this) closeEditSlotModal(); });
     </script>
 </body>
 </html>
