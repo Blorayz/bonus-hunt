@@ -596,7 +596,7 @@
                 elements.profitLossValue.classList.remove('positive', 'negative');
             }
 
-            // Update slots — ordenar por aposta crescente (menor bet primeiro)
+            // Update slots — ordenar do maior bet para o menor
             if (slots.length === 0) {
                 elements.slotsContainer.innerHTML = `
                     <div class="empty-state">
@@ -610,6 +610,12 @@
                     createSlotCard(slot, index)
                 ).join('');
             }
+
+            // Reset scroll quando os dados atualizam
+            scrollPosition = 0;
+            isResetting = false;
+            isPaused = true;
+            setTimeout(() => { isPaused = false; }, PAUSE_DURATION);
 
             console.log('📊 Stats atualizadas:', {
                 slots: stats.totalSlots,
