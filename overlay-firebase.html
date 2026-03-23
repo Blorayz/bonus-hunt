@@ -596,7 +596,7 @@
                 elements.profitLossValue.classList.remove('positive', 'negative');
             }
 
-            // Update slots
+            // Update slots — ordenar por aposta crescente (menor bet primeiro)
             if (slots.length === 0) {
                 elements.slotsContainer.innerHTML = `
                     <div class="empty-state">
@@ -605,7 +605,8 @@
                     </div>
                 `;
             } else {
-                elements.slotsContainer.innerHTML = slots.map((slot, index) => 
+                const sortedSlots = [...slots].sort((a, b) => (a.betAmount || 0) - (b.betAmount || 0));
+                elements.slotsContainer.innerHTML = sortedSlots.map((slot, index) => 
                     createSlotCard(slot, index)
                 ).join('');
             }
