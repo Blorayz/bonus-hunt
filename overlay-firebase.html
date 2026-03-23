@@ -605,7 +605,7 @@
                     </div>
                 `;
             } else {
-                const sortedSlots = [...slots].sort((a, b) => (a.betAmount || 0) - (b.betAmount || 0));
+                const sortedSlots = [...slots].sort((a, b) => (b.betAmount || 0) - (a.betAmount || 0));
                 elements.slotsContainer.innerHTML = sortedSlots.map((slot, index) => 
                     createSlotCard(slot, index)
                 ).join('');
